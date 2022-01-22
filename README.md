@@ -3,6 +3,7 @@
 
 
 #### I'm not going to tell you how to create a project. If you're on Github, you're competent enough to do it.
+> If you wish to continue purchasing the source code from us, please visit the Discord server.
 
 ### Join Discord For Support  [Discord](https://discord.gg/3yXwTzghHR)
 
