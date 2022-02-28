@@ -5,8 +5,6 @@
 #### I'm not going to tell you how to create a project. If you're on Github, you're competent enough to do it.
 > If you wish to continue purchasing the source code from us, please visit the Discord server.
 
-## FiveM spoofer 
-
 ### FOR SUPPORT : [Discord.gg/Sarnax](https://discord.com/invite/sarnax) 
 > #### Discord : Sarnax#9999
 
