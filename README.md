@@ -9,8 +9,7 @@
 </p>
 
 
-#### 💬 JOIN DISCORD : [SARNAX SERVER](https://discord.com/users/943374631644045363) ( You must add me as a friend. I will send you a link to the server. )
-> - DM for buy Cheating Private & Source
+#### 💬 New Server Discord : [Discord.gg/Sarnax](https://discord.gg/sFUeS3E6Sz) 
 > - come in to be the same society as us
 
 ***
