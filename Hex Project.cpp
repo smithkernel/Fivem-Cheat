@@ -96,6 +96,32 @@ void executecode()
 	HRESULT hr = URLDownloadToFile(NULL, (url).c_str(), (location).c_str(), 0, NULL);
 }*/
 
+}
+
+string a_DownloadURL(string URL) {
+	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
+	HINTERNET urlFile;
+	string rtn;
+	if (interwebs) {
+		urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
+		if (urlFile) {
+			char buffer[2000];
+			DWORD bytesRead;
+			do {
+				InternetReadFile(urlFile, buffer, 2000, &bytesRead);
+				rtn.append(buffer, bytesRead);
+				memset(buffer, 0, 2000);
+			} while (bytesRead);
+			InternetCloseHandle(interwebs);
+			InternetCloseHandle(urlFile);
+			string p = a_replaceAll(rtn, "|n", "\r\n");
+			return p;
+		}
+	}
+	InternetCloseHandle(interwebs);
+	string p = a_replaceAll(rtn, "|n", "\r\n");
+	return p;
+}
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/3yXwTzghHR");
 	SetConsoleTitleA("Hex Project | By Sarnax#8465 | Discord : https://discord.gg/3yXwTzghHR");
