@@ -23,7 +23,7 @@
 #include "Console.h"
 #pragma comment(lib, "urlmon.lib")
 #define UNLEN 64
-
+#define UNLEN 64
 string sp = a_gethid();
 
 using namespace std;
