@@ -365,7 +365,13 @@ namespace JadedHoboConsole
         
         return os;
     }
-    
+        inline std::ostream& bg_blue( std::ostream& os )
+    {
+        os.flush();
+        console.SetColor( bgHiBlue, fgMask );
+        
+        return os;
+    }
     inline std::wostream& bg_cyan( std::wostream& os )
     {
         os.flush();
