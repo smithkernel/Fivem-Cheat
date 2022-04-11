@@ -14,8 +14,11 @@
 > - We do not expect profit We hope you only get good things.
 ***
 
-SEE VIDEO : https://www.youtube.com/watch?v=wKrneENvvxg&ab_channel=Sarnax
-
-![vvssss](https://user-images.githubusercontent.com/94861415/156057386-4e474c8f-1259-4a43-b797-604852691884.png)
 
 
+https://user-images.githubusercontent.com/94861415/162817264-5c311e5e-4697-4619-856e-a1775608d227.mp4
+
+
+
+
+![image](https://user-images.githubusercontent.com/94861415/162817483-0d2d076b-8c93-4968-a8b4-7bc93be29e5f.png)
