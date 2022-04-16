@@ -22,5 +22,3 @@ https://user-images.githubusercontent.com/94861415/162817264-5c311e5e-4697-4619-
 
 
 ![image](https://user-images.githubusercontent.com/94861415/162817483-0d2d076b-8c93-4968-a8b4-7bc93be29e5f.png)
-
-.
