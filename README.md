@@ -1,6 +1,6 @@
 ## FiveM Lua Executor 
 ```sh-session
-OPEN SOURCE :)
+EXEC SOURCE HEX PROJECT / SEE VIDEO 
 ```
 
 ***
