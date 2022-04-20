@@ -1,6 +1,6 @@
 ## FiveM Lua Executor 
 ```sh-session
-EXEC SOURCE HEX PROJECT / SEE VIDEO 
+EXEC SOURCE HEX PROJECT / INJECTOR .LUA ( UD ) 
 ```
 
 ***
