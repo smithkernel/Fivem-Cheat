@@ -1,4 +1,4 @@
-## FiveM Lua Executor 
+## FIVEM LUA EXEC INJECTOR 
 ```sh-session
 EXEC SOURCE HEX PROJECT / INJECTOR .LUA ( UD ) 
 ```
