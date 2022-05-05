@@ -16,7 +16,7 @@ EXEC SOURCE HEX PROJECT / INJECTOR .LUA ( UD )
     </a>
 </p>
 
-### 📌・  JOIN DISCORD / BUY PRIVATE : [HEX COMMUNITY](https://discord.gg/S2NxQRvsvn) 
+### 📌・  JOIN DISCORD / BUY  : [HEX COMMUNITY](https://discord.gg/S2NxQRvsvn)  
 
 * `👋 SELL CHEATING PRIVATE / SPOOFER / SOURCE CODE / ETC `
 * ` UPDATE FREE LIFETIME & UD `
