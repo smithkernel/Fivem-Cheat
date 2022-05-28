@@ -16,7 +16,7 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
     </a>
 </p>
 
-### 📌・   DISCORD / SHOP : [HEX COMMUNITY](https://discord.gg/S2NxQRvsvn) 
+### 📌・   DISCORD / BUY : [HEX COMMUNITY](https://discord.gg/S2NxQRvsvn)  
 
 * `👋 SELL CHEATING PRIVATE / SPOOFER / SOURCE CODE / ETC `
 * `✔️ UPDATE FREE & LIFETIME & UNDETECTED & BYPASS DRIVER , INJECTOR `
