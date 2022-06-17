@@ -11,7 +11,7 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 </p>
 
 
-### 📌・ NEW DISCORD : [HEX SERVER](https://discord.gg/JsxqNHgR4m) 
+### 🔔・ NEW DISCORD : [HEX SERVER](https://discord.gg/JsxqNHgR4m) 
 
 
 * `👋 SELL CHEATING PRIVATE / SPOOFER / SOURCE CODE / ETC `
