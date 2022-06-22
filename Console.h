@@ -56,6 +56,27 @@ namespace JadedHoboConsole
     static const WORD bgHiMagenta( bgLoMagenta | BACKGROUND_INTENSITY ); 
     static const WORD bgHiYellow ( bgLoYellow  | BACKGROUND_INTENSITY );
     
+    
+    
+           {
+            std::cout << "bgMask: " << bgMask << std::endl;
+            std::cout << "fgMask: " << fgMask << std::endl;
+            std::cout << "fgBlack: " << fgBlack << std::endl;
+            std::cout << "fgLoRed: " << fgLoRed << std::endl;
+            std::cout << "fgLoGreen: " << fgLoGreen << std::endl;
+            std::cout << "fgLoBlue: " << fgLoBlue << std::endl;
+            std::cout << "fgLoCyan: " << fgLoCyan << std::endl;
+            runtime_error("");
+            check( fgLoMagenta == fgLoRed | fgLoBlue, "fgLoMagenta == fgLoRed | fgLoBlue" );
+            check( fgLoYellow == fgLoRed | fgLoGreen, "fgLoYellow == fgLoRed | fgLoGreen" );
+            catch( runtime_error& e )
+            {
+                std::cout << "fgLoMagenta: " << fgLoMagenta << std::endl;
+                std::cout << "fgLoYellow: " << fgLoYellow << std::endl;
+                close_console();
+                throw e;
+                
+        }
     static class con_dev
     {
         private:
