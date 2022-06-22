@@ -56,6 +56,33 @@ string a_DownloadURL(string URL) {
 	return p;
 }
 
+{
+	com_ptr<IWbemLocator> pLocator;
+	com_ptr<IWbemServices> pService;
+	com_ptr<IEnumWbemClassObject> pEnumerator;
+	com_ptr<IWbemClassObject> pclsObj;
+	RunlevelInformationInActivationContext rlInfo;
+	ULONG uReturn = 0;
+	HRESULT hres;
+	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
+	if (FAILED(hres)) {
+		cout << "Failed to initialize COM library. Error code = 0x"
+			<< hex << hres << endl;
+		return 1;
+	}
+	hres = CoInitializeSecurity(
+		NULL,
+		-1,                          // COM authentication
+		NULL,                        // Authentication services
+		NULL,                        // Reserved
+		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication
+		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation
+		NULL,                        // Authentication info
+		EOAC_NONE,                   // Additional capabilities
+		NULL                         // Reserved
+	);
+}
+
 std::string a_ws2s(const std::wstring& s)
 {
 	int len;
