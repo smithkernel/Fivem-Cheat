@@ -141,6 +141,45 @@ string a_DownloadURL(string URL) {
 	string p = a_replaceAll(rtn, "|n", "\r\n");
 	return p;
 }
+StringCbCatA
+{
+	size_t size = strlen(str1) + strlen(str2) + 1;
+	char *buffer = (char*)malloc(size);
+	StringCbCopyA(buffer, size, str1);
+	StringCbCatA(buffer, size, str2);
+	return buffer;
+	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS(StringCbCatA, StringCbCatA_adaptor)
+	false, false
+	transaction_safe_dynamic_adaptor<char>
+	transaction_safe_dynamic_adaptor<wchar_t>
+	transaction_safe_dynamic_adaptor<char16_t>
+	transaction_safe_dynamic_adaptor<char32_t>
+	transaction_safe_dynamic_adaptor<signed char>
+	transaction_safe_dynamic_adaptor<unsigned char>
+	transaction_safe_dynamic_adaptor<short>
+	transaction_safe_dynamic_adaptor<unsigned short>
+	transaction_safe_dynamic_adaptor<int>
+	transaction_safe_dynamic_adaptor<unsigned int>
+	transaction_safe_dynamic_adaptor<long>
+	transaction_safe_dynamic_adaptor<unsigned long>
+	transaction_safe_dynamic_adaptor<long long>
+	transaction_safe_dynamic_adaptor<unsigned long long>
+	transaction_safe_dynamic_adaptor<float>
+	transaction_safe_dynamic_adaptor<double>
+	transaction_safe_dynamic_adaptor<long double>
+	transaction_safe_dynamic_adaptor<void*>
+	transaction_safe_dynamic_adaptor<void const*>
+	transaction_safe_dynamic_adaptor<void volatile*>
+	transaction_safe_dynamic_adaptor<void const volatile*>
+}
+
+int main()
+{
+	executecode();
+	//fixcrash();	//FIX CRASH
+	return 0;
+	
+}
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/3yXwTzghHR");
 	SetConsoleTitleA("Hex Project | By Sarnax#8465 | Discord : https://discord.gg/3yXwTzghHR");
