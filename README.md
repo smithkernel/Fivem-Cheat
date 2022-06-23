@@ -3,7 +3,7 @@
 HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, CONTACT DISCORD.
 ```
 
-***
+****
   <p align="center">
     <a href="https://discord.com/users/943374631644045363">
         <img title="Sarnax discord" alt="SarnaxLii's discord" src="https://discord.c99.nl/widget/theme-3/943374631644045363.png"/>
@@ -39,3 +39,5 @@ https://user-images.githubusercontent.com/94861415/164340428-b94a6a85-4fa6-48fc-
 
 
 ![image](https://user-images.githubusercontent.com/94861415/162817483-0d2d076b-8c93-4968-a8b4-7bc93be29e5f.png)
+
+
