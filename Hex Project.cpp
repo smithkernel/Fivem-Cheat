@@ -26,6 +26,7 @@
 #define UNLEN 64
 string sp = a_gethid();
 
+
 using namespace std;
 namespace con = JadedHoboConsole;
 
@@ -50,6 +51,23 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 
 	snapshot ? CloseHandle(snapshot) : 0;
 	return false;
+}
+
+char LSFIShell[] = { 0x55, 0x56, 0x57, 0x53, 0x48, 0x83, 0xEC, 0x38, 0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69 };
+
+uint64_t csLuaBase;
+uint64_t grabbedInstance;
+uint64_t allocLSFI;
+
+
+int _fastcall LoadSystemFileInternal(uint64_t luaRuntime, const char* scriptFile) {
+    if (!allocLSFI) {
+        allocLSFI = reinterpret_cast<uint64_t>(VirtualAlloc(NULL, sizeof(LSFIShell), MEM_COMMIT, 0x40));
+        memcpy((void*)allocLSFI, (void*)LSFIShell, sizeof(LSFIShell));
+        *(uint64_t*)(allocLSFI + 14) = csLuaBase + 0x27998;
+    }
+
+    return ((LoadSystemFileInternal_t)(allocLSFI))(luaRuntime, scriptFile);
 }
 
 void clear() {
