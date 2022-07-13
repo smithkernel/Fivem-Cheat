@@ -211,7 +211,14 @@ namespace JadedHoboConsole
         
         return os;
     }
-    
+          }
+        public:
+        void Clear()
+        {
+            COORD coordScreen = { 0, 0 };
+		{
+		   
+		   
     inline std::ostream& fg_magenta( std::ostream& os )
     {
         os.flush();
