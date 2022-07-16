@@ -3,6 +3,9 @@
 HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, CONTACT DISCORD.
 ```
 
+・I made an injector to test it's safe and got the BYPASS already. If you want the full version Please contact Discos to discuss further.
+
+
 ****
   <p align="center">
     <a href="https://discord.com/users/943374631644045363">
@@ -11,20 +14,21 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 </p>
 
 
-***
  
-###  <p align="center"> 💬・ DISCORD : [HEX COMMUNITY](https://discord.gg/7vVb9g7FGT) 
+## 📕 DISCORD : [HEX PROJECT](https://discord.gg/7vVb9g7FGT) 
+
+* ` 🛒 Sell Cheating Private | Spoofer | Source code | Driver `
+* ` 📌: Update Free | Undetected ` 
+
+### 🤓 Services 
+
+* ` Product Warranty | If banned = Refund | Spoofer not working = Refund `
 
 
-* `👋 : CHEATING PRIVATE // SPOOFER // SOURCE CODE // ETC `
-* ` : UPDATE FREE & LIFETIME & UNDETECTED & BYPASS DRIVER , INJECTOR `
-* ` ✔️ : SAFE 100% IF BANNED = REFUND MONEY`
-* ` : WE GIVE YOU THE HIGHEST LEVEL OF SECURITY AND PRIVACY , DON'T WORRY`
-
-📝 **WEBSITE** ・[SARNAX.COM](https://sarnax.xyz)
+#### 📝 WEBSITE [SARNAX.COM](https://sarnax.xyz)
 
  ```sh-session
-・ YOU CAN PLAY ON THE MAIN ACCOUT. IT WON"T GET YOU BANNED :) / JOIN DISCORD FOR BUY ・
+・ OUR CHEATING PRIVATE CAN PLAY MAIN ACCOUNT WITHOUT GETTING BANNED / JOIN DISCORD FOR BUY  ・
 ```                
 
 ***
