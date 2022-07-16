@@ -5,6 +5,7 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 
 ・I made an injector to test it's safe and got the BYPASS already. If you want the full version Please contact Discos to discuss further.
 
+・ Source Shows work to make sure I'm legit and you can trust it. You can contact discord to place an order.
 
 ****
   <p align="center">
