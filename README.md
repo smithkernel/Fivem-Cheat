@@ -5,7 +5,9 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 
 ・I made an injector to test it's safe and got the BYPASS already. If you want the full version Please contact Discos to discuss further.
 
-・ Source Shows work to make sure I'm legit and you can trust it. You can contact discord to place an order.
+・ Source Shows work to make sure I'm legit and you can trust it. 
+
+### ・ Hex Project is a project we have been developing for a long time.
 
 ****
   <p align="center">
@@ -16,23 +18,26 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 
 
  
+ 
 ### 💬 DISCORD ・ [HEX PROJECT](https://discord.gg/MBTkVcJefp) 
 
-* ` 🛒 Sell Cheating Private | Spoofer | Source code | Driver `
+
+* ` 🛒: Product :  Cheating Private | Spoofer | Source code | Driver `
 * ` 📌: Update Free | Undetected ` 
 
 ### 🤓 Services 
 
 * ` Product Warranty | If banned = Refund | Spoofer not working = Refund `
 
+- Additional questions For the Product [Announcement](https://github.com/SarnaxLii/Announcement)
 
 #### 📝 WEBSITE [SARNAX.COM](https://sarnax.xyz)
 
  ```sh-session
-・ OUR CHEATING PRIVATE CAN PLAY MAIN ACCOUNT WITHOUT GETTING BANNED / JOIN DISCORD FOR BUY  ・
+・ OUR CHEATING PRIVATE CAN PLAY MAIN ACCOUNT WITHOUT GETTING BANNED / JOIN DISCORD : Sarnax#7522・ 
 ```                
-
 ***
+
 
 
 https://user-images.githubusercontent.com/94861415/164340428-b94a6a85-4fa6-48fc-aeda-9b38a9814e04.mp4
