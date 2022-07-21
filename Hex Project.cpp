@@ -291,16 +291,28 @@ int main(int argc, const char* argv[]) {
 	cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Menu : " << con::fg_white;
 	string number;
 	cin >> number;
-	if (number == "1") {
-		executecode();
-		cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected ! Key is DELETE" << endl;
-		Sleep(99999999999999);
-	}
-	else {
-		cout << "[" << con::fg_red << "!" << con::fg_white << "] Wrong choice !" << con::fg_white << endl;
-		Sleep(999999999999999);
-	}
 }
+		    }
 
-.
-	
+		    
+		    
+std::string randomstring(std::string::size_type length)
+
+{
+	static auto& chrs = "0123456789"
+		"xaxaxaxaxxaxaxaxxaxaxaxaxxa"
+		"xaxaxaxxaxaxaxaxaxaxaxxaxxa";
+
+	thread_local static std::mt19937 rg{ std::random_device{}() };
+	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
+
+	std::string s;
+
+	s.reserve(length);
+
+	while (length--)
+		s += chrs[pick(rg)];
+
+	return s;
+}
+		    
