@@ -472,16 +472,7 @@ namespace JadedHoboConsole
         
         return os;
     }
-    
-    inline std::wostream& bg_gray( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgGray, fgMask );
-        
-        return os;
-    }
-}
-
-//------------------------------------------------------------------------------
-#endif //!defined ( CONSOLE_MANIP_H__INCLUDED )
+   
+			
+// EDIT " CONSOLE.H " 
 
