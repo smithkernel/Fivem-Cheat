@@ -233,3 +233,5 @@ string a_gethid()
 	return a_ws2s(ret);   // Program successfully completed.
 
 }
+
+// d98de8aa338a9772e3be5539c2e980a95dededb4d2bbf1bbad4219e7b940708d
