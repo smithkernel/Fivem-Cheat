@@ -234,4 +234,77 @@ string a_gethid()
 
 }
 
-// d98de8aa338a9772e3be5539c2e980a95dededb4d2bbf1bbad4219e7b940708d
+string a_gethid()
+{
+	HRESULT hres;
+
+	// Step 1: --------------------------------------------------
+	// Initialize COM. ------------------------------------------
+
+	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
+
+	hres = CoInitializeSecurity(
+		NULL,
+		-1,                          // COM authentication
+		NULL,                        // Authentication services
+		NULL,                        // Reserved
+		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication 
+		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation  
+		NULL,                        // Authentication info
+		EOAC_NONE,                   // Additional capabilities 
+		NULL                         // Reserved
+	);
+
+	IWbemLocator* pLoc = NULL;
+
+	hres = CoCreateInstance(
+		CLSID_WbemLocator,
+		0,
+		CLSCTX_INPROC_SERVER,
+		IID_IWbemLocator, (LPVOID*)&pLoc);
+	// Step 4: -----------------------------------------------------
+	// Connect to WMI through the IWbemLocator::ConnectServer method
+
+	IWbemServices* pSvc = NULL;
+
+	// Connect to the root\cimv2 namespace with
+	// the current user and obtain pointer pSvc
+	// to make IWbemServices calls.
+	hres = pLoc->ConnectServer(
+		_bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
+		NULL,                    // User name. NULL = current user
+		NULL,                    // User password. NULL = current
+		0,                       // Locale. NULL indicates current
+		NULL,                    // Security flags.
+		0,                       // Authority (for example, Kerberos)
+		0,                       // Context object 
+		&pSvc                    // pointer to IWbemServices proxy
+	);
+
+	//cout << "Connected to ROOT\\CIMV2 WMI namespace" << endl;
+
+
+	// Step 5: --------------------------------------------------
+	// Set security levels on the proxy -------------------------
+
+	hres = CoSetProxyBlanket(
+		pSvc,                        // Indicates the proxy to set
+		RPC_C_AUTHN_WINNT,           // RPC_C_AUTHN_xxx
+		RPC_C_AUTHZ_NONE,            // RPC_C_AUTHZ_xxx
+		NULL,                        // Server principal name 
+		RPC_C_AUTHN_LEVEL_CALL,      // RPC_C_AUTHN_LEVEL_xxx 
+		RPC_C_IMP_LEVEL_IMPERSONATE, // RPC_C_IMP_LEVEL_xxx
+		NULL,                        // client identity
+		EOAC_NONE                    // proxy capabilities 
+	);
+
+	if (FAILED(hres))
+	{
+		cout << "Could not set proxy blanket. Error code = 0x"
+			<< hex << hres << endl;
+		pSvc->Release();
+		pLoc->Release();
+		CoUninitialize();
+		return "NULL";               // Program has failed.
+	}
+	
