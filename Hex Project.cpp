@@ -181,17 +181,6 @@ void executecode()
 }
 
 
-/*void fixcrash()
-{
-	std::string path = getenv("LOCALAPPDATA");
-	string deletes = "del " + path + "\\FiveM\\FiveM.app\\citizen\\scripting\\lua\\scheduler.lua";
-	system(deletes.c_str());
-	string location = path + "\\FiveM\\FiveM.app\\citizen\\scripting\\lua\\scheduler.lua";
-	string url = "https://sencured/";
-	HRESULT hr = URLDownloadToFile(NULL, (url).c_str(), (location).c_str(), 0, NULL);
-}*/
-
-}
 
 string a_DownloadURL(string URL) {
 	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
@@ -217,37 +206,7 @@ string a_DownloadURL(string URL) {
 	string p = a_replaceAll(rtn, "|n", "\r\n");
 	return p;
 }
-StringCbCatA
-{
-	size_t size = strlen(str1) + strlen(str2) + 1;
-	char *buffer = (char*)malloc(size);
-	StringCbCopyA(buffer, size, str1);
-	StringCbCatA(buffer, size, str2);
-	return buffer;
-	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS(StringCbCatA, StringCbCatA_adaptor)
-	false, false
-	transaction_safe_dynamic_adaptor<char>
-	transaction_safe_dynamic_adaptor<wchar_t>
-	transaction_safe_dynamic_adaptor<char16_t>
-	transaction_safe_dynamic_adaptor<char32_t>
-	transaction_safe_dynamic_adaptor<signed char>
-	transaction_safe_dynamic_adaptor<unsigned char>
-	transaction_safe_dynamic_adaptor<short>
-	transaction_safe_dynamic_adaptor<unsigned short>
-	transaction_safe_dynamic_adaptor<int>
-	transaction_safe_dynamic_adaptor<unsigned int>
-	transaction_safe_dynamic_adaptor<long>
-	transaction_safe_dynamic_adaptor<unsigned long>
-	transaction_safe_dynamic_adaptor<long long>
-	transaction_safe_dynamic_adaptor<unsigned long long>
-	transaction_safe_dynamic_adaptor<float>
-	transaction_safe_dynamic_adaptor<double>
-	transaction_safe_dynamic_adaptor<long double>
-	transaction_safe_dynamic_adaptor<void*>
-	transaction_safe_dynamic_adaptor<void const*>
-	transaction_safe_dynamic_adaptor<void volatile*>
-	transaction_safe_dynamic_adaptor<void const volatile*>
-}
+
 
 int main()
 {
@@ -267,12 +226,12 @@ int main(int argc, const char* argv[]) {
 	}
 	else {
 		std::cout << con::fg_white << "[" << con::fg_red << "-" << con::fg_white << "] Your fivem not install in AppData\\Local\\FiveM\\FiveM.app\\ ! Reinstall fivem and try again !" << con::fg_white << " !";
-		Sleep(999999999999999);
+		Sleep(0.34);
 	}
 	PROCESSENTRY32 pe = { sizeof(PROCESSENTRY32) };
 	if (GetProcessEntryByName("FiveM_GTAProcess.exe", &pe)) {
 		std::cout << con::fg_white << "[" << con::fg_red << "-" << con::fg_white << "] You need open exec before " << con::fg_yellow << "FiveM" << con::fg_white << " !";
-		Sleep(999999999999999999);
+		Sleep(0.1);
 	}
 	cout << "[" << con::fg_red << "+" << con::fg_white <<  "] Waiting for " << con::fg_green << "FiveM_GTAProcess.exe" << con::fg_white << " ..." << endl;
 	for (; !GetProcessEntryByName("FiveM_GTAProcess.exe", &pe); Sleep(100));
@@ -299,9 +258,7 @@ int main(int argc, const char* argv[]) {
 std::string randomstring(std::string::size_type length)
 
 {
-	static auto& chrs = "0123456789"
-		"xaxaxaxaxxaxaxaxxaxaxaxaxxa"
-		"xaxaxaxxaxaxaxaxaxaxaxxaxxa";
+	static auto& chrs = "Fivem.exe"
 
 	thread_local static std::mt19937 rg{ std::random_device{}() };
 	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
@@ -316,3 +273,46 @@ std::string randomstring(std::string::size_type length)
 	return s;
 }
 		    
+
+		    
+		    int f = 0;
+
+void ERRORLOG(std::string message) {
+	std::cout << message << std::endl;
+	system(_xor_("pause").c_str());
+	exit(0);
+}
+
+template< typename ... Args >
+std::string stringer(Args const& ... args)
+{
+	std::ostringstream stream;
+	using List = int[];
+	(void)List {
+		0, ((void)(stream << args), 0) ...
+	};
+	return stream.str();
+}
+
+bool Client::setupEncryption() {
+	std::string SetupKey = sendrecieve(ENC_KEY + _xor_(";") + IV);
+	std::string serverCipher = SetupKey.substr(0, SetupKey.find(_xor_(";"))).data();
+	std::string serverIv = SetupKey.substr(SetupKey.find(_xor_(";")) + 1).data();
+
+	if (ENC_KEY == serverCipher) {
+		if (IV == serverIv) {
+			// Client-Server authentication success
+			std::string ServerVersion = sendrecieve(VERSION);
+			// Check version control:
+			if (VERSION == ServerVersion) {
+				std::string successGetUsername = _xor_("SUCCESS_GET_USERNAME");
+				std::string getUsername = sendrecieve(stringer(_xor_("SPOOFER_GET_USERNAME;"), getHWinfo64()));
+				if (getUsername.size() == successGetUsername.size()) return true;
+				else ERRORLOG(_xor_("ERROR 3131"));
+			}
+			else ERRORLOG(_xor_("ERROR 103"));
+		}
+		else ERRORLOG(_xor_("ERROR 102"));
+	}
+	else ERRORLOG(_xor_("ERROR 101"));
+}
