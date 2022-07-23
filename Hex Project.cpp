@@ -24,6 +24,7 @@
 #pragma comment(lib, "urlmon.lib")
 #define UNLEN 64
 #define UNLEN 64
+
 string sp = a_gethid();
 
 
@@ -96,8 +97,7 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
 }
 
 
-
-char LSFIShell[] = { 0x55, 0x56, 0x57, 0x53, 0x48, 0x83, 0xEC, 0x38, 0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69, 0x69 };
+void namespace std;
 
 uint64_t csLuaBase;
 uint64_t grabbedInstance;
