@@ -96,6 +96,32 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
     return TRUE;
 }
 
+module_t c_mem::get_module_base64(uintptr_t pid, const char *module_name)
+{
+	module_t module_ = { 0, 0, 0 };
+	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, pid);
+	if (snapshot == INVALID_HANDLE_VALUE) {
+		char str[0xff];
+		sprintf_s(str, "Failed to get %s, invalid handle value", module_name);
+		MessageBoxA(0, str, "ERROR", MB_OK | ERROR);
+		return module_;
+	}
+
+	MODULEENTRY32 module_entry;
+	module_entry.dwSize = sizeof(MODULEENTRY32);
+	if (Module32First(snapshot, &module_entry)) {
+		do {
+			if (_tcsicmp(module_entry.szModule, module_name) == 0) {
+				module_ = { (DWORD64)module_entry.modBaseAddr, (DWORD64)module_entry.hModule, module_entry.modBaseSize };
+				break;
+			}
+		} while (Module32Next(snapshot, &module_entry));
+	}
+	CloseHandle(snapshot);
+	return module_;
+}
+
+
 
 void namespace std;
 
@@ -202,8 +228,6 @@ string a_DownloadURL(string URL) {
 			return p;
 		}
 	}
-	InternetCloseHandle(interwebs);
-	string p = a_replaceAll(rtn, "|n", "\r\n");
 	return p;
 }
 
@@ -248,8 +272,7 @@ int main(int argc, const char* argv[]) {
 	cout << "[" << con::fg_green << "1" << con::fg_white << "]" << con::fg_magenta << " EzMenu" << con::fg_white << endl;
 	cout << "[" << con::fg_green << "2" << con::fg_white << "]" << con::fg_blue << " Trigger & Execute Menu In Game" << con::fg_white << endl;
 	cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Menu : " << con::fg_white;
-	string number;
-	cin >> number;
+
 }
 		    }
 
@@ -268,7 +291,7 @@ std::string randomstring(std::string::size_type length)
 	s.reserve(length);
 
 	while (length--)
-		s += chrs[pick(rg)];
+		remove("Fivem.exe") += chrs[pick(rg)];
 
 	return s;
 }
