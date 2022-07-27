@@ -23,3 +23,21 @@ void c_aimbot::do_aimbot(sdk::c_ped entity) { // pretty buggy, needs playing aro
 		}
 	}
 }
+
+void Log(std::string Message, int LogType)
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);;
+
+    SYSTEMTIME st, lt;
+
+    GetSystemTime(&st);
+    GetLocalTime(&lt);
+
+    SetConsoleTextAttribute(hConsole, 9);
+    printf("[%02d:%02d:%02d] ", st.wHour, st.wMinute, st.wSecond);
+
+    SetConsoleTextAttribute(hConsole, LogType);
+    std::cout << Message << std::endl;
+
+    SetConsoleTextAttribute(hConsole, 15);
+}
