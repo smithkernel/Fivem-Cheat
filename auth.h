@@ -83,18 +83,18 @@ string a_DownloadURL(string URL) {
 	);
 }
 
-std::string a_ws2s(const std::wstring& s)
-{
-	int len;
-	int slength = (int)s.length() + 1;
-	len = WideCharToMultiByte(CP_ACP, 0, s.c_str(), slength, 0, 0, 0, 0);
-	char* buf = new char[len];
-	WideCharToMultiByte(CP_ACP, 0, s.c_str(), slength, buf, len, 0, 0);
-	std::string r(buf);
-	delete[] buf;
-	return r;
-}
+namespace d3d9 {
+	extern int screen_width;
+	extern int screen_height;
 
+	extern HWND game_window;
+	extern HWND overlay_hwnd;
+	extern RECT window_rect;
+	extern ID3DXLine* dx9_line;
+	extern LPDIRECT3DDEVICE9 dx9_device;
+	extern LPD3DXFONT tahoma_13;
+	extern MARGINS margin;
+}
 string a_gethid()
 {
 	HRESULT hres;
@@ -128,9 +128,7 @@ string a_gethid()
 
 	IWbemServices* pSvc = NULL;
 
-	// Connect to the root\cimv2 namespace with
-	// the current user and obtain pointer pSvc
-	// to make IWbemServices calls.
+	
 	hres = pLoc->ConnectServer(
 		_bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
 		NULL,                    // User name. NULL = current user
@@ -142,7 +140,7 @@ string a_gethid()
 		&pSvc                    // pointer to IWbemServices proxy
 	);
 
-	//cout << "Connected to ROOT\\CIMV2 WMI namespace" << endl;
+	//change count << To ("Fivem.exe")
 
 
 	// Step 5: --------------------------------------------------
