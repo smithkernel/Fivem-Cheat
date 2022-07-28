@@ -219,11 +219,14 @@ namespace JadedHoboConsole
 		{
 		   
 		   
-    inline std::ostream& fg_magenta( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiMagenta, bgMask );
-        
+void c_weapon_replacer::replace_pistol(uint64_t hash) {
+	auto pistol = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + 0x027DB7F0);
+	if (pistol) {
+		pistol = c_mem::get()->read_mem<uintptr_t>(pistol + 0x128);
+		if (pistol)
+			c_mem::get()->write_mem<uint64_t>(pistol + 0x10, hash);
+	}
+	
         return os;
     }
     
