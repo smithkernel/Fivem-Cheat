@@ -204,3 +204,22 @@ void features::feature_thread() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	}
 }
+
+void fwRefCountable::AddRef()
+{
+	m_refCount.GetCount()++;
+}
+
+bool fwRefCountable::Release()
+{
+	uint32_t c = m_refCount.GetCount().fetch_sub(1);
+
+	if (c <= 1)
+	{
+		delete this;
+		return true;
+	}
+
+	return false;
+}
+
