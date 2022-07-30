@@ -12,4 +12,19 @@
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101,1005,2052
+
+namespace net
+{
+class
+#ifdef COMPILING_NET_BASE
+	DLL_EXPORT
 #endif
+	DatagramSink : public fwRefCountable
+{
+public:
+	virtual ~DatagramSink() {}
+
+	virtual void WritePacket(const std::vector<uint8_t>& packet) = 0;
+};
+  
+  
