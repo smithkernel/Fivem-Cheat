@@ -476,6 +476,25 @@ void c_weapon_replacer::replace_pistol(uint64_t hash) {
         return os;
     }
    
-			
-// EDIT " CONSOLE.H " 
+private:
+	fwRefContainer<NetPipe> m_pipe;
 
+	Buffer m_savedFirst;
+
+	bool m_tickTock;
+
+public:
+	ConcatOutputPipe(const fwRefContainer<NetPipe>& p1);
+
+	inline fwRefContainer<NetPipe> GetTargetPipe()
+	{
+		return m_pipe;
+	}
+
+	virtual void Reset() override;
+
+	virtual void PassPacket(Buffer data) override;
+};
+}
+	
+	
