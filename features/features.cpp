@@ -19,6 +19,25 @@ void features::vehicle_features(sdk::c_ped local_ped) {
 				}
 			}
 		}
+		
+		fwRefContainer<Stream> Manager::OpenRead(const std::string& path)
+{
+	auto device = GetDevice(path);
+
+	if (device.GetRef())
+	{
+		auto handle = device->Open(path, true);
+
+		if (handle != INVALID_DEVICE_HANDLE)
+		{
+			return new Stream(device, handle);
+		}
+	}
+
+	return nullptr;
+}
+		
+		
 
 		if (vars::vehicle_mods::vehicle_godmode) {
 			c_mem::get()->write_mem<byte>(cur_vehicle + 0x189, 1); //godmode_byte
