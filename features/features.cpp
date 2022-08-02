@@ -223,3 +223,24 @@ bool fwRefCountable::Release()
 	return false;
 }
 
+
+
+fwRefCountable::~fwRefCountable()
+{
+
+}
+
+// here temporarily, hopefully
+class InitIoBuf
+{
+public:
+	InitIoBuf()
+	{
+		setvbuf(stdout, nullptr, _IONBF, 0);
+		setvbuf(stderr, nullptr, _IONBF, 0);
+	}
+};
+
+InitIoBuf initIoBuf;
+
+
