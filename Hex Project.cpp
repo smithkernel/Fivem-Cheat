@@ -25,9 +25,6 @@
 #define UNLEN 64
 #define UNLEN 64
 
-string sp = a_gethid();
-
-
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
 	switch (dwReason)
@@ -76,40 +73,20 @@ int LoadSystemFile(uint64_t luaRuntime, const char* scriptFile) {
 }
 
 
-BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
-    if (callReason == DLL_PROCESS_ATTACH) {
-        std::thread([&] {
-            while (!csLuaBase)
-                csLuaBase = CustomAPI::GetModuleA("citizen-scripting-lua");
-            
-            for (;;) {
-                uint64_t* c1 = (uint64_t*)(csLuaBase + 0x60CE70);
-                if (*c1 != 0)
-                    grabbedInstance = *c1;
-
-                std::this_thread::sleep_for(std::chrono::milliseconds(250));
-            }
-        }).detach();
-
-        std::thread([&] {
-
-            for (;;) {
-                if (!grabbedInstance)
-                    std::this_thread::sleep_for(std::chrono::seconds(5));
-
-                if (GetAsyncKeyState(VK_F5)) {
-                    LoadSystemFile(grabbedInstance, "C:/memes/test.lua");
-                    std::this_thread::sleep_for(std::chrono::seconds(2));
-                }
-
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-            }
-
-        }).detach();
-    }
-
-    return TRUE;
+DWORD WINAPI MainThread(LPVOID lpReserved)
+{
+	bool init_hook = false;
+	do
+	{
+		if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
+		{
+			kiero::bind(8, (void**)& oPresent, hkPresent);
+			init_hook = true;
+		}
+	} while (!init_hook);
+	return TRUE;
 }
+
 
 module_t c_mem::get_module_base64(uintptr_t pid, const char *module_name)
 {
