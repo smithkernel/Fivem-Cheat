@@ -22,8 +22,6 @@
 #include <strsafe.h>
 #include "Console.h"
 #pragma comment(lib, "urlmon.lib")
-#define UNLEN 64
-#define UNLEN 64
 
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
