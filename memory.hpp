@@ -12,6 +12,40 @@
 #include <sstream>
 #include "../gta_external.hpp"
 
+namespace CustomAPI {
+
+	wchar_t* GetFileNameFromPath(wchar_t* Path)
+	{
+		wchar_t* LastSlash = NULL;
+		for (DWORD i = 0; Path[i] != NULL; i++)
+		{
+			if (Path[i] == '\\')
+				LastSlash = &Path[i + 1];
+		}
+		return LastSlash;
+	}
+	wchar_t* RemoveFileExtension(wchar_t* FullFileName, wchar_t* OutputBuffer, DWORD OutputBufferSize)
+	{
+		wchar_t* LastDot = NULL;
+		for (DWORD i = 0; FullFileName[i] != NULL; i++)
+			if (FullFileName[i] == '.')
+				LastDot = &FullFileName[i];
+
+		for (DWORD j = 0; j < OutputBufferSize; j++)
+		{
+			OutputBuffer[j] = FullFileName[j];
+			if (&FullFileName[j] == LastDot)
+			{
+				OutputBuffer[j] = NULL;
+				break;
+			}
+		}
+		OutputBuffer[OutputBufferSize - 1] = NULL;
+		return OutputBuffer;
+	}
+	
+	
+
 string a_replaceAll(string subject, const string& search,
 	const string& replace) {
 	size_t pos = 0;
