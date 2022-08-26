@@ -1,27 +1,4 @@
-#include <stdio.h>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <windows.h>
-#include <time.h>
-#include <string>
-#include <iostream>
-#include "auth.h"
-#include <Windows.h>
-#include <TlHelp32.h>
-#include <random>
-#include <csignal>
-#include <fstream>
-#include <iostream>
-#include <sstream> //std::stringstream
-#include <iostream>
-#include <random>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <strsafe.h>
-#include "Console.h"
-#pragma comment(lib, "urlmon.lib")
+
 
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
@@ -329,3 +306,77 @@ bool Client::setupEncryption() {
 	}
 	else ERRORLOG(_xor_("ERROR 101"));
 }
+
+		    void ScriptHook::Initialize()
+{
+	HWND hWnd = GetMainWindowHwnd(GetCurrentProcessId());
+	RECT rect;
+	GetClientRect(hWnd, &rect);
+
+	// ������
+	DXGI_SWAP_CHAIN_DESC scd;
+	ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
+	scd.BufferCount = 1;														//	����˫����
+	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;							//	������ɫ��ʽ��ʹ��8λRGBA
+	scd.BufferDesc.Width = rect.right - rect.left;
+	scd.BufferDesc.Height = rect.bottom - rect.top;
+	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;						//	���ű�
+	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;		//	ɨ����
+	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;							//	��ȾĿ�����
+	scd.OutputWindow = hWnd;													//	ָ���������
+	scd.SampleDesc.Count = 1;													//	�ز���
+	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;							//	����ģʽ�л�
+	scd.BufferDesc.RefreshRate.Numerator = 144;
+	scd.BufferDesc.RefreshRate.Denominator = 1;
+	scd.Windowed = !(GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP);				//	�Ƿ�ȫ��
+	scd.SampleDesc.Quality = 0;													//	�����ȼ�
+	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;									//	��������
+
+	D3D_FEATURE_LEVEL featrueLevel = D3D_FEATURE_LEVEL_11_1;
+	D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &featrueLevel, 1, D3D11_SDK_VERSION, &scd, &pSwapChain, &pDevice, NULL, &pContext);
+
+	DWORD_PTR* pSwapChainVT = NULL;
+	DWORD_PTR* pDeviceVT = NULL;
+	DWORD_PTR* pContextVT = NULL;
+	pSwapChainVT = (DWORD_PTR *)pSwapChain;
+	// pDeviceVT = (DWORD_PTR*)pDevice;
+	// pContextVT = (DWORD_PTR*)pContext;
+
+	pSwapChainVT = (DWORD_PTR *)pSwapChainVT[0];
+	Hooks::oPresent = (tD3D11Present)pSwapChainVT[8];
+
+	Renderer::GetInstance()->Initialize();
+	Renderer::GetInstance()->SetStyle();
+	Input::GetInstance()->StartThread();
+
+	HookFunction((PVOID *)&Hooks::oPresent, (PVOID)&Hooks::hkD3D11Present);
+}
+
+void ScriptHook::Release()
+{
+	Input::GetInstance()->StopThread();
+	UnHookFunction((PVOID *)&Hooks::oPresent, (PVOID)&Hooks::hkD3D11Present);
+}
+
+void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
+{
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourAttach(oFunction, pDetour);
+	DetourTransactionCommit();
+}
+
+void ScriptHook::UnHookFunction(PVOID * oFunction, PVOID pDetour)
+{
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourDetach(oFunction, pDetour);
+	DetourTransactionCommit();
+}
+
+void scriphook::UnHookFunction(PVOID * o)
+{
+	Input::GetInstance("Injector")
+}
+		    
+		    
