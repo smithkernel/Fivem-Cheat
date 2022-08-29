@@ -30,7 +30,7 @@ HEX PROJECT / SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, C
 * ` Product Warranty | If banned = Refund | Spoofer not working = Refund `
 
 - Additional questions For the Product [Announcement](https://github.com/SarnaxLii/Announcement)
-
+ 
 #### 📝 WEBSITE [SARNAX.COM](https://sarnax.xyz)
 
  ```sh-session
