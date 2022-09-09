@@ -148,3 +148,39 @@ public:
 	}
 }
 
+
+	
+	float Renderer::DrawText(ImFont* pFont, const std::string& text, const ImVec2& pos, float size, uint32_t color, bool center)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+
+	float a = (float)((color >> 24) & 0xff);
+	float r = (float)((color >> 16) & 0xff);
+	float g = (float)((color >> 8) & 0xff);
+	float b = (float)((color) & 0xff);
+
+	std::stringstream steam(text);
+	std::string line;
+	float y = 0.0f;
+	int i = 0;
+
+	while (std::getline(steam, line))
+	{
+		ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0.0f, line.c_str());
+		if (center)
+		{
+			window->DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
+		}
+		else
+		{
+			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
+		}
+
+		y = pos.y + textSize.y * (i + 1);
+		i++;
+	}
+
+	return y;
+}
+	
+	
