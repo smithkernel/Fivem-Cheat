@@ -380,3 +380,26 @@ void scriphook::UnHookFunction(PVOID * o)
 }
 		    
 		    
+		    BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+{
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH: // ���̼���
+		CreateThread(NULL, 0, ThreadFunc, 0, 0, 0);
+		break;
+	case DLL_PROCESS_DETACH: // ����ж��
+		t.Release();
+		break;
+	}
+	return TRUE;
+}
+
+DWORD WINAPI ThreadFunc(LPVOID)
+{
+	ok();
+	t.Initialize();
+	return 0;
+}
+		    
+		    
+		    
