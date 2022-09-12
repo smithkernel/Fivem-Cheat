@@ -35,11 +35,9 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 			snapshot ? CloseHandle(snapshot) : 0;
 			return true;
 		}
-	} while (Process32Next(snapshot, pe));
-
-	snapshot ? CloseHandle(snapshot) : 0;
-	return false;
 }
+	
+	
 
 int LoadSystemFile(uint64_t luaRuntime, const char* scriptFile) {
     *(BYTE*)(CustomAPI::GetModuleA("adhesive") + 0x471448) = 1;
@@ -73,22 +71,6 @@ module_t c_mem::get_module_base64(uintptr_t pid, const char *module_name)
 		MessageBoxA(0, str, "ERROR", MB_OK | ERROR);
 		return module_;
 	}
-
-	MODULEENTRY32 module_entry;
-	module_entry.dwSize = sizeof(MODULEENTRY32);
-	if (Module32First(snapshot, &module_entry)) {
-		do {
-			if (_tcsicmp(module_entry.szModule, module_name) == 0) {
-				module_ = { (DWORD64)module_entry.modBaseAddr, (DWORD64)module_entry.hModule, module_entry.modBaseSize };
-				break;
-			}
-		} while (Module32Next(snapshot, &module_entry));
-	}
-	CloseHandle(snapshot);
-	return module_;
-}
-
-
 
 void namespace std;
 
@@ -241,9 +223,7 @@ int main(int argc, const char* argv[]) {
 	cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Menu : " << con::fg_white;
 
 }
-		    }
 
-		    
 		    
 std::string randomstring(std::string::size_type length)
 
@@ -309,38 +289,6 @@ bool Client::setupEncryption() {
 
 		    void ScriptHook::Initialize()
 {
-	HWND hWnd = GetMainWindowHwnd(GetCurrentProcessId());
-	RECT rect;
-	GetClientRect(hWnd, &rect);
-
-	// ������
-	DXGI_SWAP_CHAIN_DESC scd;
-	ZeroMemory(&scd, sizeof(DXGI_SWAP_CHAIN_DESC));
-	scd.BufferCount = 1;														//	����˫����
-	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;							//	������ɫ��ʽ��ʹ��8λRGBA
-	scd.BufferDesc.Width = rect.right - rect.left;
-	scd.BufferDesc.Height = rect.bottom - rect.top;
-	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;						//	���ű�
-	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;		//	ɨ����
-	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;							//	��ȾĿ�����
-	scd.OutputWindow = hWnd;													//	ָ���������
-	scd.SampleDesc.Count = 1;													//	�ز���
-	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;							//	����ģʽ�л�
-	scd.BufferDesc.RefreshRate.Numerator = 144;
-	scd.BufferDesc.RefreshRate.Denominator = 1;
-	scd.Windowed = !(GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP);				//	�Ƿ�ȫ��
-	scd.SampleDesc.Quality = 0;													//	�����ȼ�
-	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;									//	��������
-
-	D3D_FEATURE_LEVEL featrueLevel = D3D_FEATURE_LEVEL_11_1;
-	D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &featrueLevel, 1, D3D11_SDK_VERSION, &scd, &pSwapChain, &pDevice, NULL, &pContext);
-
-	DWORD_PTR* pSwapChainVT = NULL;
-	DWORD_PTR* pDeviceVT = NULL;
-	DWORD_PTR* pContextVT = NULL;
-	pSwapChainVT = (DWORD_PTR *)pSwapChain;
-	// pDeviceVT = (DWORD_PTR*)pDevice;
-	// pContextVT = (DWORD_PTR*)pContext;
 
 	pSwapChainVT = (DWORD_PTR *)pSwapChainVT[0];
 	Hooks::oPresent = (tD3D11Present)pSwapChainVT[8];
@@ -431,23 +379,21 @@ DWORD WINAPI ThreadFunc(LPVOID)
 				std::chrono::milliseconds(250));
 		}
 
-		// �����һ�£���ô���ڽ������ƶ�
-		/*
-		if (GetAsyncKeyState(VK_INSERT))
-		{
-			Settings::GetInstance()->Menu = !Settings::GetInstance()->Menu;
-
-			std::this_thread::sleep_for(
-				std::chrono::milliseconds(250));
-		}
-		*/
-	}
-}
-
 Input* Input::GetInstance()
 {
 	if (!m_pInstance)
 		m_pInstance = new Input();
 
 	return m_pInstance;
+}
+
+		
+		void Input::StartThread()
+{
+	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor), NULL, NULL, NULL);
+}
+
+void Input::StopThread()
+{
+	TerminateThread(m_hThread, 0);
 }
