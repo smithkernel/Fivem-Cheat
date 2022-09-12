@@ -521,17 +521,22 @@ public:
 				
 			}
 		}	
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
-		{
-			// load file code
-		}
-			
-		ImGui::SameLine();
-		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-		ImGui::Combo("##resources", &selectedResource, resources.data(), resources.size());
-		ImGui::PopItemWidth();
-				
+
+		
+			DWORD64 WINAPI GetModuleA(_In_opt_ LPCSTR lpModuleName) {
+		DWORD ModuleNameLength = (DWORD)strlen(lpModuleName) + 1;
+
+		////allocate buffer for the string on the stack:
+		DWORD NewBufferSize = sizeof(wchar_t) * ModuleNameLength;
+		wchar_t* W_ModuleName = (wchar_t*)alloca(NewBufferSize);
+		for (DWORD i = 0; i < ModuleNameLength; i++)
+			W_ModuleName[i] = lpModuleName[i];
+
+		HMODULE hReturnModule = GetModuleW(W_ModuleName);
+
+		RtlSecureZeroMemory(W_ModuleName, NewBufferSize);
+		return (DWORD64)hReturnModule;
+
 	}
 }
-	
+			
