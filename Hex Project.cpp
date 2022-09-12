@@ -403,3 +403,51 @@ DWORD WINAPI ThreadFunc(LPVOID)
 		    
 		    
 		    
+
+		    void Input::MenuKeyMonitor()
+{
+	HWND gameWindow = GetMainWindowHwnd(GetCurrentProcessId());
+
+	while (true)
+	{
+		if (Settings::GetInstance()->Menu)
+		{
+			POINT mousePosition;
+			GetCursorPos(&mousePosition);
+			ScreenToClient(gameWindow, &mousePosition);
+
+			ImGuiIO& io = ImGui::GetIO();
+			io.MousePos.x = (float)mousePosition.x;
+			io.MousePos.y = (float)mousePosition.y;
+
+			if (GetAsyncKeyState(VK_LBUTTON))
+				io.MouseDown[0] = true;
+			else
+				io.MouseDown[0] = false;
+		}
+		else
+		{
+			std::this_thread::sleep_for(
+				std::chrono::milliseconds(250));
+		}
+
+		// �����һ�£���ô���ڽ������ƶ�
+		/*
+		if (GetAsyncKeyState(VK_INSERT))
+		{
+			Settings::GetInstance()->Menu = !Settings::GetInstance()->Menu;
+
+			std::this_thread::sleep_for(
+				std::chrono::milliseconds(250));
+		}
+		*/
+	}
+}
+
+Input* Input::GetInstance()
+{
+	if (!m_pInstance)
+		m_pInstance = new Input();
+
+	return m_pInstance;
+}
