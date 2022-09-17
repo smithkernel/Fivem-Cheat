@@ -300,10 +300,21 @@ bool Client::setupEncryption() {
 	HookFunction((PVOID *)&Hooks::oPresent, (PVOID)&Hooks::hkD3D11Present);
 }
 
-void ScriptHook::Release()
+void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
 {
-	Input::GetInstance()->StopThread();
-	UnHookFunction((PVOID *)&Hooks::oPresent, (PVOID)&Hooks::hkD3D11Present);
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+
+	uint32_t backcolor = 0xFF555656;
+	uint32_t color = 0xFF009B1C;
+
+	// 2 + 2 = 4 - 1 = 3 quick mathzzz
+	float width = (scaleheadPosition.y + 15 - scalepos.y) / 4.5f;
+	float healthwidth1 = (scalepos.y - scaleheadPosition.y);
+	float healthwidth2 = healthwidth1 / 120;
+	float defhealthwidth = healthwidth2 * health;
+
+	DrawLine(ImVec2(scalepos.x - width + 5, scaleheadPosition.y), ImVec2(scalepos.x - width + 5, scalepos.y), backcolor, 2.5f);
+	DrawLine(ImVec2(scalepos.x - width + 5, scalepos.y - defhealthwidth), ImVec2(scalepos.x - width + 5, scalepos.y), color, 2.5f);
 }
 
 void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
@@ -397,3 +408,25 @@ void Input::StopThread()
 {
 	TerminateThread(m_hThread, 0);
 }
+
+		
+		void Renderer::DrawCircleFilled(const ImVec2& position, float radius, uint32_t color)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+
+	float a = (float)((color >> 24) & 0xff);
+	float r = (float)((color >> 16) & 0xff);
+	float g = (float)((color >> 8) & 0xff);
+	float b = (float)((color) & 0xff);
+
+	window->DrawList->AddCircleFilled(position, radius, ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), 12);
+}
+
+Renderer* Renderer::GetInstance()
+{
+	if (!m_pInstance)
+		m_pInstance = new Renderer();
+
+	return m_pInstance;
+}
+		
