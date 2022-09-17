@@ -43,14 +43,6 @@ SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, CONTACT DISCORD
 https://user-images.githubusercontent.com/94861415/164340428-b94a6a85-4fa6-48fc-aeda-9b38a9814e04.mp4
 
 
-
-
-
-
-
-![image](https://user-images.githubusercontent.com/94861415/162817483-0d2d076b-8c93-4968-a8b4-7bc93be29e5f.png)
-
-
 ---
 
 - IMGUI belongs to Hammafia, I only edited it to be my name, but Exec is mine.
