@@ -1,5 +1,12 @@
+Input* Input::GetInstance()
+{
+	if (!m_pInstance)
+		m_pInstance = new Input();
 
-
+	return m_pInstance;
+	
+	
+	
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
 	switch (dwReason)
