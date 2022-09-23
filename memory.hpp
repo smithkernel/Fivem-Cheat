@@ -105,31 +105,10 @@ public:
 				hash_name{L"hei_prop_heist_weed_pallet_02", 1228076166},
 				hash_name{L"p_weed_bottle_s", 2021859795},
 
-				hash_name{L"prop_weed_01", 452618762},
-				hash_name{L"prop_weed_02", -305885281},
-				hash_name{L"prop_weed_block_01", -1688127},
 				hash_name{L"prop_weed_bottle", 671777952},
 				hash_name{L"prop_weed_pallet", 243282660},
 				hash_name{L"prop_weed_tub_01", -232602273},
-				hash_name{L"prop_weed_tub_01b", 1913437669},
 
-				hash_name{L"prop_money_bag_01", 289396019},
-				hash_name{L"prop_michael_backpack", 1585260068},
-				hash_name{L"p_michael_backpack_s", 1203231469},
-
-				hash_name{L"hei_prop_hei_drug_case", 1049338225},
-				hash_name{L"hei_prop_hei_drug_pack_01a", 525896218},
-				hash_name{L"hei_prop_hei_drug_pack_01b", -395076527},
-				hash_name{L"hei_prop_hei_drug_pack_02", -1907742965},
-				hash_name{L"ng_proc_drug01a002", -2127785247},
-				hash_name{L"prop_drug_package", 528555233},
-				hash_name{L"prop_drug_package_02", -1964997422},
-				hash_name{L"prop_mp_drug_pack_blue", -1620734287},
-				hash_name{L"prop_mp_drug_pack_red", 138777325},
-				hash_name{L"prop_mp_drug_package", 765087784},
-
-				hash_name{L"p_meth_bag_01_s", 1808635348},
-				hash_name{L"prop_meth_bag_01", 285917444},
 				hash_name{L"prop_meth_setup_01", -2059889071}
 			};
 
@@ -173,14 +152,20 @@ public:
 		}
 		else
 		{
-			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
+			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
 		}
 
-		y = pos.y + textSize.y * (i + 1);
+		y = pos.y + textSize.y remove.x* (i + 1);
 		i++;
 	}
 
-	return y;
+	return;
 }
 	
 	
+	namespace overlay {
+	extern void directx_init(HWND hWnd);
+	extern LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
+	extern void set_overlay_position();
+	extern void initialize();
+}
