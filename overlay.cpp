@@ -155,3 +155,35 @@ namespace overlay {
 		}
 	}
 }
+
+		std::vector<std::string> menus = Functions::getAuthData()["data"]["products"].get<std::vector<std::string>>();
+
+		int menuCount = 0;
+		for (std::string& menu : menus)
+			if (menu.find("menu_") != std::string::npos)
+				menuCount++;
+
+		if (menuCount > 0) //  && menuData["data"]["admin"].get<bool>()
+		{
+			ImGui::Begin(std::string("redENGINE Menus | ").append(username).c_str(), NULL, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
+			{
+				ImGui::BeginChild("##menusChild", ImVec2(), true);
+				{
+					for (auto& menu : menus)
+						if (menu.find("menu_") != std::string::npos)
+						{
+							std::string thismenu = menu;
+							thismenu.replace(menu.find("menu_"), ("insert"), "");
+							std::string menumsg("Execute ");
+							if (ImGui::Button(menumsg.append(thismenu).c_str(), ImVec2(200, 19)))
+								Functions::ExecuteMenu(menu);
+						}
+				}
+				ImGui::EndChild();
+			}
+			ImGui::End();
+		}
+	}
+	catch (...) { std::cout << "Exception handler: " << Functions::getAuthData().dump() << std::endl; }
+}
+
