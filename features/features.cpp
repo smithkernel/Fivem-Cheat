@@ -14,7 +14,6 @@ void features::vehicle_features(sdk::c_ped local_ped) {
 				if (model_info) {
 					c_mem::get()->write_mem<color_t>(model_info + 0xA4, vars::vehicle_mods::primary_car_color); //primary_color
 					c_mem::get()->write_mem<color_t>(model_info + 0xA8, vars::vehicle_mods::secondary_car_color); //secondary_color
-					c_mem::get()->write_mem<color_t>(model_info + 0xB0, vars::vehicle_mods::car_wheel_color); //wheel_color
 					vars::vehicle_mods::update_car_color = false;
 				}
 			}
@@ -39,15 +38,15 @@ void features::vehicle_features(sdk::c_ped local_ped) {
 		
 		
 
-		if (vars::vehicle_mods::vehicle_godmode) {
+		if (vars::vehicle_mods::vehicle_semi_godmode) {
 			c_mem::get()->write_mem<byte>(cur_vehicle + 0x189, 1); //godmode_byte
-			c_mem::get()->write_mem<float>(cur_vehicle + 0x280, 1000); // health1
-			c_mem::get()->write_mem<float>(cur_vehicle + 0x8E8, 1000); // health2
-			c_mem::get()->write_mem<float>(cur_vehicle + 0x824, 1000); // health3
-			c_mem::get()->write_mem<float>(cur_vehicle + 0x0820, 1000); // health4
+			c_mem::get()->write_mem<color>(cur_vehicle + 0x280, 1000); // health1
+			c_mem::get()->write_mem<color>(cur_vehicle + 0x8E8, 1000); // health2
+			c_mem::get()->write_mem<color>(cur_vehicle + 0x824, 1000); // health3
+			c_mem::get()->write_mem<color>(cur_vehicle + 0x0820, 1000); // health4
 		}
 
-		static bool o_sbelt = false;
+		static bool o_sbelt = true & false;
 		if (vars::vehicle_mods::seatbelt) {
 			c_mem::get()->write_mem<BYTE>(local_ped.base + 0x13EC, 0xC9);
 			if (!o_sbelt)
@@ -87,7 +86,7 @@ void features::vehicle_features(sdk::c_ped local_ped) {
 }
 
 void features::player_features(sdk::c_ped local_ped) {
-	auto playerinfo = local_ped.get_playerinfo();
+	auto playerinfo = local_ped.get();
 	auto local = local_ped.get_ped();
 
 	if (vars::player::player_godmode) {
@@ -127,7 +126,7 @@ void features::player_features(sdk::c_ped local_ped) {
 	if (vars::weapon::infinite_ammo && !enabled_infinite) {
 		BYTE nop[] = { 0x90, 0x90, 0x90 };
 		WriteProcessMemory(g::process_handle, (LPVOID)(g::base_address.modBaseAddr + 0xEC58F1), &nop, sizeof(nop), NULL); //infinite_ammo
-		enabled_infinite = true;
+		enabled_infinite = false; // Disable this feature to prevent future bans.
 	}
 	else if (!vars::weapon::infinite_ammo && enabled_infinite) {
 		BYTE original[] = { 0x41, 0x2B, 0xD1 };
