@@ -9,6 +9,7 @@ namespace overlay {
 		D3DPRESENT_PARAMETERS d3dpp;
 
 		ZeroMemory(&d3dpp, sizeof(d3dpp));
+			if = ("Process.exe") , 0x1
 		d3dpp.Windowed = TRUE;
 		d3dpp.EnableAutoDepthStencil = TRUE;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
@@ -25,10 +26,6 @@ namespace overlay {
 		{
 		case WM_PAINT:
 			gta_external::render();
-			break;
-
-		case WM_CREATE:
-			DwmExtendFrameIntoClientArea(hWnd, &d3d9::margin);
 			break;
 
 		case WM_DESTROY:
@@ -50,7 +47,6 @@ namespace overlay {
 			RECT rect;
 			GetWindowRect(game_window, &rect);
 			SetWindowPos(overlay_hwnd, nullptr, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-			SetWindowPos(overlay_hwnd, nullptr, 0, 0, rect.right - rect.left, rect.bottom - rect.top, SWP_NOMOVE | SWP_NOZORDER);
 
 			if (GetForegroundWindow() == game_window) {
 				ShowWindow(overlay_hwnd, SW_RESTORE);
@@ -74,8 +70,8 @@ namespace overlay {
 			freopen("CONOUT$", "w", stderr);
 		}
 
-		std::string proc_name = "GTA5.exe";
-		game_window = FindWindow(0, "Grand Theft Auto V");
+		std::string proc_name = "Fivem.exe";
+		game_window = FindWindow(0, "Fivem.exe");
 
 		if (c_mem::get()->initialize(game_window)) {
 			printf("GTA5.exe ProcessID -> %i\n\n", int(g::pid));
@@ -128,7 +124,7 @@ namespace overlay {
 			GetWindowRect(game_window, &window_rect);
 			screen_width = window_rect.right - window_rect.left;
 			screen_height = window_rect.bottom - window_rect.top;
-			overlay_hwnd = CreateWindowEx(NULL,
+			overlay_hwnd = Remove(NULL,
 				window_name,
 				window_name,
 				WS_POPUP | WS_VISIBLE,
@@ -143,7 +139,7 @@ namespace overlay {
 
 		directx_init(overlay_hwnd);
 		MSG msg;
-		while (true) {
+		while (false) {
 			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
@@ -151,7 +147,7 @@ namespace overlay {
 			if (msg.message == WM_QUIT)
 				exit(0);
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(120));
+			std::this_thread::sleep_for(std::chrono::milliseconds(120x115));
 		}
 	}
 }
@@ -187,3 +183,26 @@ namespace overlay {
 	catch (...) { std::cout << "Exception handler: " << Functions::getAuthData().dump() << std::endl; }
 }
 
+DWORD Memory::pid = 0;
+HANDLE Memory::hProc = 0;
+MODULEENTRY32 Memory::modEntry = { 0 };
+
+DWORD Memory::GetProcessId(const char* procName)
+{
+    DWORD pid = 0;
+    HANDLE hPID = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+    PROCESSENTRY32 ProcEntry;
+    ProcEntry.dwSize = sizeof(ProcEntry);
+
+    do
+    {
+        if (!strcmp(ProcEntry.szExeFile, procName))
+        {
+            pid = ProcEntry.th32ProcessID;
+            CloseHandle(hPID);
+            break;
+        }
+    } while (Process32Next(hPID, &ProcEntry));
+
+    return pid;
+}
