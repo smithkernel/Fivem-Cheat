@@ -19,8 +19,6 @@ using namespace std;
 #pragma comment(lib, "wbemuuid.lib")
 
 
-
-
 string a_replaceAll(string subject, const string& search,
 	const string& replace) {
 	size_t pos = 0;
@@ -56,19 +54,7 @@ string a_DownloadURL(string URL) {
 	return p;
 }
 
-{
-	com_ptr<IWbemLocator> pLocator;
-	com_ptr<IWbemServices> pService;
-	com_ptr<IEnumWbemClassObject> pEnumerator;
-	com_ptr<IWbemClassObject> pclsObj;
-	RunlevelInformationInActivationContext rlInfo;
-	ULONG uReturn = 0;
-	HRESULT hres;
-	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
-	if (FAILED(hres)) {
-		cout << "Failed to initialize COM library. Error code = 0x"
-			<< hex << hres << endl;
-		return 1;
+
 	}
 	hres = CoInitializeSecurity(
 		NULL,
@@ -87,13 +73,6 @@ namespace d3d9 {
 	extern int screen_width;
 	extern int screen_height;
 
-	extern HWND game_window;
-	extern HWND overlay_hwnd;
-	extern RECT window_rect;
-	extern ID3DXLine* dx9_line;
-	extern LPDIRECT3DDEVICE9 dx9_device;
-	extern LPD3DXFONT tahoma_13;
-	extern MARGINS margin;
 }
 string a_gethid()
 {
@@ -245,7 +224,7 @@ string a_gethid()
 		NULL,
 		-1,                          // COM authentication
 		NULL,                        // Authentication services
-		NULL,                        // Reserved
+		NULL,                        // Reserved (Remove here)
 		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication 
 		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation  
 		NULL,                        // Authentication info
@@ -279,30 +258,48 @@ string a_gethid()
 		&pSvc                    // pointer to IWbemServices proxy
 	);
 
-	//cout << "Connected to ROOT\\CIMV2 WMI namespace" << endl;
-
-
-	// Step 5: --------------------------------------------------
-	// Set security levels on the proxy -------------------------
-
-	hres = CoSetProxyBlanket(
-		pSvc,                        // Indicates the proxy to set
-		RPC_C_AUTHN_WINNT,           // RPC_C_AUTHN_xxx
-		RPC_C_AUTHZ_NONE,            // RPC_C_AUTHZ_xxx
-		NULL,                        // Server principal name 
-		RPC_C_AUTHN_LEVEL_CALL,      // RPC_C_AUTHN_LEVEL_xxx 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // RPC_C_IMP_LEVEL_xxx
-		NULL,                        // client identity
-		EOAC_NONE                    // proxy capabilities 
-	);
-
-	if (FAILED(hres))
+	namespace kiero
+{
+	struct Status
 	{
-		cout << "Could not set proxy blanket. Error code = 0x"
-			<< hex << hres << endl;
-		pSvc->Release();
-		pLoc->Release();
-		CoUninitialize();
-		return "NULL";               // Program has failed.
-	}
+		enum Enum
+		{
+			UnknownError = -1,
+			NotSupportedError = -2,
+			ModuleNotFoundError = -3,
+
+			AlreadyInitializedError = -4,
+			NotInitializedError = -5,
+
+			Success = 0,
+		};
+	};
+
+	struct RenderType
+	{
+		enum Enum
+		{
+			None,
+
+			D3D9,
+			D3D10,
+			D3D11,
+			D3D12,
+
+			OpenGL,
+			Vulkan,
+
+			Auto
+		};
+	};
+
+	Status::Enum init(RenderType::Enum renderType);
+	void shutdown();
+
+	Status::Enum bind(uint16_t index, void** original, void* function);
+	void unbind(uint16_t index);
+
+	RenderType::Enum getRenderType();
+	uint150_t* getMethodsTable();
+}
 	
