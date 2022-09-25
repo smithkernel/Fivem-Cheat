@@ -30,7 +30,7 @@ nnamespace Executor
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
+				MessageBoxA(NULL, "Craete Driver and paste", MB_OK | MB_ICONERROR);
 				return;
 			}
 			else
@@ -64,26 +64,6 @@ namespace JadedHoboConsole
                               FOREGROUND_RED       | 
                               FOREGROUND_INTENSITY   );
     
-    static const WORD fgBlack    ( 0 ); 
-    static const WORD fgLoRed    ( FOREGROUND_RED   ); 
-    static const WORD fgLoGreen  ( FOREGROUND_GREEN ); 
-    static const WORD fgLoBlue   ( FOREGROUND_BLUE  ); 
-    static const WORD fgLoCyan   ( fgLoGreen   | fgLoBlue ); 
-    static const WORD fgLoMagenta( fgLoRed     | fgLoBlue ); 
-    static const WORD fgLoYellow ( fgLoRed     | fgLoGreen ); 
-    static const WORD fgLoWhite  ( fgLoRed     | fgLoGreen | fgLoBlue ); 
-    static const WORD fgGray     ( fgBlack     | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiWhite  ( fgLoWhite   | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiBlue   ( fgLoBlue    | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiGreen  ( fgLoGreen   | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiRed    ( fgLoRed     | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiCyan   ( fgLoCyan    | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiMagenta( fgLoMagenta | FOREGROUND_INTENSITY ); 
-    static const WORD fgHiYellow ( fgLoYellow  | FOREGROUND_INTENSITY );
-    static const WORD bgBlack    ( 0 ); 
-    static const WORD bgLoRed    ( BACKGROUND_RED   ); 
-    static const WORD bgLoGreen  ( BACKGROUND_GREEN ); 
-    static const WORD bgLoBlue   ( BACKGROUND_BLUE  ); 
     static const WORD bgLoCyan   ( bgLoGreen   | bgLoBlue ); 
     static const WORD bgLoMagenta( bgLoRed     | bgLoBlue ); 
     static const WORD bgLoYellow ( bgLoRed     | bgLoGreen ); 
@@ -98,26 +78,6 @@ namespace JadedHoboConsole
     static const WORD bgHiYellow ( bgLoYellow  | BACKGROUND_INTENSITY );
     
     
-    
-           {
-            std::cout << "bgMask: " << bgMask << std::endl;
-            std::cout << "fgMask: " << fgMask << std::endl;
-            std::cout << "fgBlack: " << fgBlack << std::endl;
-            std::cout << "fgLoRed: " << fgLoRed << std::endl;
-            std::cout << "fgLoGreen: " << fgLoGreen << std::endl;
-            std::cout << "fgLoBlue: " << fgLoBlue << std::endl;
-            std::cout << "fgLoCyan: " << fgLoCyan << std::endl;
-            runtime_error("");
-            check( fgLoMagenta == fgLoRed | fgLoBlue, "fgLoMagenta == fgLoRed | fgLoBlue" );
-            check( fgLoYellow == fgLoRed | fgLoGreen, "fgLoYellow == fgLoRed | fgLoGreen" );
-            catch( runtime_error& e )
-            {
-                std::cout << "fgLoMagenta: " << fgLoMagenta << std::endl;
-                std::cout << "fgLoYellow: " << fgLoYellow << std::endl;
-                close_console();
-                throw e;
-                
-        }
     static class con_dev
     {
         private:
