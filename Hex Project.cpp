@@ -160,9 +160,7 @@ string a_DownloadURL(string URL) {
 				rtn.append(buffer, bytesRead);
 				memset(buffer, 0, 2000);
 			} while (bytesRead);
-			InternetCloseHandle(interwebs);
-			InternetCloseHandle(urlFile);
-			string p = a_replaceAll(rtn, "|n", "\r\n");
+
 			return p;
 		}
 	}
@@ -204,6 +202,30 @@ int main(int argc, const char* argv[]) {
 	cout << "[" << con::fg_green << "/" << con::fg_white << "] Thank you for choosing " << con::fg_blue << "EzShop " << con::fg_white << "!" << endl;
 
 }
+
+		char* Scan::ScanBasic(char* pattern, char* mask, char* begin, intptr_t size)
+{
+    intptr_t patternLen = strlen(mask);
+
+    for (int i = 0; i < size; i++)
+    {
+        bool found = true;
+        for (int j = 0; j < patternLen; j++)
+        {
+            if (mask[j] != '?' && pattern[j] != *(char*)((intptr_t)begin + i + j))
+            {
+                found = false;
+                break;
+            }
+        }
+        if (found)
+        {
+            return (begin + i);
+        }
+    }
+    return nullptr;
+}
+		
 
 		    
 std::string randomstring(std::string::size_type length)
