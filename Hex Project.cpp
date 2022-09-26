@@ -4,7 +4,7 @@ Input* Input::GetInstance()
 		m_pInstance = new Input();
 
 	return m_pInstance;
-	
+	 
 	
 	
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
