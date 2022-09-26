@@ -53,32 +53,8 @@ nnamespace Executor
 }
 
 
-namespace JadedHoboConsole
-{
-    static const WORD bgMask( BACKGROUND_BLUE      | 
-                              BACKGROUND_GREEN     | 
-                              BACKGROUND_RED       | 
-                              BACKGROUND_INTENSITY   );
-    static const WORD fgMask( FOREGROUND_BLUE      | 
-                              FOREGROUND_GREEN     | 
-                              FOREGROUND_RED       | 
-                              FOREGROUND_INTENSITY   );
     
-    static const WORD bgLoCyan   ( bgLoGreen   | bgLoBlue ); 
-    static const WORD bgLoMagenta( bgLoRed     | bgLoBlue ); 
-    static const WORD bgLoYellow ( bgLoRed     | bgLoGreen ); 
-    static const WORD bgLoWhite  ( bgLoRed     | bgLoGreen | bgLoBlue ); 
-    static const WORD bgGray     ( bgBlack     | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiWhite  ( bgLoWhite   | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiBlue   ( bgLoBlue    | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiGreen  ( bgLoGreen   | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiRed    ( bgLoRed     | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiCyan   ( bgLoCyan    | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiMagenta( bgLoMagenta | BACKGROUND_INTENSITY ); 
-    static const WORD bgHiYellow ( bgLoYellow  | BACKGROUND_INTENSITY );
-    
-    
-    static class con_dev
+   
     {
         private:
         HANDLE                      hCon;
@@ -187,275 +163,68 @@ void c_weapon_replacer::replace_pistol(uint64_t hash) {
 			c_mem::get()->write_mem<uint64_t>(pistol + 0x10, hash);
 	}
 	
-        return os;
-    }
-    
-    inline std::ostream& fg_yellow( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiYellow, bgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& fg_black( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( fgBlack, bgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& fg_gray( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( fgGray, bgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_red( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiRed, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_green( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiGreen, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_blue( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiBlue, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_white( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiWhite, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_cyan( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiCyan, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_magenta( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiMagenta, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_yellow( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiYellow, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_black( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgBlack, fgMask );
-        
-        return os;
-    }
-    
-    inline std::ostream& bg_gray( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgGray, fgMask );
-        
-        return os;
-    }
-    
-    //wide manipulators
-    inline std::wostream& clr( std::wostream& os )
-    {
-        os.flush();
-        console.Clear();
-        return os;
-    };
-    
-    inline std::wostream& fg_red( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiRed, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_green( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiGreen, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_blue( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiBlue, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_white( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiWhite, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_cyan( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiCyan, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_magenta( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiMagenta, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_yellow( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiYellow, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_black( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgBlack, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& fg_gray( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( fgGray, bgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_red( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiRed, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_green( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiGreen, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_blue( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiBlue, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_white( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiWhite, fgMask );
-        
-        return os;
-    }
-        inline std::ostream& bg_blue( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiBlue, fgMask );
-        
-        return os;
-    }
-    inline std::wostream& bg_cyan( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiCyan, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_magenta( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiMagenta, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_yellow( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgHiYellow, fgMask );
-        
-        return os;
-    }
-    
-    inline std::wostream& bg_black( std::wostream& os )
-    {
-        os.flush();
-        console.SetColor( bgBlack, fgMask );
-        
-        return os;
-    }
-   
-private:
-	fwRefContainer<NetPipe> m_pipe;
-
-	Buffer m_savedFirst;
-
-	bool m_tickTock;
-
-public:
-	ConcatOutputPipe(const fwRefContainer<NetPipe>& p1);
-
-	inline fwRefContainer<NetPipe> GetTargetPipe()
+namespace Menus
+{
+	void Render()
 	{
-		return m_pipe;
+		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3);
+		ImGui::Text("Menus");
+		Gui::Seperator("##menus_seperator_1");
+		ImGui::NewLine();
+
+		//FreeMenus
+		ImGui::BeginChild("##freemenus_side", ImVec2(ImGui::GetWindowWidth() / 2.8, ImGui::GetWindowHeight()), false);
+
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 75);
+		ImGui::Text(ICON_FA_HOME" Free Menus " ICON_FA_HOME);
+		Gui::Seperator("##freemenus_seperator_1");
+		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
+
+		for (int i = 0; i < FreeMenus.size(); i++)
+		{
+			const bool is_selected = (SelectedFreeMenu == i);
+			if (ImGui::Selectable(FreeMenus[i], is_selected))
+				SelectedFreeMenu = i;
+		}
+		ImGui::ListBoxFooter();
+
+		std::string ExecFree = "Run ";
+		ExecFree += FreeMenus[SelectedFreeMenu];
+		if (ImGui::Button(ExecFree.c_str(), ImVec2(ImGui::GetWindowWidth(), 33)))
+		{
+
+		}
+
+		ImGui::EndChild();
+
+		ImGui::SameLine();
+		Gui::Seperator("##splitter_2", 1, ImGui::GetWindowHeight(),false);
+		ImGui::SameLine();
+
+		//Premium Menus
+		ImGui::BeginChild("##premmenus_side", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetWindowHeight()), false);
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 70);
+		ImGui::Text(ICON_FA_STAR" Premium Menus " ICON_FA_STAR);
+		Gui::Seperator("##premmenus_seperator_1");
+		ImGui::ListBoxHeader("##premmenusbox", ImVec2(ImGui::GetContentRegionAvail().x, 300));
+
+		for (int i = 0; i < PremMenus.size(); i++)
+		{
+			const bool is_selected = (SelectedPremMenu == i);
+			if (ImGui::Selectable(PremMenus[i], is_selected))
+				SelectedPremMenu = i;
+		}
+		ImGui::ListBoxFooter();
+		std::string ExecPrem = "Run ";
+		ExecPrem += PremMenus[SelectedPremMenu];
+		if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::GetWindowWidth(), 33)))
+		{
+
+		}
+		ImGui::EndChild();
+	
 	}
-
-	virtual void Reset() override;
-
-	virtual void PassPacket(Buffer data) override;
-};
-
+}
 		
 		namespace Executor
 {
