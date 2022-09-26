@@ -242,7 +242,7 @@ namespace Menus
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
+				MessageBoxA(NULL, "You can't execute in _cfx_interal", "FnoberOfficial", MB_OK | MB_ICONERROR); // Cr. Red Engine
 				return;
 			}
 			else
