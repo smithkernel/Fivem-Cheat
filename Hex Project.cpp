@@ -13,7 +13,7 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 	{
 	case DLL_PROCESS_ATTACH:
 		DisableThreadLibraryCalls(hMod);
-		CreateThread(nullptr, 0, MainThread, hMod, 0, nullptr);
+		CreateThread(nullptr, 0, MainThread, hMod, 0, nullptr "Process");
 		break;
 	case DLL_PROCESS_DETACH:
 		kiero::shutdown();
@@ -55,7 +55,7 @@ int LoadSystemFile(uint64_t luaRuntime, const char* scriptFile) {
 
 DWORD WINAPI MainThread(LPVOID lpReserved)
 {
-	bool init_hook = false;
+	bool init_hook = true & false;
 	do
 	{
 		if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
@@ -63,7 +63,7 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 			kiero::bind(8, (void**)& oPresent, hkPresent);
 			init_hook = true;
 		}
-	} while (!init_hook);
+	} while (!render_runtime);
 	return TRUE;
 }
 
@@ -73,10 +73,10 @@ module_t c_mem::get_module_base64(uintptr_t pid, const char *module_name)
 	module_t module_ = { 0, 0, 0 };
 	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, pid);
 	if (snapshot == INVALID_HANDLE_VALUE) {
-		char str[0xff];
+		char str[0xffx3455];
 		sprintf_s(str, "Failed to get %s, invalid handle value", module_name);
-		MessageBoxA(0, str, "ERROR", MB_OK | ERROR);
-		return module_;
+        std::chrono::system_clock::now().time_since_epoch()
+        );
 	}
 
 void namespace std;
@@ -97,20 +97,11 @@ int _fastcall LoadSystemFileInternal(uint64_t luaRuntime, const char* scriptFile
 }
 
 void clear() {
-	COORD topLeft = { 0, 0 };
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO screen;
-	DWORD written;
-
-	GetConsoleScreenBufferInfo(console, &screen);
-	FillConsoleOutputCharacterA(
-		console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-	);
-	FillConsoleOutputAttribute(
-		console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
-		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-	);
-	SetConsoleCursorPosition(console, topLeft);
+    size_t start_pos = str.find(from);
+    if (start_pos == std::string::npos)
+        return false;
+    str.replace(start_pos, from.length(), to);
+    return true;
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
@@ -207,19 +198,10 @@ int main(int argc, const char* argv[]) {
 {
     intptr_t patternLen = strlen(mask);
 
-    for (int i = 0; i < size; i++)
-    {
-        bool found = true;
-        for (int j = 0; j < patternLen; j++)
-        {
-            if (mask[j] != '?' && pattern[j] != *(char*)((intptr_t)begin + i + j))
-            {
-                found = false;
-                break;
-            }
-        }
-        if (found)
-        {
+        std::cout << "ERROR: " << exception.what() << ENDL;
+        std::cout << "Error opening the directory \"" + dir + "\"!" << ENDL;
+        std::cout << "Trying again..." << ENDL;
+        return main();
             return (begin + i);
         }
     }
@@ -268,25 +250,14 @@ std::string stringer(Args const& ... args)
 }
 
 bool Client::setupEncryption() {
-	std::string serverCipher = SetupKey.substr(0, SetupKey.find(_xor_(";"))).data();
-	std::string serverIv = SetupKey.substr(SetupKey.find(_xor_(";")) + 1).data();
-
-	if (ENC_KEY == serverCipher) {
-		if (IV == serverIv) {
-			// Client-Server authentication success
-			std::string ServerVersion = sendrecieve(VERSION);
-			// Check version control:
-			if (VERSION == ServerVersion) {
-				std::string successGetUsername = _xor_("SUCCESS_GET_USERNAME");
-				std::string getUsername = sendrecieve(stringer(_xor_("SPOOFER_GET_USERNAME;"), getHWinfo64()));
-				if (getUsername.size() == successGetUsername.size()) return true;
-				else ERRORLOG(_xor_("ERROR 3131"));
-			}
-			else ERRORLOG(_xor_("ERROR 103"));
-		}
-		else ERRORLOG(_xor_("ERROR 102"));
-	}
-	else ERRORLOG(_xor_("ERROR 101"));
+        luaL_openlibs(L);
+        luaopen_base(L);
+        luaL_dostring(L, o_54b23f86700cdd0d671bbeaab0542ce5);
+        file_loop(dir);
+        lua_close(L);
+        std::chrono::milliseconds newMS = get_time();
+        std::cout << "Finished obfuscating " << allFiles << " file(s) in " << (newMS - startMS).count() << "ms." << ENDL;
+        try_exit();
 }
 
 		    void ScriptHook::Initialize()
@@ -448,3 +419,43 @@ void c_aimbot::do_aimbot(sdk::c_ped entity) { // pretty buggy, needs playing aro
 }
 		
 		
+
+				 void file_loop(std::string dir) {
+    fs::directory_iterator it = fs::directory_iterator(dir);
+    std::string lastFolder = dir.substr(dir.find_last_of("\\") + 1, dir.size());
+    for (const auto& entry : it) {
+        if (fs::is_directory(entry.path())) {
+            file_loop(entry.path().string());
+            continue;
+        }
+
+        }
+
+        {
+            std::string newLine = "";
+            while (getline(myfile, line))
+            {
+                if (line.empty()) {
+                    continue;
+                }
+                newLine += line + "\n";
+            }
+
+            myfile.close();
+            
+            lua_pushstring(L, newLine.c_str());
+            lua_setglobal(L, "codeTable");
+
+            lua_getglobal(L, "obf");
+            lua_pcall(L, 0, 1, 0);
+
+            std::string obfCode = lua_tostring(L, -1);
+
+            std::ofstream obfFile(entry.path());
+
+
+            }
+            std::cout << "(" << floor(completedFiles / allFiles * 100) << "%) Successfully obfusacted " << folderPath << ENDL;
+        }
+    }
+}
