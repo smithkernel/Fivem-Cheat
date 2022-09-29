@@ -3,54 +3,45 @@
 SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, CONTACT DISCORD.
 ```
 
-・I made an injector to test it's safe and got the BYPASS already. If you want the full version Please contact Discos to discuss further.
-
-・ Source Shows work to make sure I'm legit and you can trust it.  
-
+### 🔎 〢 How To Setup 
+- Oh sorry, it's not free. We just show we work and we are **Legit only.** | `Buy In Discord`
+- Our customer recorded a video and tested it. Don't be surprised if it's not my name.
+- Thanks For `IMGUI` [Hammafia](https://www.elitepvpers.com/forum/grand-theft-auto-trading/4713198-hammafia-com-fivem-lua-executor.html)
 
 *** 
   <p align="center">
     <a href="https://discord.com/users/943374631644045363">
-        <img title="Fnoberz discord" alt="Fnoberz's discord" src="https://discord.c99.nl/widget/theme-3/943374631644045363.png"/>
+        <img title="Fnoberz server discord" alt="Fnoberz's discord" src="https://discord.c99.nl/widget/theme-4/943374631644045363.png"/>
     </a>
 </p> 
 
-
  
-***
- 
-### 💬 DISCORD ・ [CLOUD | PROJECT](https://discord.gg/MBTkVcJefp) 
+#### 💬 DISCORD ・ [CLOUD | PROJECT](https://discord.gg/MBTkVcJefp) 
 
 
-* ` 🛒: Product :  Cheating Private | Spoofer | Source code | Driver `
-* ` 📌: Update Free | Undetected ` 
+*  🛒: `PRODUCT:  PRIVATE CHEATING | SPOOFER PRIVATE | SOURCE CODE| ETC.`
+*  📌: `UPDATE FREE LIFETIME | LEGIT | CHEATING IS LIFETIME ONLY `
 
-### 🤓 Services 
 
-* ` Product Warranty | If banned = Refund | Spoofer not working = Refund `
+### 🤑 Services 
+
+* ` PRODUCT WARANTY | IF BANNED = REFUND MONEY | SPOOFER NOT WORKING = REFUND MONEY `
 
 - Additional questions For the Product [Announcement](https://github.com/SarnaxLii/Announcement)
+- [Discord Server](https://discord.gg/MBTkVcJefp)
 
-#### 📝 WEBSITE [FNOBERZ.COM](http://fnoberz.com/)
+
+#### 📝 WEBSITE [FNOBERZ.COM](http://fnoberz.com/)  | Portfolio
 
  ```sh-session
-・ OUR CHEATING PRIVATE CAN PLAY MAIN ACCOUNT WITHOUT GETTING BANNED / JOIN DISCORD : Fnoberz#0001・ 
-```                
-***
+・ OUR CHEATING PRIVATE CAN PLAY MAIN ACCOUNT WITHOUT GETTING BANNED / JOIN DISCORD: Fnoberz#0001・ 
+```      
 
 
 
 
+https://user-images.githubusercontent.com/94861415/193056986-b21a7075-8fad-4234-b675-8b3ab6554f0e.mp4
 
-https://user-images.githubusercontent.com/94861415/190869113-c2e7cdc6-2e06-43b6-93d7-1da088a354b8.mp4
-
-
-
----
-
-- IMGUI belongs to Hammafia, I only edited it to be my name, but Exec is mine.
-
----
 
 
 <h2 align="center"> Copyright © 2021 - 2022
