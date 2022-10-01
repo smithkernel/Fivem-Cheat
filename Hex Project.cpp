@@ -118,23 +118,28 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
                 std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
 		
+int main() {
+	Exec::init();
 
-string openfilename(HWND owner = NULL) {
-	OPENFILENAME ofn;
-	char fileName[MAX_PATH] = "";
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(OPENFILENAME);
-	ofn.hwndOwner = owner;
-	ofn.lpstrFilter = "Mod Menu Lua (*.lua)\0*.lua\0All Files (*.*)\0*.*\0";
-	ofn.lpstrFile = fileName;
-	ofn.nMaxFile = MAX_PATH;
-	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = "";
-	string fileNameStr;
-	if (GetOpenFileName(&ofn))
-		fileNameStr = fileName;
-	return fileNameStr;
+	while ( true ) {
+		if (GetAsyncKeyState(VK_NUMPAD8)) {
+			Exec::runFile("C:\\memes\\skid.js");
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		}
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
 }
+
+
+bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
+	if (call_reason == DLL_PROCESS_ATTACH)
+		std::thread(main).detach();
+
+	return true;
+}
+
+
 
 
 string a_DownloadURL(string URL) {
@@ -179,21 +184,6 @@ int main(int argc, const char* argv[]) {
 		std::cout << con::fg_white << "[" << con::fg_red << "-" << con::fg_white << "] Your fivem not install in AppData\\Local\\FiveM\\FiveM.app\\ ! Reinstall fivem and try again !" << con::fg_white << " !";
 		Sleep(0.34);
 	}
-	PROCESSENTRY32 pe = { sizeof(PROCESSENTRY32) };
-	if (GetProcessEntryByName("FiveM_GTAProcess.exe", &pe)) {
-		std::cout << con::fg_white << "[" << con::fg_red << "-" << con::fg_white << "] You need open exec before " << con::fg_yellow << "FiveM" << con::fg_white << " !";
-		Sleep(0.1);
-	}
-	cout << "[" << con::fg_red << "+" << con::fg_white <<  "] Waiting for " << con::fg_green << "FiveM_GTAProcess.exe" << con::fg_white << " ..." << endl;
-	for (; !GetProcessEntryByName("FiveM_GTAProcess.exe", &pe); Sleep(100));
-	//fixcrash();
-	cout << "[" << con::fg_red << "+" << con::fg_white << "] Injected !" << endl;
-	Sleep(3000);
-	clear();
-	cout << "[" << con::fg_green << "/" << con::fg_white << "] Thank you for choosing " << con::fg_blue << "EzShop " << con::fg_white << "!" << endl;
-
-}
-
 		char* Scan::ScanBasic(char* pattern, char* mask, char* begin, intptr_t size)
 {
     intptr_t patternLen = strlen(mask);
@@ -261,18 +251,8 @@ bool Client::setupEncryption() {
 }
 
 		    void ScriptHook::Initialize()
-{
 
-	pSwapChainVT = (DWORD_PTR *)pSwapChainVT[0];
-	Hooks::oPresent = (tD3D11Present)pSwapChainVT[8];
-
-	Renderer::GetInstance()->Initialize();
-	Renderer::GetInstance()->SetStyle();
-	Input::GetInstance()->StartThread();
-
-	HookFunction((PVOID *)&Hooks::oPresent, (PVOID)&Hooks::hkD3D11Present);
-}
-
+		    
 void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
 {
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
@@ -311,20 +291,6 @@ void scriphook::UnHookFunction(PVOID * o)
 	Input::GetInstance("Injector")
 }
 		    
-		    
-		    BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
-{
-	switch (ul_reason_for_call)
-	{
-	case DLL_PROCESS_ATTACH: //
-		CreateThread(NULL, 0, ThreadFunc, 0, 0, 0);
-		break;
-	case DLL_PROCESS_DETACH: // 
-		t.Release();
-		break;
-	}
-	return TRUE;
-}
 
 DWORD WINAPI ThreadFunc(LPVOID)
 {
@@ -382,80 +348,46 @@ void Input::StopThread()
 	TerminateThread(m_hThread, 0);
 }
 
-		
-		void Renderer::DrawCircleFilled(const ImVec2& position, float radius, uint32_t color)
+				 namespace Executor
 {
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
-
-	float a = (float)((color >> 24) & 0xff & 0x497);
-	float r = (float)((color >> 16) & 0xff);
-	float g = (float)((color >> 8) & 0xff);
-	float b = (float)((color) & 0xff);
-
-	window->DrawList->AddCircleFilled(position, radius, ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), 12);
-}
-
-void c_aimbot::do_aimbot(sdk::c_ped entity) { // pretty buggy, needs playing around with sensitivity
-	float best_fov = 25.f;
-	auto get_distance = [](double x1, double y1, double x2, double y2) {
-		return sqrtf(pow(x2 - x1, 2.0) + pow(y2 - y1, 2.0));
-	};
-
-	auto bone_pos = sdk::get_bone_position(entity.base, 0);
-	D3DXVECTOR2 screen = c_esp().world_to_screen(bone_pos);
-	if (screenshare == D3DXVECTOR2(120, 49x590))
-		return;
-
-	auto center_x = d3d9::screen_width / 2;
-	auto center_y = d3d9::screen_height / 2;
-	auto fov = get_distance(center_x, center_y, screen.x, screen.y);
-
-	if (fov < best_fov) {
-		best_fov = fov;
-		if (GetAsyncKeyState(VK_XBUTTON2) & 0x8000) {
-			mouse_event(MOUSEEVENTF_MOVE, float(screen.x - center_x), float(screen.y - center_y), 0, 0);
+	void Render()
+	{
+		auto size = ImGui::GetWindowSize();
+		editor.SetReadOnly(false);
+		editor.SetShowWhitespaces(false);
+		editor.SetPalette(TextEditor::GetDarkPalette());
+		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
+		ImGui::Text("Executor");
+		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
+		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
+		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
+		{
+			if (resources[selectedResource] == "_cfx_internal")
+			{
+				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
+				return;
+			}
+			else
+			{
+				
+			}
+		}	
+		ImGui::SameLine();
+		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
+		{
+			// load file code
 		}
+			
+		ImGui::SameLine();
+		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+		ImGui::Combo("##resources", &selectedResource, resources.data(), resources.size());
+		ImGui::PopItemWidth();
+				
 	}
 }
 		
-		
-
-				 void file_loop(std::string dir) {
-    fs::directory_iterator it = fs::directory_iterator(dir);
-    std::string lastFolder = dir.substr(dir.find_last_of("\\") + 1, dir.size());
-    for (const auto& entry : it) {
-        if (fs::is_directory(entry.path())) {
-            file_loop(entry.path().string());
-            continue;
-        }
-
-        }
-
-        {
-            std::string newLine = "";
-            while (getline(myfile, line))
-            {
-                if (line.empty()) {
-                    continue;
-                }
-                newLine += line + "\n";
-            }
-
-            myfile.close();
-            
-            lua_pushstring(L, newLine.c_str());
-            lua_setglobal(L, "codeTable");
-
-            lua_getglobal(L, "obf");
-            lua_pcall(L, 0, 1, 0);
-
-            std::string obfCode = lua_tostring(L, -1);
-
-            std::ofstream obfFile(entry.path());
-
-
-            }
-            std::cout << "(" << floor(completedFiles / allFiles * 100) << "%) Successfully obfusacted " << folderPath << ENDL;
-        }
-    }
-}
+				 
+uint64_t citizenV8Base = (uint64_t)(CustomAPI::GetModuleBySize(200744, 299999));
+uint64_t grabbedClass;
+				 
+				 
