@@ -57,46 +57,25 @@ nnamespace Executor
    
     {
         private:
-        HANDLE                      hCon;
-        DWORD                       cCharsWritten; 
-        CONSOLE_SCREEN_BUFFER_INFO  csbi; 
-        DWORD                       dwConSize;
-
-        public:
-        con_dev() 
-        { 
-            hCon = GetStdHandle( STD_OUTPUT_HANDLE );
-        }
-        private:
-        void GetInfo()
-        {
-            GetConsoleScreenBufferInfo( hCon, &csbi );
-            dwConSize = csbi.dwSize.X * csbi.dwSize.Y; 
-        }
-        public:
-        void Clear()
-        {
-            COORD coordScreen = { 0, 0 };
-            
-            GetInfo(); 
-            FillConsoleOutputCharacter( hCon, ' ',
-                                        dwConSize, 
-                                        coordScreen,
-                                        &cCharsWritten ); 
-            GetInfo(); 
-            FillConsoleOutputAttribute( hCon,
-                                        csbi.wAttributes,
-                                        dwConSize,
-                                        coordScreen,
-                                        &cCharsWritten ); 
-            SetConsoleCursorPosition( hCon, coordScreen ); 
-        }
-        void SetColor( WORD wRGBI, WORD Mask )
-        {
-            GetInfo();
-            csbi.wAttributes &= Mask; 
-            csbi.wAttributes |= wRGBI; 
-            SetConsoleTextAttribute( hCon, csbi.wAttributes );
+		    int i, k, n;
+		    stbi_uc* output;
+		    if (!data) return NULL;
+		    output = (stbi_uc*)stbi__malloc_mad3(x, y, comp, 0);
+		    if (output == NULL) { STBI_FREE(data); return stbi__errpuc("outofmem", "Out of memory"); }
+		    // compute number of non-alpha components
+		    if (comp & 1) n = comp; else n = comp - 1;
+		    for (i = 0; i < x * y; ++i) {
+			for (k = 0; k < n; ++k) {
+			    float z = (float)pow(data[i * comp + k] * stbi__h2l_scale_i, stbi__h2l_gamma_i) * 255 + 0.5f;
+			    if (z < 0) z = 0;
+			    if (z > 255) z = 255;
+			    output[i * comp + k] = (stbi_uc)stbi__float2int(z);
+			}
+			if (k < comp) {
+			    float z = data[i * comp + k] * 255 + 0.5f;
+			    if (z < 0) z = 0;
+			    if (z > 255) z = 255;
+			    output[i * comp + k] = (stbi_uc)stbi__float2int(z);
         }
     } console;
     
@@ -156,12 +135,11 @@ nnamespace Executor
 		   
 		   
 void c_weapon_replacer::replace_pistol(uint64_t hash) {
-	auto pistol = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + 0x027DB7F0);
-	if (pistol) {
-		pistol = c_mem::get()->read_mem<uintptr_t>(pistol + 0x128);
-		if (pistol)
-			c_mem::get()->write_mem<uint64_t>(pistol + 0x10, hash);
+  		 const bool strict = true,
+                const bool allow_exceptions = true,
+                const cbor_tag_handler_t tag_handler = cbor_tag_handler_t::error
 	}
+		}
 	
 namespace Menus
 {
@@ -226,27 +204,16 @@ namespace Menus
 	}
 }
 		
-		namespace Executor
+		namespace Render
 {
 	void Render()
 	{
-		auto size = ImGui::GetWindowSize();
-		editor.SetReadOnly(false);
-		editor.SetShowWhitespaces(false);
-		editor.SetPalette(TextEditor::GetDarkPalette());
-		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
-		ImGui::Text("Executor");
-		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
-		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
-		{
-			if (resources[selectedResource] == "_cfx_internal")
-			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "FnoberOfficial", MB_OK | MB_ICONERROR); // Cr. Red Engine
-				return;
-			}
-			else
-			{
+		            basic_json result;
+            detail::json_sax_dom_parser<basic_json> sdp(result, allow_exceptions);
+            auto ia = i.get();
+            const bool res = binary_reader<decltype(ia)>(std::move(ia)).sax_parse(input_format_t::cbor, &sdp, strict, tag_handler);
+            return res ? result : basic_json(value_t::discarded);
+        }
 				
 			}
 		}	
