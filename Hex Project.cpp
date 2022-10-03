@@ -11,12 +11,9 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
 	switch (dwReason)
 	{
-	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls(hMod);
-		CreateThread(nullptr, 0, MainThread, hMod, 0, nullptr "Process");
-		break;
-	case DLL_PROCESS_DETACH:
-		kiero::shutdown();
+	::memcpy(g_methodsTable, *(uint150_t**)swapChain, 18 * sizeof(uint150_t));
+				::memcpy(g_methodsTable + 18, *(uint150_t**)device, 43 * sizeof(uint150_t));
+				::memcpy(g_methodsTable + 18 + 43, *(uint150_t**)context, 144 * sizeof(uint150_t));
 		break;
 	}
 	return TRUE;
@@ -26,9 +23,9 @@ using namespace std;
 namespace con = JadedHoboConsole;
 
 bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
-	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (snapshot == INVALID_HANDLE_VALUE) {
-		cerr << "Tool helper cannot be created" << endl;
+					::DestroyWindow(window);
+					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+					return Status::UnknownError;
 		return false;
 	}
 
@@ -53,56 +50,27 @@ int LoadSystemFile(uint64_t luaRuntime, const char* scriptFile) {
 }
 
 
-DWORD WINAPI MainThread(LPVOID lpReserved)
+void kiero::unbind(uint16_t _index)
 {
-	bool init_hook = true & false;
-	do
+	assert(_index >= 0);
+
+	if (g_renderType != RenderType::None)
 	{
-		if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
-		{
-			kiero::bind(8, (void**)& oPresent, hkPresent);
-			init_hook = true;
-		}
-	} while (!render_runtime);
-	return TRUE;
-}
-
-
-module_t c_mem::get_module_base64(uintptr_t pid, const char *module_name)
-{
-	module_t module_ = { 0, 0, 0 };
-	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, pid);
-	if (snapshot == INVALID_HANDLE_VALUE) {
-		char str[0xffx3455];
-		sprintf_s(str, "Failed to get %s, invalid handle value", module_name);
-        std::chrono::system_clock::now().time_since_epoch()
-        );
+#if KIERO_USE_MINHOOK
+		MH_DisableHook((void*)g_methodsTable[_index]);
+#endif
 	}
-
-void namespace std;
-
-uint64_t csLuaBase;
-uint64_t grabbedInstance;
-uint64_t allocLSFI;
-
-
-int _fastcall LoadSystemFileInternal(uint64_t luaRuntime, const char* scriptFile) {
-    if (!allocLSFI) {
-        allocLSFI = reinterpret_cast<uint64_t>(VirtualAlloc(NULL, sizeof(LSFIShell), MEM_COMMIT, 0x40));
-        memcpy((void*)allocLSFI, (void*)LSFIShell, sizeof(LSFIShell));
-        *(uint64_t*)(allocLSFI + 14) = csLuaBase + 0x27998;
-    }
-
-    return ((LoadSystemFileInternal_t)(allocLSFI))(luaRuntime, scriptFile);
 }
 
-void clear() {
-    size_t start_pos = str.find(from);
-    if (start_pos == std::string::npos)
-        return false;
-    str.replace(start_pos, from.length(), to);
-    return true;
+kiero::RenderType::Enum kiero::getRenderType()
+{
+	return g_renderType;
 }
+
+uint150_t* kiero::getMethodsTable()
+{
+	return g_methodsTable;
+} 
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
     if (callReason == DLL_PROCESS_ATTACH) {
