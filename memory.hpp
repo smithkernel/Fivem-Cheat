@@ -16,31 +16,31 @@ namespace CustomAPI {
 
 	wchar_t* GetFileNameFromPath(wchar_t* Path)
 	{
-		wchar_t* LastSlash = NULL;
-		for (DWORD i = 0; Path[i] != NULL; i++)
-		{
-			if (Path[i] == '\\')
-				LastSlash = &Path[i + 1];
-		}
-		return LastSlash;
-	}
-	wchar_t* RemoveFileExtension(wchar_t* FullFileName, wchar_t* OutputBuffer, DWORD OutputBufferSize)
-	{
-		wchar_t* LastDot = NULL;
-		for (DWORD i = 0; FullFileName[i] != NULL; i++)
-			if (FullFileName[i] == '.')
-				LastDot = &FullFileName[i];
+			ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
+	ImFontConfig icons_config;
 
-		for (DWORD j = 0; j < OutputBufferSize; j++)
-		{
-			OutputBuffer[j] = FullFileName[j];
-			if (&FullFileName[j] == LastDot)
-			{
-				OutputBuffer[j] = NULL;
-				break;
-			}
-		}
-		OutputBuffer[OutputBufferSize - 1] = NULL;
+	icons_config.MergeMode = true;
+	icons_config.PixelSnapH = true;
+	icons_config.OversampleH = 2.5;
+	icons_config.OversampleV = 2.5;
+
+	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
+	io.WantCaptureKeyboard;
+	io.WantCaptureMouse;
+	io.FontAllowUserScaling;
+
+	ImFontConfig rubik;
+	rubik.FontDataOwnedByAtlas = false;
+
+	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
+	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
+	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
+	io.Fonts->AddFontDefault();
+
+	ImGui_ImplWin32_Init(window);
+	ImGui_ImplDX11_Init(pDevice, pContext);
 		return OutputBuffer;
 	}
 	
