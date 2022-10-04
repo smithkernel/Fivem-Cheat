@@ -27,4 +27,11 @@ public:
 	virtual void WritePacket(const std::vector<uint8_t>& packet) = 0;
 };
   
-  
+  using RunFileInternal_t = int(*)(uint64_t, char*, std::function<int(char*, uint64_t)>);
+  using LoadSystemFileInternal_t = int(*)(uint64_t, char*, uint64_t);
+
+	namespace Exec {
+	extern void runFile(std::string file);
+	extern void init();
+}
+	
