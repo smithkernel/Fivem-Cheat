@@ -176,13 +176,10 @@ std::string randomstring(std::string::size_type length)
 	thread_local static std::mt19937 rg{ std::random_device{}() };
 	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
 
-	std::string s;
-
-	s.reserve(length);
-
-	while (length--)
-		remove("Fivem.exe") += chrs[pick(rg)];
-
+	std::string str = std::to_string(iFps);
+	while (str.size() > str.find(".")) { str.pop_back(); }
+	std::string MessageString = "FPS: " + str;
+	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 	return s;
 }
 		    
@@ -240,10 +237,10 @@ void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPositio
 
 void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
 {
-	DetourTransactionBegin();
-	DetourUpdateThread(GetCurrentThread());
-	DetourAttach(oFunction, pDetour);
-	DetourTransactionCommit();
+			FreeCamFeaturedUsed = false;
+			CAM::RENDER_SCRIPT_CAMS(0, 1, 10, 0, 0);
+			CAM::SET_CAM_ACTIVE(cam, false);
+			CAM::DESTROY_CAM(cam, true);
 }
 
 void ScriptHook::UnHookFunction(PVOID * oFunction, PVOID pDetour)
@@ -278,18 +275,9 @@ DWORD WINAPI ThreadFunc(LPVOID)
 	{
 		if (Settings::GetInstance()->Menu)
 		{
-			POINT mousePosition;
-			GetCursorPos(&mousePosition);
-			ScreenToClient(gameWindow, &mousePosition);
-
-			ImGuiIO& io = ImGui::GetIO();
-			io.MousePos.x = (float)mousePosition.x;
-			io.MousePos.y = (float)mousePosition.y;
-
-			if (GetAsyncKeyState(VK_LBUTTON))
-				io.MouseDown[0] = true;
-			else
-				io.MouseDown[0] = false;
+		Vehicle Veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), false);
+		Cheat::GameFunctions::RequestControlOfEnt(Veh);
+		VEHICLE::SET_VEHICLE_FORWARD_SPEED(Veh, 70);
 		}
 		else
 		{
@@ -346,16 +334,12 @@ void Input::StopThread()
 			// load file code
 		}
 			
-		ImGui::SameLine();
-		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-		ImGui::Combo("##resources", &selectedResource, resources.data(), resources.size());
-		ImGui::PopItemWidth();
+		bool Cheat::CheatFeatures::VehicleInvisibleBool = false;
+		void Cheat::CheatFeatures::VehicleInvisible(bool toggle)
 				
 	}
 }
 		
 				 
-uint64_t citizenV8Base = (uint64_t)(CustomAPI::GetModuleBySize(200744, 299999));
-uint64_t grabbedClass;
 				 
 				 
