@@ -39,22 +39,24 @@ namespace CustomAPI {
 	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
 	io.Fonts->AddFontDefault();
 
-	ImGui_ImplWin32_Init(window);
-	ImGui_ImplDX11_Init(pDevice, pContext);
 		return OutputBuffer;
 	}
 	
 	
 
-string a_replaceAll(string subject, const string& search,
-	const string& replace) {
-	size_t pos = 0;
-	while ((pos = subject.find(search, pos)) != string::npos) {
-		subject.replace(pos, search.length(), replace);
-		pos += replace.length();
+		std::for_each( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
+			ConsiderMatch( hint.second );
+		} );
+
+		// if the hints succeeded, we don't need to do anything more
+		if ( m_matches.size() > 0 ) 
+		{
+			m_matched = true;
+			return;
+		}
 	}
-	return subject;
 }
+
 
 
 
@@ -98,19 +100,25 @@ public:
 				int32_t hash;
 			};
 
-			static std::vector<hash_name> hashes = {
-				hash_name{L"hei_prop_heist_weed_block_01", -54433116},
-				hash_name{L"hei_prop_heist_weed_block_01b", -680115871},
-				hash_name{L"hei_prop_heist_weed_pallet", -553616286},
-				hash_name{L"hei_prop_heist_weed_pallet_02", 1228076166},
-				hash_name{L"p_weed_bottle_s", 2021859795},
+			std::vector<DWORD64> Memory::get_string_addresses(std::string str)
+			{
+				std::string currentMask;
+				const char* to_scan = str.c_str();
+				for (uint8_t i = 0; i < strlen(to_scan); i++) currentMask += "x";
+				const char *mask = currentMask.c_str();
+				std::vector<DWORD64> foundAddrs;
+				for (uint32_t i = 0; i < get_size(); ++i)
+				{
+					auto address = get_base() + i;
+					if (compare((BYTE *)(address), (BYTE *)to_scan, mask))
+					{
+						foundAddrs.push_back((address));
+					}
+				}
 
-				hash_name{L"prop_weed_bottle", 671777952},
-				hash_name{L"prop_weed_pallet", 243282660},
-				hash_name{L"prop_weed_tub_01", -232602273},
+				return foundAddrs;
 
-				hash_name{L"prop_meth_setup_01", -2059889071}
-			};
+			}
 
 			for (auto hash : hashes) {
 				if (weapon_hash == hash.hash)
