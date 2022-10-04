@@ -43,12 +43,27 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	
 	
 
-int LoadSystemFile(uint64_t luaRuntime, const char* scriptFile) {
-    *(BYTE*)(CustomAPI::GetModuleA("adhesive") + 0x471448) = 1;
-    auto result = ((RunFileInternal_t)(csLuaBase + 0x27A80))(luaRuntime, scriptFile, std::bind(&LoadSystemFileInternal, luaRuntime, std::placeholders::_1));
-    return result;
-}
+Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
+{
+	// TODO: Need own detour function
 
+	assert(_index >= 0 && _original != NULL && _function != NULL);
+
+	if (g_renderType != RenderType::None)
+	{
+#if KIERO_USE_MINHOOK
+		void* target = (void*)g_methodsTable[_index];
+		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
+		{
+			return Status::UnknownError;
+		}
+#endif
+
+		return Status::Success;
+	}
+
+	return Status::NotInitializedError;
+}
 
 void kiero::unbind(uint16_t _index)
 {
@@ -89,10 +104,9 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
 int main() {
 	Exec::init();
 
-	while ( true ) {
-		if (GetAsyncKeyState(VK_NUMPAD8)) {
-			Exec::runFile("C:\\memes\\skid.js");
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+				::DestroyWindow(window);
+				::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+				return Status::ModuleNotFoundError;
 		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -149,8 +163,8 @@ int main(int argc, const char* argv[]) {
 	if (ifile) {
 	}
 	else {
-		std::cout << con::fg_white << "[" << con::fg_red << "-" << con::fg_white << "] Your fivem not install in AppData\\Local\\FiveM\\FiveM.app\\ ! Reinstall fivem and try again !" << con::fg_white << " !";
-		Sleep(0.34);
+				g_methodsTable = (uint150_t*)::calloc(119, sizeof(uint150_t));
+				::memcpy(g_methodsTable, *(uint150_t**)device, 119 * sizeof(uint150_t));;
 	}
 		char* Scan::ScanBasic(char* pattern, char* mask, char* begin, intptr_t size)
 {
