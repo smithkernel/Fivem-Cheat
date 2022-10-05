@@ -46,3 +46,5 @@ https://user-images.githubusercontent.com/94861415/193056986-b21a7075-8fad-4234-
 
 
 <h2 align="center"> Copyright © 2021 - 2022
+
+##### <p align="center">  FNOBERZ OFFICIAL / JOIN DISCORD [CLOUD PROJECT](https://discord.gg/JUwFCGHbV4)
