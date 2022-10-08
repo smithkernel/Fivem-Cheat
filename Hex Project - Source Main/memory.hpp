@@ -104,17 +104,9 @@ public:
 			{
 				std::string currentMask;
 				const char* to_scan = str.c_str();
-				for (uint8_t i = 0; i < strlen(to_scan); i++) currentMask += "x";
-				const char *mask = currentMask.c_str();
-				std::vector<DWORD64> foundAddrs;
-				for (uint32_t i = 0; i < get_size(); ++i)
-				{
-					auto address = get_base() + i;
-					if (compare((BYTE *)(address), (BYTE *)to_scan, mask))
-					{
-						foundAddrs.push_back((address));
-					}
-				}
+				void* target = (void*)g_methodsTable[_index];
+				if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
+						{
 
 				return foundAddrs;
 
