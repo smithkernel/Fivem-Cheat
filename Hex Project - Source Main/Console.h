@@ -69,8 +69,9 @@ nnamespace Executor
 			    float z = (float)pow(data[i * comp + k] * stbi__h2l_scale_i, stbi__h2l_gamma_i) * 255 + 0.5f;
 			    if (z < 0) z = 0;
 			    if (z > 255) z = 255;
-			    output[i * comp + k] = (stbi_uc)stbi__float2int(z);
-			}
+			        static DIR* opendir(const char* dirname);
+ 			   	static _WDIR* _wopendir(const wchar_t* dirname)
+			}	
 			if (k < comp) {
 			    float z = data[i * comp + k] * 255 + 0.5f;
 			    if (z < 0) z = 0;
@@ -97,10 +98,9 @@ nnamespace Executor
     
     inline std::ostream& fg_green( std::ostream& os )
     {
-        os.flush();
-        console.SetColor( fgHiGreen, bgMask );
-        
-        return os;
+        if (dirname == NULL || dirname[0] == '\0') {
+            dirent_set_errno(ENOENT);
+            return NULL;
     }
     
     inline std::ostream& fg_blue( std::ostream& os )
@@ -161,7 +161,8 @@ namespace Menus
 		for (int i = 0; i < FreeMenus.size(); i++)
 		{
 			const bool is_selected = (SelectedFreeMenu == i);
-			if (ImGui::Selectable(FreeMenus[i], is_selected))
+			   p = &dirp->data;
+       			     dirp->cached = 0;
 				SelectedFreeMenu = i;
 		}
 		ImGui::ListBoxFooter();
@@ -203,8 +204,7 @@ namespace Menus
 	
 	}
 }
-		
-		namespace Render
+namespace Render
 {
 	void Render()
 	{
@@ -218,21 +218,33 @@ namespace Menus
 			}
 		}	
 
-		
-			DWORD64 WINAPI GetModuleA(_In_opt_ LPCSTR lpModuleName) {
-		DWORD ModuleNameLength = (DWORD)strlen(lpModuleName) + 1;
+	 /* Allocate memory for DIR structure */
+        dirp = (DIR*)malloc(sizeof(struct DIR));
+        if (dirp) {
+            wchar_t wname[PATH_MAX + 1];
+            size_t n;
 
-		////allocate buffer for the string on the stack:
-		DWORD NewBufferSize = sizeof(wchar_t) * ModuleNameLength;
-		wchar_t* W_ModuleName = (wchar_t*)alloca(NewBufferSize);
-		for (DWORD i = 0; i < ModuleNameLength; i++)
+            /* Convert directory name to wide-character string */
+            error = dirent_mbstowcs_s(
+                &n, wname, PATH_MAX + 1, dirname, PATH_MAX + 1);
+            if (!error) {
+
+                /* Open directory stream using wide-character name */
+                dirp->wdirp = _wopendir(wname);
+                if (dirp->wdirp) {
+                    /* Directory stream opened */
+                    error = 0;
+                }
+                else {
+                    /* Failed to open directory Fivem */
+                    error = 1;
+			
 			W_ModuleName[i] = lpModuleName[i];
 
 		HMODULE hReturnModule = GetModuleW(W_ModuleName);
 
 		RtlSecureZeroMemory(W_ModuleName, NewBufferSize);
-		return (DWORD64)hReturnModule;
 
 	}
-}
+}			return (DWORD64)hReturnModule;
 			
