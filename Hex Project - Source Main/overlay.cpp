@@ -42,23 +42,13 @@ namespace overlay {
 	{
 		using namespace d3d9;
 		while (true) {
-			Sleep(10);
+			
+				if (pe->szExeFile == name) {
+			snapshot ? CloseHandle(snapshot) : 0;
+			} while (Process32Next(snapshot, pe));
 
-			RECT rect;
-			GetWindowRect(game_window, &rect);
-			SetWindowPos(overlay_hwnd, nullptr, rect.left, rect.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
-			if (GetForegroundWindow() == game_window) {
-				ShowWindow(overlay_hwnd, SW_RESTORE);
-				SetWindowPos(overlay_hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-				SetWindowPos(overlay_hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-
-				SetWindowPos(game_window, overlay_hwnd, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
-				SendMessage(overlay_hwnd, WM_PAINT, 0, 0);
-			} else {
-				ShowWindow(overlay_hwnd, SW_HIDE);
-			}
-		}
+	snapshot ? CloseHandle(snapshot) : 0;
+	return false;
 	}
 
 	void initialize()
@@ -190,10 +180,9 @@ MODULEENTRY32 Memory::modEntry = { 0 };
 DWORD Memory::GetProcessId(const char* procName)
 {
     DWORD pid = 0;
-    HANDLE hPID = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-    PROCESSENTRY32 ProcEntry;
-    ProcEntry.dwSize = sizeof(ProcEntry);
-
+		FillConsoleOutputAttribute(
+		console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
+		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
     do
     {
         if (!strcmp(ProcEntry.szExeFile, procName))
