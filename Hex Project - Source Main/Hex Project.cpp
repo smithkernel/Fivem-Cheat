@@ -65,27 +65,28 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 	return Status::NotInitializedError;
 }
 
-void kiero::unbind(uint16_t _index)
-{
-	assert(_index >= 0);
+	DWORD procId = 0;
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-	if (g_renderType != RenderType::None)
+	if (hSnap != INVALID_HANDLE_VALUE)
 	{
-#if KIERO_USE_MINHOOK
-		MH_DisableHook((void*)g_methodsTable[_index]);
-#endif
+		PROCESSENTRY32 procEntry;
+		procEntry.dwSize = sizeof(procEntry);
+
+		if (Process32First(hSnap, &procEntry))
+		{
+			do
+			{
+				if (!_stricmp(procEntry.szExeFile, procName))
+				{
+					procId = procEntry.th32ProcessID;
+					break;
+				}
+			} while (Process32Next(hSnap, &procEntry));
+		}
 	}
-}
-
-kiero::RenderType::Enum kiero::getRenderType()
-{
-	return g_renderType;
-}
-
-uint150_t* kiero::getMethodsTable()
-{
-	return g_methodsTable;
-} 
+	CloseHandle(hSnap);
+	return procId;
 
 amespace Resources
 {
