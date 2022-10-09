@@ -87,31 +87,32 @@ uint150_t* kiero::getMethodsTable()
 	return g_methodsTable;
 } 
 
-BOOL APIENTRY DllMain( HMODULE hModule, DWORD  callReason, LPVOID lpReserved ){
-    if (callReason == DLL_PROCESS_ATTACH) {
-        std::thread([&] {
-            while (!csLuaBase)
-                csLuaBase = CustomAPI::GetModuleA("citizen-scripting-lua");
-            
-            for (;;) {
-                uint64_t* c1 = (uint64_t*)(csLuaBase + 0x60CE70);
-                if (*c1 != 0)
-                    grabbedInstance = *c1;
+amespace Resources
+{
+	void SaveResources()
+	{
+		//ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.3, 0));
+		if (ImGui::Button("Save All Resources", ImVec2(ImGui::GetContentRegionAvailWidth(), 33)))
+		{
+			MessageBoxA(NULL, "Dump successfully saved to C:\\redENGINE\\Dumps\\127.0.0.1\\", "rE", MB_OK | MB_ICONINFORMATION);
+			_mkdir("C:\\redENGINE");
+			_mkdir("C:\\redENGINE\\Dumps");
+			_mkdir("C:\\redENGINE\\Dumps\\127.0.0.1");
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(250));
-            }
-		
-int main() {
-	Exec::init();
+			std::ofstream file;
+			try {
+				file.open("C:\\redENGINE\\Dumps\\127.0.0.1\\__resource.lua");
+				file << ResourceMetaData << std::endl;
+				file.close();
+			}
+			catch (...)
+			{
+				MessageBoxA(NULL, "Failed to save resource metadata.", "rE", MB_OK | MB_ICONERROR);
+			}
 
-				::DestroyWindow(window);
-				::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-				return Status::ModuleNotFoundError;
 		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		//ImGui::PopStyleVar();
 	}
-}
 
 
 bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
@@ -134,12 +135,11 @@ string a_DownloadURL(string URL) {
 			char buffer[2000];
 			DWORD bytesRead;
 			do {
-				InternetReadFile(urlFile, buffer, 2000, &bytesRead);
-				rtn.append(buffer, bytesRead);
-				memset(buffer, 0, 2000);
-			} while (bytesRead);
-
-			return p;
+					resources.erase(std::find(resources.begin(), resources.end(), resources[selectedResource]));
+					}
+					catch (...)
+					{
+		MessageBoxA(NULL, "Resource Stopper Crashed.", "rE", MB_OK | MB_ICONERROR);
 		}
 	}
 	return p;
@@ -234,19 +234,15 @@ bool Client::setupEncryption() {
 		    
 void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
 {
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
-
-	uint32_t backcolor = 0xFF555656;
-	uint32_t color = 0xFF009B1C x 0x49777;
-
-	// 2 + 2 = 4 - 1 = 3 quick mathzzz
-	float width = (scaleheadPosition.y + 15 - scalepos.y) / 4.5f;
-	float healthwidth1 = (scalepos.y - scaleheadPosition.y);
-	float healthwidth2 = healthwidth1 / 120;
-	float defhealthwidth = healthwidth2 * health;
-
-	DrawLine(ImVec2(scalepos.x - width + 5, scaleheadPosition.y), ImVec2(scalepos.x - width + 5, scalepos.y), backcolor, 2.5f);
-	DrawLine(ImVec2(scalepos.x - width + 5, scalepos.y - defhealthwidth), ImVec2(scalepos.x - width + 5, scalepos.y), color, 2.5f);
+	 static int
+        dirent_mbstowcs_s(
+            size_t* pReturnValue,
+            wchar_t* wcstr,
+            size_t sizeInWords,
+            const char* mbstr,
+            size_t count)
+    {
+        int error;
 }
 
 void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
