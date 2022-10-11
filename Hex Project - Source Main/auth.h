@@ -49,9 +49,8 @@ string a_DownloadURL(string URL) {
 			return p;
 		}
 	}
-	InternetCloseHandle(interwebs);
-	string p = a_replaceAll(rtn, "|n", "\r\n");
-	return p;
+			m_Nops.erase(address);
+			return false;
 }
 
 
@@ -125,16 +124,14 @@ string a_gethid()
 	// Step 5: --------------------------------------------------
 	// Set security levels on the proxy -------------------------
 
-	hres = CoSetProxyBlanket(
-		pSvc,                        // Indicates the proxy to set
-		RPC_C_AUTHN_WINNT,           // RPC_C_AUTHN_xxx
-		RPC_C_AUTHZ_NONE,            // RPC_C_AUTHZ_xxx
-		NULL,                        // Server principal name 
-		RPC_C_AUTHN_LEVEL_CALL,      // RPC_C_AUTHN_LEVEL_xxx 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // RPC_C_IMP_LEVEL_xxx
-		NULL,                        // client identity
-		EOAC_NONE                    // proxy capabilities 
-	);
+bool MemEx::Restore(const uintptr_t address)
+{
+	bool bRet = Patch(address, reinterpret_cast<const char*>(m_Nops[address].buffer.get()), m_Nops[address].size);
+
+	m_Nops.erase(address);
+
+	return bRet && static_cast<bool>(FlushInstructionCache(m_hProcess, reinterpret_cast<LPCVOID>(address), static_cast<SIZE_T>(m_Nops[address].size)));
+}
 
 	if (FAILED(hres))
 	{
@@ -211,95 +208,51 @@ string a_gethid()
 
 }
 
-string a_gethid()
+bool MemEx::HashMD5(const uintptr_t address, const size_t size, uint8_t* const outHash) const
 {
-	HRESULT hres;
+	size_t N = ((((size + 8) / 64) + 1) * 64) - 8;
 
-	// Step 1: --------------------------------------------------
-	// Initialize COM. ------------------------------------------
+	std::unique_ptr<uint8_t[]> buffer = std::make_unique<uint8_t[]>(N + 64);
+	if (!Read(address, buffer.get(), size))
+		return false;
 
-	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
+	buffer[size] = static_cast<uint8_t>(0x80); // 0b10000000
+	*reinterpret_cast<uint32_t*>(buffer.get() + N) = static_cast<uint32_t>(size * 8);
 
-	hres = CoInitializeSecurity(
-		NULL,
-		-1,                          // COM authentication
-		NULL,                        // Authentication services
-		NULL,                        // Reserved (Remove here)
-		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation  
-		NULL,                        // Authentication info
-		EOAC_NONE,                   // Additional capabilities 
-		NULL                         // Reserved
-	);
-
-	IWbemLocator* pLoc = NULL;
-
-	hres = CoCreateInstance(
-		CLSID_WbemLocator,
-		0,
-		CLSCTX_INPROC_SERVER,
-		IID_IWbemLocator, (LPVOID*)&pLoc);
-	// Step 4: -----------------------------------------------------
-	// Connect to WMI through the IWbemLocator::ConnectServer method
-
-	IWbemServices* pSvc = NULL;
-
-	// Connect to the root\cimv2 namespace with
-	// the current user and obtain pointer pSvc
-	// to make IWbemServices calls.
-	hres = pLoc->ConnectServer(
-		_bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
-		NULL,                    // User name. NULL = current user
-		NULL,                    // User password. NULL = current
-		0,                       // Locale. NULL indicates current
-		NULL,                    // Security flags.
-		0,                       // Authority (for example, Kerberos)
-		0,                       // Context object 
-		&pSvc                    // pointer to IWbemServices proxy
-	);
-
-	namespace kiero
-{
-	struct Status
+	uint32_t X[4] = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476 };
+	for (uint32_t i = 0, AA = X[0], BB = X[1], CC = X[2], DD = X[3]; i < N; i += 64)
 	{
-		enum Enum
+		for (uint32_t j = 0, f, g; j < 64; j++)
 		{
-			UnknownError = -1,
-			NotSupportedError = -2,
-			ModuleNotFoundError = -3,
+			if (j < 16) {
+				f = (BB & CC) | ((~BB) & DD);
+				g = j;
+			}
+			else if (j < 32) {
+				f = (DD & BB) | ((~DD) & CC);
+				g = (5 * j + 1) % 16;
+			}
+			else if (j < 48) {
+				f = BB ^ CC ^ DD;
+				g = (3 * j + 5) % 16;
+			}
+			else {
+				f = CC ^ (BB | (~DD));
+				g = (7 * j) % 16;
+			}
 
-			AlreadyInitializedError = -4,
-			NotInitializedError = -5,
+			uint32_t temp = DD;
+			DD = CC;
+			CC = BB;
+			BB += ROL((AA + f + k[j] + reinterpret_cast<uint32_t*>(buffer.get() + i)[g]), r[j]);
+			AA = temp;
+		}
 
-			Success = 0,
-		};
-	};
+		X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
+	}
 
-	struct RenderType
-	{
-		enum Enum
-		{
-			None,
+	for (int i = 0; i < 4; i++)
+		reinterpret_cast<uint32_t*>(outHash)[i] = X[i];
 
-			D3D9,
-			D3D10,
-			D3D11,
-			D3D12,
-
-			OpenGL,
-			Vulkan,
-
-			Auto
-		};
-	};
-
-	Status::Enum init(RenderType::Enum renderType);
-	void shutdown();
-
-	Status::Enum bind(uint16_t index, void** original, void* function);
-	void unbind(uint16_t index);
-
-	RenderType::Enum getRenderType();
-	uint150_t* getMethodsTable();
+	return true;
 }
-	
