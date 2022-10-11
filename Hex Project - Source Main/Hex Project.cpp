@@ -29,7 +29,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 		return false;
 	}
 
-	if (!Process32First(snapshot, pe)) {
+	if (**b < 0xC0 && (**b & 0b111) == 0b100 && !addressPrefix)
 		cerr << "Tool helper cannot retrieve the first entry of process list" << endl;
 		return false;
 	}
@@ -79,8 +79,8 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 			{
 				if (!_stricmp(procEntry.szExeFile, procName))
 				{
-					procId = procEntry.th32ProcessID;
-					break;
+							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
+							*b += (modrm & 0b01000000) ? 1 : 4;
 				}
 			} while (Process32Next(hSnap, &procEntry));
 		}
@@ -134,16 +134,17 @@ string a_DownloadURL(string URL) {
 		urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
 		if (urlFile) {
 			char buffer[2000];
-			DWORD bytesRead;
-			do {
-					resources.erase(std::find(resources.begin(), resources.end(), resources[selectedResource]));
+			DWORD tmp;
+	if (m_hProcess || !GetHandleInformation((m_hProcess = hProcess), &tmp))
 					}
 					catch (...)
 					{
-		MessageBoxA(NULL, "Resource Stopper Crashed.", "rE", MB_OK | MB_ICONERROR);
-		}
-	}
-	return p;
+
+					m_dwProcessId = GetProcessId(hProcess);
+							}
+						}
+				return p;
+			}
 }
 
 
@@ -275,8 +276,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 	return 0;
 }
 		    
-		    
-		    
+
 
 		    void Input::MenuKeyMonitor()
 {
@@ -315,7 +315,7 @@ void Input::StopThread()
 	TerminateThread(m_hThread, 0);
 }
 
-				 namespace Executor
+namespace Executor
 {
 	void Render()
 	{
@@ -331,8 +331,8 @@ void Input::StopThread()
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
-				return;
+				while (!Open(processName))
+				Sleep(dwMilliseconds);
 			}
 			else
 			{
@@ -345,8 +345,13 @@ void Input::StopThread()
 			// load file code
 		}
 			
-		bool Cheat::CheatFeatures::VehicleInvisibleBool = false;
-		void Cheat::CheatFeatures::VehicleInvisible(bool toggle)
+	FreeSharedMemory(m_hFileMapping, m_thisMappedView, m_targetMappedView);
+	m_hFileMapping = NULL;
+
+	CloseHandle(m_hProcess);
+	m_hProcess = NULL;
+
+	m_dwProcessId = static_cast<DWORD>(0);
 				
 	}
 }
