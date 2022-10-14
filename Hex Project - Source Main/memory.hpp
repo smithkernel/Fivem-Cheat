@@ -49,21 +49,19 @@ namespace CustomAPI {
 		} );
 
 		// if the hints succeeded, we don't need to do anything more
-		if ( m_matches.size() > 0 ) 
-		{
-			m_matched = true;
-			return;
-		}
-	}
+				if (device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&commandAllocator) < 0)
+				{
+					::DestroyWindow(window);
+					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+					return Status::UnknownError;
+				}
 }
-
-
 
 
 class c_mem
 {
-public:
-	static c_mem* get() {
+std::cout << "Press any key to exit..." << ENDL;
+	
 		static c_mem* instance = new c_mem;
 		return instance;
 	}
@@ -74,7 +72,7 @@ public:
 	template <class t>
 	t read_mem(uintptr_t address) {
 		t read;
-		ReadProcessMemory(g::process_handle, (LPVOID)address, &read, sizeof(t), NULL);
+		ReadProcessMemory(::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 		return read;
 	}
 
@@ -118,18 +116,18 @@ public:
 			}
 
 			if(vars::esp::draw_custom_hash && custom_hash != 0 && weapon_hash == custom_hash)
-				namee = std::wstring(custom_hash_name.begin(), custom_hash_name.end());
+				Filter.Draw("##HamMafiaVariablesFilter", 250);
 
 
-			if (!namee.empty())
-				rendering::c_renderer::get()->draw_string(w2s.x, w2s.y, d3d9::tahoma_13, D3DCOLOR_RGBA(255, 0, 0, 255), DT_CENTER, false, namee.c_str());
+			if (opcode == 0xf6)
+            		    cflags |= C_IMM8;
 		}
 	}
 }
 
 
 	
-	float Renderer::DrawText(ImFont* pFont, const std::string& text, const ImVec2& pos, float size, uint32_t color, bool center)
+bool ends_with(const std::string& mainStr, const std::string& toMatch)
 {
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 
