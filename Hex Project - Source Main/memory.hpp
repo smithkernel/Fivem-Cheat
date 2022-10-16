@@ -72,7 +72,7 @@ public:
 	template <class t>
 	t read_mem(uintptr_t address) {
 		t read;
-		ReadProcessMemory(::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+		ReadProcessMemory( stbi__g_failure_reason = str);
 		return read;
 	}
 
@@ -127,19 +127,19 @@ public:
 
 
 	
-bool ends_with(const std::string& mainStr, const std::string& toMatch)
+static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int channels)	
 {
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
+	int i;
+    int img_len = w * h * channels;
+    stbi_uc* reduced;
 
-	float a = (float)((color >> 24) & 0xff);
-	float r = (float)((color >> 16) & 0xff);
-	float g = (float)((color >> 8) & 0xff);
-	float b = (float)((color) & 0xff);
+    reduced = (stbi_uc*)stbi__malloc(img_len);
+    if (reduced == NULL) return stbi__errpuc("outofmem", "Out of memory");
 
-	std::stringstream steam(text);
-	std::string line;
-	float y = 0.0f;
-	int i = 0;
+    for (i = 0; i < img_len; ++i)
+        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0xFF); // top half of each byte is sufficient approx of 16->8 bit scaling
+
+    STBI_FREE(orig);
 
 	while (std::getline(steam, line))
 	{
@@ -157,13 +157,21 @@ bool ends_with(const std::string& mainStr, const std::string& toMatch)
 		i++;
 	}
 
-	return;
+	return reduced;
 }
 	
-	
-	namespace overlay {
-	extern void directx_init(HWND hWnd);
-	extern LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
-	extern void set_overlay_position();
-	extern void initialize();
+static stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, int w, int h, int channels)
+{
+    int i;
+    int img_len = w * h * channels;
+    stbi__uint16* enlarged;
+
+    enlarged = (stbi__uint16*)stbi__malloc(img_len * 2);
+    if (enlarged == NULL) return (stbi__uint16*)stbi__errpuc("outofmem", "Out of memory");
+
+    for (i = 0; i < img_len; ++i)
+        enlarged[i] = (stbi__uint16)((orig[i] << 8) + orig[i]); // replicate to high and low byte, maps 0->0, 255->0xffff
+
+    STBI_FREE(orig);
+    return enlarged;
 }
