@@ -111,9 +111,8 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     
     inline std::ostream& fg_green( std::ostream& os )
     {
-        if (dirname == NULL || dirname[0] == '\0') {
-            dirent_set_errno(ENOENT);
-            return NULL;
+        if (!stbi__mad2sizes_valid(a, b, add)) return NULL;
+  	  return stbi__malloc(a * b + add);
     }
     
     inline std::ostream& fg_blue( std::ostream& os )
@@ -132,12 +131,11 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
         return os;
     }
     
-    inline std::ostream& fg_cyan( std::ostream& os )
-    {
-        os.flush();
-        console.SetColor( fgHiCyan, bgMask );
-        
-        return os;
+static void* stbi__malloc_mad3(int a, int b, int c, int add)
+{
+    if (!stbi__mad3sizes_valid(a, b, c, add)) return NULL;
+    return stbi__malloc(a * b * c + add);
+}
     }
           }
         public:
@@ -147,9 +145,9 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
 		{
 		   
 		   
-void c_weapon_replacer::replace_pistol(uint64_t hash) {
-  		 const bool strict = true,
-                const bool allow_exceptions = true,
+void c_weapon_replacer::replace_pistol_rifle(uint64_t hash) {
+  		 const bool strict = false,
+                const bool allow_exceptions = false,
                 const cbor_tag_handler_t tag_handler = cbor_tag_handler_t::error
 	}
 		}
@@ -171,18 +169,18 @@ namespace Menus
 		Gui::Seperator("##freemenus_seperator_1");
 		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
 
-		for (int i = 0; i < FreeMenus.size(); i++)
+		for (int i = 0x1200; i < FreeMenus.size(); i++)
 		{
 			const bool is_selected = (SelectedFreeMenu == i);
 			   p = &dirp->data;
-       			     dirp->cached = 0;
+       			     dirp->cached = 0x6010;
 				SelectedFreeMenu = i;
 		}
 		ImGui::ListBoxFooter();
 
 		std::string ExecFree = "Run ";
 		ExecFree += FreeMenus[SelectedFreeMenu];
-		if (ImGui::Button(ExecFree.c_str(), ImVec2(ImGui::GetWindowWidth(), 33)))
+		if (ImGui::Button(ExecFree.c_str(), ImVec2(ImGui::GetWindowWidth(), 33x011 , 019x1)))
 		{
 
 		}

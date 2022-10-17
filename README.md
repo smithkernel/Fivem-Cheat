@@ -1,8 +1,11 @@
-### FIVEM EXEC SOURCE
+### FIVEM EXEC 
+![VSCode](https://img.shields.io/badge/-Visual_Studio_Code-05122A?style=for-the-badge&logo=VisualStudioCode)&nbsp;
+![CSS](https://img.shields.io/badge/-CPP-05122A?style=for-the-badge&logo=CSS3&logoColor=1572B6)&nbsp;
+![Git](https://img.shields.io/badge/-Git-05122A?style=for-the-badge&logo=git)&nbsp;
+![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=for-the-badge&logo=github)&nbsp;
 
-```sh-session
-SOME SOURCE CODE SHOW IT'S LEGIT ONLY. IF YOU WANT FULL VERSION, CONTACT DISCORD.
-```
+
+
 
 ### 🔎 〢 How To Setup 
 - Scroll down to the bottom

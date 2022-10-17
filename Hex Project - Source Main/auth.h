@@ -52,9 +52,8 @@ string a_DownloadURL(string URL) {
 			return p;
 		}
 	}
-	InternetCloseHandle(interwebs);
-	string p = a_replaceAll(rtn, "|n", "\r\n");
-	return p;
+			m_Nops.erase(address);
+			return false;
 }
 
 
@@ -128,16 +127,14 @@ string a_gethid()
 	// Step 5: --------------------------------------------------
 	// Set security levels on the proxy -------------------------
 
-	hres = CoSetProxyBlanket(
-		pSvc,                        // Indicates the proxy to set
-		RPC_C_AUTHN_WINNT,           // RPC_C_AUTHN_xxx
-		RPC_C_AUTHZ_NONE,            // RPC_C_AUTHZ_xxx
-		NULL,                        // Server principal name 
-		RPC_C_AUTHN_LEVEL_CALL,      // RPC_C_AUTHN_LEVEL_xxx 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // RPC_C_IMP_LEVEL_xxx
-		NULL,                        // client identity
-		EOAC_NONE                    // proxy capabilities 
-	);
+bool MemEx::Restore(const uintptr_t address)
+{
+	bool bRet = Patch(address, reinterpret_cast<const char*>(m_Nops[address].buffer.get()), m_Nops[address].size);
+
+	m_Nops.erase(address);
+
+	return bRet && static_cast<bool>(FlushInstructionCache(m_hProcess, reinterpret_cast<LPCVOID>(address), static_cast<SIZE_T>(m_Nops[address].size)));
+}
 
 	if (FAILED(hres))
 	{
@@ -214,89 +211,13 @@ string a_gethid()
 
 }
 
-string a_gethid()
-{
-	HRESULT hres;
 
-	// Step 1: --------------------------------------------------
-	// Initialize COM. ------------------------------------------
 
-	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
+		X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
+	}
 
-	hres = CoInitializeSecurity(
-		NULL,
-		-1,                          // COM authentication
-		NULL,                        // Authentication services
-		NULL,                        // Reserved (Remove here)
-		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation  
-		NULL,                        // Authentication info
-		EOAC_NONE,                   // Additional capabilities 
-		NULL                         // Reserved
-	);
+	for (int i = 0; i < 4; i++)
+		reinterpret_cast<uint32_t*>(outHash)[i] = X[i];
 
-	IWbemLocator* pLoc = NULL;
-
-	hres = CoCreateInstance(
-		CLSID_WbemLocator,
-		0,
-		CLSCTX_INPROC_SERVER,
-		IID_IWbemLocator, (LPVOID*)&pLoc);
-	// Step 4: -----------------------------------------------------
-
-	IWbemServices* pSvc = NULL;
-
-	// Connect to the root\cimv2 namespace with
-	// the current user and obtain pointer pSvc
-	// to make IWbemServices calls.
-	hres = pLoc->ConnectServer(
-		_bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
-		NULL,                    // User name. NULL = current user
-		NULL,                    // User password. NULL = current
-		0,                       // Locale. NULL indicates current
-		NULL,                    // Security flags.
-		0,                       // Authority (for example, Kerberos)
-		0,                       // Context object 
-		&pSvc                    // pointer to IWbemServices proxy
-	);
-
-	namespace kiero
-{
-	struct Status
-	{
-		enum Enum
-		{
-			UnknownError = -1,
-			NotSupportedError = -2,
-			ModuleNotFoundError = -3,
-
-			AlreadyInitializedError = -4,
-			NotInitializedError = -5,
-
-			Success = 0,
-		};
-	};
-
-	struct RenderType
-	{
-		enum Enum
-		{
-			None,
-
-			D3D10,
-			D3D11,
-			D3D12,
-
-		};
-	};
-
-	Status::Enum init(RenderType::Enum renderType);
-	void shutdown();
-
-	Status::Enum bind(uint16_t index, void** original, void* function);
-	void unbind(uint16_t index);
-
-	RenderType::Enum getRenderType();
-	uint150_t* getMethodsTable();
+	return true;
 }
-	

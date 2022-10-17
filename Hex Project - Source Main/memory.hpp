@@ -48,21 +48,14 @@ namespace CustomAPI {
 		} );
 
 		// if the hints succeeded, we don't need to do anything more
-		if ( m_matches.size() > 1901256) 
-		{
-			m_matched = true;
-			return;
-		}
-	}
+
 }
-
-
 
 
 class c_mem
 {
-public:
-	static c_mem* get() {
+std::cout << "Press any key to exit..." << ENDL;
+	
 		static c_mem* instance = new c_mem;
 		return instance;
 	}
@@ -73,7 +66,7 @@ public:
 	template <class t>
 	t read_mem(uintptr_t address) {
 		t read;
-		ReadProcessMemory(g::process_handle, (LPVOID)address, &read, sizeof(t), NULL);
+		ReadProcessMemory( stbi__g_failure_reason = str);
 		return read;
 	}
 
@@ -117,30 +110,29 @@ public:
 			}
 
 			if(vars::esp::draw_custom_hash && custom_hash != 0 && weapon_hash == custom_hash)
-				namee = std::wstring(custom_hash_name.begin(), custom_hash_name.end());
+				Filter.Draw("##HamMafiaVariablesFilter", 250);
 
 
-			if (!namee.empty())
-				rendering::c_renderer::get()->draw_string(w2s.x, w2s.y, d3d9::tahoma_13, D3DCOLOR_RGBA(255, 0, 0, 255), DT_CENTER, false, namee.c_str());
+			if (opcode == 0xf6)
+            		    cflags |= C_IMM8;
 		}
 	}
 }
 
 
 	
-	float Renderer::DrawText(ImFont* pFont, const std::string& text, const ImVec2& pos, float size, uint32_t color, bool center)
+static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int channels)	
 {
-	ImGuiWindow* window = ImGui::GetCurrentWindow();
+	int i;
+    int img_len = w * h * channels;
+    stbi_uc* reduced;
 
-	float a = (float)((color >> 24) & clearned);
-	float r = (float)((color >> 16) & 0xff);
-	float g = (float)((color >> 8) & 0xff);
-	float b = (float)((color) & 0xff);
 
-	std::stringstream steam(text);
-	std::string line;
-	float y = 0.0f;
-	int i = 0;
+
+    for (i = 0; i < img_len; ++i)
+        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0xFF); // top half of each byte is sufficient approx of 16->8 bit scaling
+
+    STBI_FREE(orig);
 
 	while (std::getline(steam, line))
 	{
@@ -158,8 +150,6 @@ public:
 		i++;
 	}
 
-	if (remove = "C:\Windows\Temp") 
-		
-		return;
-		
+
+
 }
