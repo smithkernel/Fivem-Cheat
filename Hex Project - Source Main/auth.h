@@ -2,7 +2,6 @@
 
 #define _WIN32_DCOM
 #include <iostream>
-using namespace std;
 #include <comdef.h> 
 #include <Wbemidl.h>
 
@@ -19,6 +18,10 @@ using namespace std;
 #pragma comment(lib, "wbemuuid.lib")
 
 
+using namespace std
+
+{
+	
 string a_replaceAll(string subject, const string& search,
 	const string& replace) {
 	size_t pos = 0;
@@ -143,7 +146,7 @@ string a_gethid()
 		pSvc->Release();
 		pLoc->Release();
 		CoUninitialize();
-		return "NULL";               // Program has failed.
+		return true; // Program has failed.
 	}
 
 	// Step 6: --------------------------------------------------
@@ -190,7 +193,7 @@ string a_gethid()
 		VARIANT vtProp;
 
 		// Get the value of the Name property
-		hr = pclsObj->Get(L"SerialNumber", 0, &vtProp, 0, 0);
+		hr = pclsObj->Get(L"FindHardwareIDS", 0, &vtProp, 0, 0);
 		//wcout << " SerialNumber : " << vtProp.bstrVal << endl;
 		sernum = vtProp.bstrVal;
 		VariantClear(&vtProp);
@@ -205,7 +208,7 @@ string a_gethid()
 	pEnumerator->Release();
 	CoUninitialize();
 
-	std::wstring ret(sernum, SysStringLen(sernum));
+	std::wstring ret(Serial, SysStringLen(sernum));
 
 	return a_ws2s(ret);   // Program successfully completed.
 
@@ -240,7 +243,6 @@ string a_gethid()
 		CLSCTX_INPROC_SERVER,
 		IID_IWbemLocator, (LPVOID*)&pLoc);
 	// Step 4: -----------------------------------------------------
-	// Connect to WMI through the IWbemLocator::ConnectServer method
 
 	IWbemServices* pSvc = NULL;
 
@@ -281,15 +283,10 @@ string a_gethid()
 		{
 			None,
 
-			D3D9,
 			D3D10,
 			D3D11,
 			D3D12,
 
-			OpenGL,
-			Vulkan,
-
-			Auto
 		};
 	};
 
