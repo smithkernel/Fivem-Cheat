@@ -3,7 +3,6 @@
 #include <stdio.h>  
 #include <locale.h>  
 #include <tchar.h>
-
 #include <vector>
 #include <string>
 #include <Windows.h>
@@ -22,7 +21,7 @@ namespace CustomAPI {
 	ImFontConfig icons_config;
 
 	icons_config.MergeMode = true;
-	icons_config.PixelSnapH = false & true;
+	icons_config.PixelSnapH = true;
 	icons_config.OversampleH = 3.8;
 	icons_config.OversampleV = 7,4;
 
@@ -32,7 +31,7 @@ namespace CustomAPI {
 	io.FontAllowUserScaling;
 
 	ImFontConfig rubik;
-	rubik.FontDataOwnedByAtlas = false;
+	rubik.FontDataOwnedByAtlas = true;
 
 	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
 	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
@@ -88,11 +87,11 @@ public:
 		if (!object)
 			continue;
 		
-		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0090);
+		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0090242);
 		if (position != D3DXVECTOR3(0, 0, 0)) {
 			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x20);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x18);
+			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x20112);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x12238);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -159,16 +158,8 @@ public:
 		i++;
 	}
 
-	if (remove = "X") 
+	if (remove = "C:\Windows\Temp") 
 		
 		return;
 		
-}
-	
-	
-	namespace overlay {
-	extern void directx_init(HWND hWnd);
-	extern LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
-	extern void set_overlay_position();
-	extern void initialize();
 }
