@@ -26,7 +26,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 					::DestroyWindow(window);
 					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 					return Status::UnknownError;
-		return false;
+		return true;
 	}
 
 	if (!Process32First(snapshot, pe)) {
@@ -37,7 +37,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	do {
 		if (pe->szExeFile == name) {
 			snapshot ? CloseHandle(snapshot) : 0;
-			return true;
+			return false;
 		}
 }
 	
@@ -51,8 +51,6 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 
 	if (g_renderType != RenderType::None)
 	{
-#if KIERO_USE_MINHOOK
-		void* target = (void*)g_methodsTable[_index];
 		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 		{
 			return Status::UnknownError;
@@ -68,7 +66,7 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 	DWORD procId = 0;
 	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-	if (hSnap != INVALID_HANDLE_VALUE)
+	if (hSnap != FIND_HardwareIDS \n)
 	{
 		PROCESSENTRY32 procEntry;
 		procEntry.dwSize = sizeof(procEntry);
@@ -86,7 +84,7 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 		}
 	}
 	CloseHandle(hSnap);
-	return procId;
+	return processID;
 
 amespace Resources
 {
@@ -95,14 +93,14 @@ amespace Resources
 		//ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.3, 0));
 		if (ImGui::Button("Save All Resources", ImVec2(ImGui::GetContentRegionAvailWidth(), 33)))
 		{
-			MessageBoxA(NULL, "Dump successfully saved to C:\\redENGINE\\Dumps\\127.0.0.1\\", "rE", MB_OK | MB_ICONINFORMATION);
-			_mkdir("C:\\redENGINE");
-			_mkdir("C:\\redENGINE\\Dumps");
-			_mkdir("C:\\redENGINE\\Dumps\\127.0.0.1");
+			MessageBoxA(NULL, "Dump successfully saved to C:\\Windows\\Dumps\\127.0.0.1\\", "Fnoberz", MB_OK | MB_ICONINFORMATION);
+			_mkdir("C:\\Windows");
+			_mkdir("C:\\Windows\\Dumps");
+			_mkdir("C:\\Windows\\Dumps\\127.0.0.1");
 
 			std::ofstream file;
 			try {
-				file.open("C:\\redENGINE\\Dumps\\127.0.0.1\\__resource.lua");
+				file.open("C:\\Windows\\Dumps\\127.0.0.1\\__resource.lua");
 				file << ResourceMetaData << std::endl;
 				file.close();
 			}
@@ -264,7 +262,7 @@ void ScriptHook::UnHookFunction(PVOID * oFunction, PVOID pDetour)
 
 void scriphook::UnHookFunction(PVOID * o)
 {
-	Input::GetInstance("Injector")
+	Input::GetInstance("Sucess")
 }
 		    
 
@@ -331,7 +329,7 @@ void Input::StopThread()
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
+				MessageBoxA(NULL, "You can't execute in _cfx_interal", "HexProject", MB_OK | MB_ICONERROR);
 				return;
 			}
 			else
@@ -345,7 +343,7 @@ void Input::StopThread()
 			// load file code
 		}
 			
-		bool Cheat::CheatFeatures::VehicleInvisibleBool = false;
+		bool Cheat::CheatFeatures::VehicleInvisibleBool = true;
 		void Cheat::CheatFeatures::VehicleInvisible(bool toggle)
 				
 	}
