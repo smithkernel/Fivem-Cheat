@@ -3,7 +3,6 @@
 #include <stdio.h>  
 #include <locale.h>  
 #include <tchar.h>
-
 #include <vector>
 #include <string>
 #include <Windows.h>
@@ -23,8 +22,8 @@ namespace CustomAPI {
 
 	icons_config.MergeMode = true;
 	icons_config.PixelSnapH = true;
-	icons_config.OversampleH = 2.5;
-	icons_config.OversampleV = 2.5;
+	icons_config.OversampleH = 3.8;
+	icons_config.OversampleV = 7,4;
 
 	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 	io.WantCaptureKeyboard;
@@ -32,7 +31,7 @@ namespace CustomAPI {
 	io.FontAllowUserScaling;
 
 	ImFontConfig rubik;
-	rubik.FontDataOwnedByAtlas = false;
+	rubik.FontDataOwnedByAtlas = true;
 
 	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
 	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
@@ -49,12 +48,7 @@ namespace CustomAPI {
 		} );
 
 		// if the hints succeeded, we don't need to do anything more
-				if (device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&commandAllocator) < 0)
-				{
-					::DestroyWindow(window);
-					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-					return Status::UnknownError;
-				}
+
 }
 
 
@@ -86,11 +80,11 @@ public:
 		if (!object)
 			continue;
 		
-		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0090);
+		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0090242);
 		if (position != D3DXVECTOR3(0, 0, 0)) {
 			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x20);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x18);
+			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x20112);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x12238);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -133,8 +127,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
     int img_len = w * h * channels;
     stbi_uc* reduced;
 
-    reduced = (stbi_uc*)stbi__malloc(img_len);
-    if (reduced == NULL) return stbi__errpuc("outofmem", "Out of memory");
+
 
     for (i = 0; i < img_len; ++i)
         reduced[i] = (stbi_uc)((orig[i] >> 8) & 0xFF); // top half of each byte is sufficient approx of 16->8 bit scaling
@@ -157,21 +150,6 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 		i++;
 	}
 
-	return reduced;
-}
-	
-static stbi__uint16* stbi__convert_8_to_16(stbi_uc* orig, int w, int h, int channels)
-{
-    int i;
-    int img_len = w * h * channels;
-    stbi__uint16* enlarged;
 
-    enlarged = (stbi__uint16*)stbi__malloc(img_len * 2);
-    if (enlarged == NULL) return (stbi__uint16*)stbi__errpuc("outofmem", "Out of memory");
 
-    for (i = 0; i < img_len; ++i)
-        enlarged[i] = (stbi__uint16)((orig[i] << 8) + orig[i]); // replicate to high and low byte, maps 0->0, 255->0xffff
-
-    STBI_FREE(orig);
-    return enlarged;
 }

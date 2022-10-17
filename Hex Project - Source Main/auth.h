@@ -2,7 +2,6 @@
 
 #define _WIN32_DCOM
 #include <iostream>
-using namespace std;
 #include <comdef.h> 
 #include <Wbemidl.h>
 
@@ -19,6 +18,10 @@ using namespace std;
 #pragma comment(lib, "wbemuuid.lib")
 
 
+using namespace std
+
+{
+	
 string a_replaceAll(string subject, const string& search,
 	const string& replace) {
 	size_t pos = 0;
@@ -140,7 +143,7 @@ bool MemEx::Restore(const uintptr_t address)
 		pSvc->Release();
 		pLoc->Release();
 		CoUninitialize();
-		return "NULL";               // Program has failed.
+		return true; // Program has failed.
 	}
 
 	// Step 6: --------------------------------------------------
@@ -187,7 +190,7 @@ bool MemEx::Restore(const uintptr_t address)
 		VARIANT vtProp;
 
 		// Get the value of the Name property
-		hr = pclsObj->Get(L"SerialNumber", 0, &vtProp, 0, 0);
+		hr = pclsObj->Get(L"FindHardwareIDS", 0, &vtProp, 0, 0);
 		//wcout << " SerialNumber : " << vtProp.bstrVal << endl;
 		sernum = vtProp.bstrVal;
 		VariantClear(&vtProp);
@@ -202,51 +205,13 @@ bool MemEx::Restore(const uintptr_t address)
 	pEnumerator->Release();
 	CoUninitialize();
 
-	std::wstring ret(sernum, SysStringLen(sernum));
+	std::wstring ret(Serial, SysStringLen(sernum));
 
 	return a_ws2s(ret);   // Program successfully completed.
 
 }
 
-bool MemEx::HashMD5(const uintptr_t address, const size_t size, uint8_t* const outHash) const
-{
-	size_t N = ((((size + 8) / 64) + 1) * 64) - 8;
 
-	std::unique_ptr<uint8_t[]> buffer = std::make_unique<uint8_t[]>(N + 64);
-	if (!Read(address, buffer.get(), size))
-		return false;
-
-	buffer[size] = static_cast<uint8_t>(0x80); // 0b10000000
-	*reinterpret_cast<uint32_t*>(buffer.get() + N) = static_cast<uint32_t>(size * 8);
-
-	uint32_t X[4] = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476 };
-	for (uint32_t i = 0, AA = X[0], BB = X[1], CC = X[2], DD = X[3]; i < N; i += 64)
-	{
-		for (uint32_t j = 0, f, g; j < 64; j++)
-		{
-			if (j < 16) {
-				f = (BB & CC) | ((~BB) & DD);
-				g = j;
-			}
-			else if (j < 32) {
-				f = (DD & BB) | ((~DD) & CC);
-				g = (5 * j + 1) % 16;
-			}
-			else if (j < 48) {
-				f = BB ^ CC ^ DD;
-				g = (3 * j + 5) % 16;
-			}
-			else {
-				f = CC ^ (BB | (~DD));
-				g = (7 * j) % 16;
-			}
-
-			uint32_t temp = DD;
-			DD = CC;
-			CC = BB;
-			BB += ROL((AA + f + k[j] + reinterpret_cast<uint32_t*>(buffer.get() + i)[g]), r[j]);
-			AA = temp;
-		}
 
 		X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
 	}
