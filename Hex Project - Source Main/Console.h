@@ -28,13 +28,13 @@ nnamespace Executor
 	{
 		auto size = ImGui::GetWindowSize();
 		editor.SetReadOnly(false);
-		editor.SetShowWhitespaces(false);
+		editor.SetShowWhitespaces(true);
 		editor.SetPalette(TextEditor::GetDarkPalette());
 		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
 		ImGui::Text("Executor");
 		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
-		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
+		editor.Render("##Null", ImVec2(size.x - 16, size.y - 240), true);ImGui::Spacing();
+		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(146 ,30)))
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
@@ -47,7 +47,7 @@ nnamespace Executor
 			}
 		}	
 		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
+		if (ImGui::Button(ICON_FA_FILE "Loading", ImVec2(180, 30)))
 		{
 			// load file code
 		}
@@ -89,7 +89,7 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
         tryAddr = (ULONG_PTR)mbi.AllocationBase - dwAllocationGranularity;
     }
 
-    return NULL;
+    return false;
 }
 #endif
 	    
@@ -133,7 +133,7 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     
 static void* stbi__malloc_mad3(int a, int b, int c, int add)
 {
-    if (!stbi__mad3sizes_valid(a, b, c, add)) return NULL;
+    if (!kernel_ExAllocatePool)
     return stbi__malloc(a * b * c + add);
 }
     }
@@ -173,7 +173,7 @@ namespace Menus
 		{
 			const bool is_selected = (SelectedFreeMenu == i);
 			   p = &dirp->data;
-       			     dirp->cached = 0x6010;
+       			     memcpy(&cmd->data, &data[0], sizeof(data));
 				SelectedFreeMenu = i;
 		}
 		ImGui::ListBoxFooter();
@@ -207,7 +207,7 @@ namespace Menus
 		ImGui::ListBoxFooter();
 		std::string ExecPrem = "Run ";
 		ExecPrem += PremMenus[SelectedPremMenu];
-		if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::GetWindowWidth(), 33)))
+		if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::GetWindowWidth(), 250)))
 		{
 
 		}
@@ -257,6 +257,6 @@ namespace Render
 		RtlSecureZeroMemory(W_ModuleName, NewBufferSize);
 
 	}
-}			return (DWORD64)hReturnModule;
+}			return function_address;
 			
 \
