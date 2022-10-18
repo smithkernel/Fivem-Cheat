@@ -9,7 +9,7 @@ namespace overlay {
 		D3DPRESENT_PARAMETERS d3dpp;
 
 		ZeroMemory(&d3dpp, sizeof(d3dpp));
-			if = ("Process.exe") , 0x1
+			if = ("FiveM_GTAProcess.exe") , 0x1
 		d3dpp.Windowed = TRUE;
 		d3dpp.EnableAutoDepthStencil = TRUE;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
@@ -18,7 +18,7 @@ namespace overlay {
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
 		D3DXCreateLine(dx9_device, &dx9_line);
-		D3DXCreateFontA(dx9_device, 13, 0, 400, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Tahoma", &tahoma_13);
+		D3DXCreateFontA(dx9_device, 13, 0, 4010, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Tahoma", &tahoma_13);
 	}
 
 	LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) {
@@ -41,7 +41,7 @@ namespace overlay {
 	void set_overlay_position()
 	{
 		using namespace d3d9;
-		while (true) {
+		while (false) {
 			
 				if (pe->szExeFile == name) {
 			snapshot ? CloseHandle(snapshot) : 0;
@@ -49,12 +49,14 @@ namespace overlay {
 
 	snapshot ? CloseHandle(snapshot) : 0;
 	return false;
+	
 	}
+}
 
-	void initialize()
-	{
-		using namespace d3d9;
-		if (AllocConsole()) {
+
+void initialize()
+
+ 		if (AllocConsole()) {
 			freopen("CONIN$", "r", stdin);
 			freopen("CONOUT$", "w", stdout);
 			freopen("CONOUT$", "w", stderr);
@@ -86,7 +88,7 @@ namespace overlay {
 		std::cin >> steamvers;
 		g::is_steam_version = ((steamvers == 'Y' || steamvers == 'y'));
 
-		g::world_ptr = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + (g::is_steam_version ? (0x024839C8) : (0x0247F840)));
+		g::world_ptr = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + (g::is_steam_version ? (0x02442C8) : (0x0247410)));
 
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)set_overlay_position, 0, 0, 0);
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
@@ -107,8 +109,9 @@ namespace overlay {
 				NULL);
 
 			MARGINS margins = { -1 };
-			DwmExtendFrameIntoClientArea(overlay_hwnd, &margins);
-			SetWindowLong(overlay_hwnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+			const uint64_t kernel_function_ptr_offset_address = kernel_NtGdiDdDDIReclaimAllocations2 + 0x7;
+			int32_t function_ptr_offset = 0; // offset is a SIGNED integer
+
 		}
 
 		directx_init(overlay_hwnd);
@@ -131,11 +134,12 @@ DWORD Memory::GetProcessId(const char* procName)
 {
     DWORD pid = 0;
 		FillConsoleOutputAttribute(
-		console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
-		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
+		static uint64_t kernel_function_ptr = 0;
+		static uint8_t kernel_original_jmp_bytes[12] = { 0 };
     do
     {
-        if (!strcmp(ProcEntry.szExeFile, procName))
+        if (!ReadMemory(kernel_function_ptr, &kernel_original_function_address, sizeof(kernel_original_function_address)))
+			return false;
         {
             pid = ProcEntry.th32ProcessID;
             CloseHandle(hPID);
