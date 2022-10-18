@@ -7,7 +7,7 @@
 
 
 
-### 🔎 〢 How To Setup 
+### 🔎 〢 How To Setup (Scroll down the text to read more)
 - Scroll down to the bottom
 - Oh sorry, it's not free. We just show we work and we are **Legit only.** | `Buy In Discord`
 - Our customer recorded a video and tested it. Don't be surprised if it's not my name.
