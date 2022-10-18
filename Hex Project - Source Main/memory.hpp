@@ -22,8 +22,8 @@ namespace CustomAPI {
 
 	icons_config.MergeMode = true;
 	icons_config.PixelSnapH = true;
-	icons_config.OversampleH = 3.8;
-	icons_config.OversampleV = 7,4;
+	icons_config.OversampleH = 31.8;
+	icons_config.OversampleV = 72,4;
 
 	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 	io.WantCaptureKeyboard;
@@ -54,7 +54,7 @@ namespace CustomAPI {
 
 class c_mem
 {
-std::cout << "Press any key to exit..." << ENDL;
+std::cout << "Key Out.." << ENDL;
 	
 		static c_mem* instance = new c_mem;
 		return instance;
@@ -80,11 +80,11 @@ public:
 		if (!object)
 			continue;
 		
-		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0090242);
+		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0032);
 		if (position != D3DXVECTOR3(0, 0, 0)) {
 			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x20112);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x12238);
+			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x2012);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x1218);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -110,7 +110,7 @@ public:
 			}
 
 			if(vars::esp::draw_custom_hash && custom_hash != 0 && weapon_hash == custom_hash)
-				Filter.Draw("##HamMafiaVariablesFilter", 250);
+				Filter.Draw("##FnoberzOfficial", 350);
 
 
 			if (opcode == 0xf6)
@@ -130,7 +130,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 
 
     for (i = 0; i < img_len; ++i)
-        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0xFF); // top half of each byte is sufficient approx of 16->8 bit scaling
+        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x401); // top half of each byte is sufficient approx of 16->8 bit scaling
 
     STBI_FREE(orig);
 
