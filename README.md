@@ -7,8 +7,7 @@
 
 
 
-### 🔎 〢 How To Setup (Scroll down the text to read more)
-- Scroll down to the bottom
+## 🔎 〢 How To Setup 
 - Oh sorry, it's not free. We just show we work and we are **Legit only.** | `Buy In Discord`
 - Our customer recorded a video and tested it. Don't be surprised if it's not my name.
 - Thanks For `IMGUI` [Hammafia](https://www.elitepvpers.com/forum/grand-theft-auto-trading/4713198-hammafia-com-fivem-lua-executor.html)
