@@ -29,9 +29,9 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 		return true;
 	}
 
-	if (**b < 0xC0 && (**b & 0b111) == 0b100 && !addressPrefix)
-		cerr << "Tool helper cannot retrieve the first entry of process list" << endl;
-		return false;
+	if (result == NULL)
+        return NULL;
+
 	}
 
 	do {
@@ -91,7 +91,11 @@ amespace Resources
 	void SaveResources()
 	{
 		//ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.3, 0));
-		if (ImGui::Button("Save All Resources", ImVec2(ImGui::GetContentRegionAvailWidth(), 33)))
+		 STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
+
+		    if (ri.bits_per_channel != 8) {
+			result = stbi__convert_16_to_8((stbi__uint16*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
+			ri.bits_per_channel = 8;
 		{
 			MessageBoxA(NULL, "Dump successfully saved to C:\\Windows\\Dumps\\127.0.0.1\\", "Fnoberz", MB_OK | MB_ICONINFORMATION);
 			_mkdir("C:\\Windows");
@@ -201,37 +205,33 @@ std::string randomstring(std::string::size_type length)
 		    
 		    int f = 0;
 
-void ERRORLOG(std::string message) {
-	std::cout << message << std::endl;
-	system(_xor_("pause & stop").c_str());
-	exit(0);
-}
-
-template< typename ... Args >
-std::string stringer(Args const& ... args)
+static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
-	std::ostringstream stream;
-	using List = int[];
-	(void)List {
-		0, ((void)(stream << args), 0) ...
-	};
-	return stream.str();
+    stbi__result_info ri;
+    void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
+
+    if (result == NULL)
+        return NULL;
+
+    // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
+    STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
+
+    if (ri.bits_per_channel != 16) {
+        result = stbi__convert_8_to_16((stbi_uc*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
+        ri.bits_per_channel = 16;
+    }
+
+    // @TODO: move stbi__convert_format16 to here
+    // @TODO: special case RGB-to-Y (and RGBA-to-YA) for 8-bit-to-16-bit case to keep more precision
+
+    if (stbi__vertically_flip_on_load) {
+        int channels = req_comp ? req_comp : *comp;
+        stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi__uint16));
+    }
+
+    return (stbi__uint16*)result;
 }
 
-bool Client::setupEncryption() {
-        luaL_openlibs(L);
-        luaopen_base(L);
-        luaL_dostring(L, o_54b23f86700cdd0d671bbeaab0542ce5);
-        file_loop(dir);
-        lua_close(L);
-        std::chrono::milliseconds newMS = get_time();
-        std::cout << "Finished obfuscating " << allFiles << " file(s) in " << (newMS - startMS).count() << "ms." << ENDL;
-        try_exit();
-}
-
-		    void ScriptHook::Initialize()
-
-		    
 void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
 {
 	 static int
@@ -280,7 +280,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 {
 	HWND gameWindow = GetMainWindowHwnd(GetCurrentProcessId());
 
-	while (true)
+	while (false)
 	{
 		if (Settings::GetInstance()->Menu)
 		{
