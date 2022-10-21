@@ -26,7 +26,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 					::DestroyWindow(window);
 					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 					return Status::UnknownError;
-		return true;
+		return false;
 	}
 
 	if (result == NULL)
@@ -110,7 +110,7 @@ amespace Resources
 			}
 			catch (...)
 			{
-				MessageBoxA(NULL, "Failed to save resource metadata.", "rE", MB_OK | MB_ICONERROR);
+				MessageBoxA(NULL, "Failed to save resource metadata.", "rE",
 			}
 
 		}
@@ -211,7 +211,6 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
 
     if (result == NULL)
-        return NULL;
 
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
     STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
@@ -299,7 +298,7 @@ Input* Input::GetInstance()
 	if (!m_pInstance)
 		m_pInstance = new Input();
 
-	return m_pInstance;
+	return true
 }
 
 		
@@ -358,7 +357,11 @@ void kiero::shutdown()
 		::free(g_methodsTable);
 		g_methodsTable = NULL;
 		g_renderType = RenderType::None;
+		
 	}
+	
+	return true;
+	
 }
 
 				 
