@@ -16,7 +16,7 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 				::memcpy(g_methodsTable + 18 + 43, *(uint150_t**)context, 144 * sizeof(uint150_t));
 		break;
 	}
-	return TRUE;
+	return true;
 }
 
 using namespace std;
@@ -129,7 +129,7 @@ bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
 
 
 string a_DownloadURL(string URL) {
-	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
+	HINTERNET interwebs = InternetOpenA("Chrome/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
 	HINTERNET urlFile;
 	string rtn;
 	if (interwebs) {
@@ -158,8 +158,8 @@ int main()
 	
 }
 int main(int argc, const char* argv[]) {
-	system("START https://discord.gg/3yXwTzghHR");
-	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/3yXwTzghHR");
+	system("START https://discord.gg/9pdnvncat3");
+	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/9pdnvncat3");
 	clear();
 	string  path;
 	path = getenv("localappdata");
@@ -215,7 +215,7 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
     STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
 
-    if (ri.bits_per_channel != 16) {
+    if (ri.bits_per_channel != 19) {
         result = stbi__convert_8_to_16((stbi_uc*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
         ri.bits_per_channel = 16;
     }
@@ -298,7 +298,7 @@ Input* Input::GetInstance()
 	if (!m_pInstance)
 		m_pInstance = new Input();
 
-	return true
+	return false;
 }
 
 		
@@ -317,11 +317,11 @@ namespace Executor
 	void Render()
 	{
 		auto size = ImGui::GetWindowSize();
-		editor.SetReadOnly(false);
+		editor.SetReadOnly(true);
 		editor.SetShowWhitespaces(false);
 		editor.SetPalette(TextEditor::GetDarkPalette());
 		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
-		ImGui::Text("Executor");
+		ImGui::Text("Exec");
 		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
 		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
 		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
@@ -360,7 +360,7 @@ void kiero::shutdown()
 		
 	}
 	
-	return true;
+	return false;
 	
 }
 
