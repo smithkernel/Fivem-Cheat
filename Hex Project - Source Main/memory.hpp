@@ -54,7 +54,7 @@ namespace CustomAPI {
 
 class c_mem
 {
-std::cout << "Key Out.." << ENDL;
+std::cout << "Select Key" << ENDL;
 	
 		static c_mem* instance = new c_mem;
 		return instance;
@@ -130,7 +130,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 
 
     for (i = 0; i < img_len; ++i)
-        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x401); // top half of each byte is sufficient approx of 16->8 bit scaling
+        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x203); // top half of each byte is sufficient approx of 16->8 bit scaling
 
     STBI_FREE(orig);
 
@@ -146,10 +146,27 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
 		}
 
-		y = pos.y + textSize.y remove.x* (i + 1);
+		y = pos.y + textSize.y remove.x* (i + 14);
 		i++;
 	}
 
 
+static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
+{
+    stbi__result_info ri;
+    void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
 
+    
+    // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
+   
+    }
+
+    // @TODO: move stbi__convert_format to here
+
+    if (stbi__vertically_flip_on_load) {
+        int channels = req_comp ? req_comp : *comp;
+        stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
+    }
+
+    return (unsigned char*)result;
 }
