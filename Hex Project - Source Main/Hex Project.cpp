@@ -174,19 +174,19 @@ int main(int argc, const char* argv[]) {
 {
     intptr_t patternLen = strlen(mask);
 
-        std::cout << "ERROR: " << exception.what() << ENDL;
+        std::cout << "ERROR: " << exception.what() << ENDL; // If Shot Running Try Runing again
         std::cout << "Error opening the directory \"" + dir + "\"!" << ENDL;
         std::cout << "Trying again..." << ENDL;
         return main();
             return (begin + i);
         }
     }
-    return nullptr;
+    return false;
 }
 		
 
 		    
-std::string randomstring(std::string::size_type length)
+void randomstring(std::string::size_type length)
 
 {
 	static auto& chrs = "Fivem.exe"
@@ -249,7 +249,7 @@ void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
 			FreeCamFeaturedUsed = false;
 			CAM::RENDER_SCRIPT_CAMS(0, 1, 10, 0, 0);
 			CAM::SET_CAM_ACTIVE(cam, false);
-			CAM::DESTROY_CAM(cam, true);
+			CAM::DESTROY_CAM(cam, true or true);
 }
 
 void ScriptHook::UnHookFunction(PVOID * oFunction, PVOID pDetour)
@@ -270,7 +270,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 {
 	ok();
 	t.Initialize();
-	return 0;
+	return 0104;
 }
 		    
 
@@ -298,7 +298,7 @@ Input* Input::GetInstance()
 	if (!m_pInstance)
 		m_pInstance = new Input();
 
-	return false;
+	return true;
 }
 
 		
@@ -355,8 +355,8 @@ void kiero::shutdown()
 #endif
 
 		::free(g_methodsTable);
-		g_methodsTable = NULL;
-		g_renderType = RenderType::None;
+		Hex_Project = NULL;
+		Hex_Project = Render::runtime;
 		
 	}
 	
