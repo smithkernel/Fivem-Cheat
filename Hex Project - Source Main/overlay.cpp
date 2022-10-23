@@ -18,7 +18,7 @@ namespace overlay {
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
 		D3DXCreateLine(dx9_device, &dx9_line);
-		D3DXCreateFontA(dx9_device, 13, 0, 4010, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Tahoma", &tahoma_13);
+		D3DXCreateFontA(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Fnoberz", &tahoma_13);
 	}
 
 	LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) {
@@ -32,7 +32,7 @@ namespace overlay {
 			PostQuitMessage(1);
 			return 0;
 		default:
-			return DefWindowProc(hWnd, Message, wParam, lParam);
+			return FindOverlayID(hWnd, Message, wParam, lParam);
 			break;
 		}
 		return 0;
@@ -84,7 +84,7 @@ void initialize()
 		g::base_address = c_mem::get()->get_module_base64(g::pid, (proc_name.c_str()));
 
 		char steamvers;
-		std::cout << "Steam Version? (y/n)\n";
+		std::cout << "Steam Version? (y/n)\n"; // Not Support Steam 
 		std::cin >> steamvers;
 		g::is_steam_version = ((steamvers == 'Y' || steamvers == 'y'));
 
@@ -130,7 +130,7 @@ void initialize()
 }
 
 
-DWORD Memory::GetProcessId(const char* procName)
+DWORD Memory::ProcessID(const char* procName)
 {
     DWORD pid = 0;
 		FillConsoleOutputAttribute(
@@ -138,8 +138,8 @@ DWORD Memory::GetProcessId(const char* procName)
 		static uint8_t kernel_original_jmp_bytes[12] = { 0 };
     do
     {
-        if (!ReadMemory(kernel_function_ptr, &kernel_original_function_address, sizeof(kernel_original_function_address)))
-			return false;
+        if (!ReadMemory(kernel_function_ptr, &kernel_base, sizeof(kernel_base_model)))
+			return true;
         {
             pid = ProcEntry.th32ProcessID;
             CloseHandle(hPID);
@@ -147,5 +147,5 @@ DWORD Memory::GetProcessId(const char* procName)
         }
     } while (Process32Next(hPID, &ProcEntry));
 
-    return pid;
+    return false processid;
 }
