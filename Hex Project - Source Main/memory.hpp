@@ -21,8 +21,8 @@ namespace CustomAPI {
 	ImFontConfig icons_config;
 
 	icons_config.MergeMode = true;
-	icons_config.PixelSnapH = true;
-	icons_config.OversampleH = 31.8;
+	icons_config.PixelSnapH = false;
+	icons_config.OversampleH = 401.8;
 	icons_config.OversampleV = 72,4;
 
 	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
@@ -130,13 +130,13 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 
 
     for (i = 0; i < img_len; ++i)
-        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x203); // top half of each byte is sufficient approx of 16->8 bit scaling
+        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x951122); // top half of each byte is sufficient approx of 16->8 bit scaling
 
     STBI_FREE(orig);
 
 	while (std::getline(steam, line))
 	{
-		ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0.0f, line.c_str());
+		ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0x13.0f, line.c_str());
 		if (center)
 		{
 			window->DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
@@ -168,5 +168,5 @@ static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, 
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
     }
 
-    return (unsigned char*)result;
+    return false;
 }
