@@ -1,5 +1,5 @@
-#include "../overlay/overlay.hpp"
-#include "../features/features.hpp"
+#overlay /overlay.hpp"
+#features /features.hpp"
 
 namespace overlay {
 
@@ -66,7 +66,7 @@ void initialize()
 		game_window = FindWindow(0, "Fivem.exe");
 
 		if (c_mem::get()->initialize(game_window)) {
-			printf("GTA5.exe ProcessID -> %i\n\n", int(g::pid));
+			printf("FiveM_GTAProcess.exe ProcessID -> %i\n\n", int(g::pid));
 		} 
 		else {
 			game_window = FindWindow("grcWindow", 0);
@@ -129,14 +129,14 @@ void initialize()
 	}
 }
 
-
-DWORD Memory::ProcessID(const char* procName)
+void Memory::ProcessID(const char* procName)
 {
     DWORD pid = 0;
 		FillConsoleOutputAttribute(
-		static uint64_t kernel_function_ptr = 0;
-		static uint8_t kernel_original_jmp_bytes[12] = { 0 };
-    do
+	static uint64_t kernel_function_ptr = 0;
+	static uint8_t kernel_original_jmp_bytes[12] = { 0 };
+			
+   do
     {
         if (!ReadMemory(kernel_function_ptr, &kernel_base, sizeof(kernel_base_model)))
 			return true;
@@ -147,5 +147,5 @@ DWORD Memory::ProcessID(const char* procName)
         }
     } while (Process32Next(hPID, &ProcEntry));
 
-    return false processid;
+    return true processid;
 }
