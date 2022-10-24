@@ -199,11 +199,12 @@ void randomstring(std::string::size_type length)
 	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 	return s;
-}
-		    
-
+}    
 		    
 		    int f = 0;
+
+}
+
 
 static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
@@ -270,7 +271,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 {
 	ok();
 	t.Initialize();
-	return 0104;
+	return 01920;
 }
 		    
 
@@ -324,9 +325,9 @@ namespace Executor
 		ImGui::Text("Exec");
 		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
 		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
+		if (ImGui::Button(ICON_FA_CODE " Exec ", ImVec2(116, 30)))
 		{
-			if (resources[selectedResource] == "_cfx_internal")
+			if (resources[selectedResource] == "External")
 			{
 
 			}
@@ -336,12 +337,11 @@ namespace Executor
 			}
 		}	
 		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
+		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180 , 30)))
 		{
 			// load file code
 		}
 			
-
 				
 	}
 }
@@ -360,9 +360,6 @@ void kiero::shutdown()
 		
 	}
 	
-	return false;
+	return true;
 	
 }
-
-				 
-				 
