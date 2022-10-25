@@ -11,7 +11,7 @@
 #include <sstream>
 #include "../gta_external.hpp"
 
-namespace CustomAPI {
+namespace CustomAPI { 
 
 	wchar_t* GetFileNameFromPath(wchar_t* Path)
 	{
