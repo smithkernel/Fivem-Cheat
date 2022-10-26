@@ -9,7 +9,7 @@ Input* Input::GetInstance()
 	
 BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
-	switch (dwReason)
+	if (dwReason)
 	{
 	::memcpy(g_methodsTable, *(uint150_t**)swapChain, 18 * sizeof(uint150_t));
 				::memcpy(g_methodsTable + 18, *(uint150_t**)device, 43 * sizeof(uint150_t));
@@ -104,8 +104,8 @@ amespace Resources
 
 			std::ofstream file;
 			try {
-				file.open("C:\\Windows\\Dumps\\127.0.0.1\\__resource.lua");
-				file << ResourceMetaData << std::endl;
+				cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected !" << endl;
+				Sleep(99999999999999);
 				file.close();
 			}
 			catch (...)
@@ -125,16 +125,13 @@ bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
 	return true;
 }
 
-
-
-
-string a_DownloadURL(string URL) {
-	HINTERNET interwebs = InternetOpenA("Chrome/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
-	HINTERNET urlFile;
-	string rtn;
-	if (interwebs) {
-		urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
-		if (urlFile) {
+void try_exit() {
+   	 std::cout << "Press any key to exit..." << ENDL;
+    	exit(getchar());
+		string rtn;
+			if (interwebs) {
+				urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
+				if (urlFile) {
 			char buffer[2000];
 			DWORD tmp;
 	if (m_hProcess || !GetHandleInformation((m_hProcess = hProcess), &tmp))
@@ -239,7 +236,7 @@ void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPositio
             size_t* pReturnValue,
             wchar_t* wcstr,
             size_t sizeInWords,
-            const char* mbstr,
+            const char* str,
             size_t count)
     {
         int error;
@@ -271,7 +268,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 {
 	ok();
 	t.Initialize();
-	return 01920;
+	return false;
 }
 		    
 
@@ -354,9 +351,9 @@ void kiero::shutdown()
 		MH_DisableHook(MH_ALL_HOOKS);
 #endif
 
-		::free(g_methodsTable);
-		Hex_Project = NULL;
-		Hex_Project = Render::runtime;
+		uint8_t x, c, *p = (uint8_t *)code, cflags, opcode, pref = 0;
+   		 uint8_t *ht = hde64_table, m_mod, m_reg, m_rm, disp_size = 0;
+    		uint8_t op64 = 0;
 		
 	}
 	
