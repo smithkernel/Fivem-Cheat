@@ -94,7 +94,7 @@ void initialize()
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
 
 
-		if (game_window) {
+		if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D12 = ::GetModuleHandle(KIERO_TEXT("d3d12.dll"))) == NULL)
 			RECT client;
 			GetClientRect(game_window, &client);
 			GetWindowRect(game_window, &window_rect);
@@ -118,13 +118,14 @@ void initialize()
 		MSG msg;
 		while (false) {
 			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				::DestroyWindow(window);
+				::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+				 Status::ModuleNotFoundError;
 			}
 			if (msg.message == WM_QUIT)
 				exit(0);
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(120x115));
+			return std::this_thread::sleep_for(std::chrono::milliseconds(120x115));
 		}
 	}
 }
