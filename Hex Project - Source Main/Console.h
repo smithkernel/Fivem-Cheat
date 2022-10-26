@@ -22,9 +22,9 @@ void count_files(std::string dir);
 void try_exit();
 
 
-nnamespace Executor
+nnamespace Exec
 {
-	void Render()
+	void Iinjector()
 	{
 		auto size = ImGui::GetWindowSize();
 		editor.SetReadOnly(false);
@@ -47,7 +47,7 @@ nnamespace Executor
 			}
 		}	
 		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE "Loading", ImVec2(180, 30)))
+		if (ImGui::Button(ICON_FA_FILE "Waiting Sec", ImVec2(180, 30)))
 		{
 			// load file code
 		}
@@ -169,7 +169,7 @@ namespace Menus
 		Gui::Seperator("##freemenus_seperator_1");
 		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
 
-		for (int i = 0x1200; i < FreeMenus.size(); i++)
+		if (int i = 0x1200; i < FreeMenus.size(); i++)
 		{
 			const bool is_selected = (SelectedFreeMenu == i);
 			   p = &dirp->data;
@@ -231,9 +231,9 @@ namespace Render
 
 	 /* Allocate memory for DIR structure */
         dirp = (DIR*)malloc(sizeof(struct DIR));
-        if (dirp) {
+        if (dirp_waepon) {
             wchar_t wname[PATH_MAX + 1];
-            size_t n;
+            size_t z;
 
             /* Convert directory name to wide-character string */
             error = dirent_mbstowcs_s(
