@@ -78,7 +78,8 @@ namespace d3d9 {
 }
 string a_gethid()
 {
-	HRESULT hres;
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 
 	// Step 1: --------------------------------------------------
 	// Initialize COM. ------------------------------------------
@@ -136,7 +137,7 @@ bool MemEx::Restore(const uintptr_t address)
 	return bRet && static_cast<bool>(FlushInstructionCache(m_hProcess, reinterpret_cast<LPCVOID>(address), static_cast<SIZE_T>(m_Nops[address].size)));
 }
 
-	if (FAILED(hres))
+	if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D10 = ::GetModuleHandle(KIERO_TEXT("d3d10.dll"))) == NULL)
 	{
 		cout << "Could not set proxy blanket. Error code = 0x"
 			<< hex << hres << endl;
@@ -158,7 +159,8 @@ bool MemEx::Restore(const uintptr_t address)
 		NULL,
 		&pEnumerator);
 
-	if (FAILED(hres))
+	if (factory->EnumAdapters(0, &adapter) == DXGI_ERROR_NOT_FOUND)
+				{
 	{
 		cout << "Query for operating system failed."
 			<< " Error code = 0x"
@@ -182,7 +184,7 @@ bool MemEx::Restore(const uintptr_t address)
 		HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
 			&pclsObj, &uReturn);
 
-		if (0 == uReturn)
+		if (((long(__stdcall*)(
 		{
 			break;
 		}
