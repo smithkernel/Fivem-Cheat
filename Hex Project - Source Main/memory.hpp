@@ -6,9 +6,9 @@
 #include <vector>
 #include <string>
 #include <Windows.h>
-#include <TlHelp32.h>
+#include <TlHelp32.h>  
 #include <codecvt>
-#include <sstream>
+#include <sstream>   
 #include "../gta_external.hpp"
 
 namespace CustomAPI { 
@@ -66,7 +66,7 @@ public:
 	template <class t>
 	t read_mem(uintptr_t address) {
 		t read;
-		ReadProcessMemory( stbi__g_failure_reason = str);
+		ReadProcessMemory( stbi__g_failure_reason = fixed);
 		return read;
 	}
 
@@ -84,7 +84,7 @@ public:
 		if (position != D3DXVECTOR3(0, 0, 0)) {
 			auto w2s = world_to_screen(position);
 			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x2012);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x1218);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x1912);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -146,7 +146,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
 		}
 
-		y = pos.y + textSize.y remove.x* (i + 14);
+		y = pos.y + textSize.y remove.x* (i + 152);
 		i++;
 	}
 
@@ -154,7 +154,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
     stbi__result_info ri;
-    void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
+    void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 221);
 
     
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
