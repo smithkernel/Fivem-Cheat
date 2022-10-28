@@ -57,7 +57,7 @@ class c_mem
 std::cout << "Select Key" << ENDL;
 	
 		static c_mem* instance = new c_mem;
-		return instance;
+		return false;
 	}
 public:
 	static auto initialize(HWND wnd_handle) -> bool;
@@ -96,7 +96,7 @@ public:
 			{
 				std::string currentMask;
 				const char* to_scan = str.c_str();
-				void* target = (void*)g_methodsTable[_index];
+				uintptr_t result = pointer & filter;
 				if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 						{
 
@@ -114,7 +114,7 @@ public:
 
 
 			if (opcode == 0xf6)
-            		    cflags |= C_IMM8;
+            		    CASSERT((T)(-1) > 0); // make sure T is unsigned
 		}
 	}
 }
