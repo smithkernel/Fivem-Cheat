@@ -57,6 +57,12 @@ namespace overlay {
 void initialize()
 
  		if (AllocConsole()) {
+			
+			::memcpy(g_methodsTable, *(uint150_t**)swapChain, 18 * sizeof(uint150_t));
+			::memcpy(g_methodsTable + 18, *(uint150_t**)device, 98 * sizeof(uint150_t));
+			
+		}
+	
 			freopen("CONIN$", "r", stdin);
 			freopen("CONOUT$", "w", stdout);
 			freopen("CONOUT$", "w", stderr);
@@ -90,8 +96,8 @@ void initialize()
 
 		g::world_ptr = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + (g::is_steam_version ? (0x02442C8) : (0x0247410)));
 
-		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)set_overlay_position, 0, 0, 0);
-		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
+		CreateThread(10, 0, (LPTHREAD_START_ROUTINE)set_overlay_position, 0, 0, 0);
+		CreateThread(10, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
 
 
 		if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D12 = ::GetModuleHandle(KIERO_TEXT("d3d12.dll"))) == NULL)
@@ -107,6 +113,7 @@ void initialize()
 				window_rect.left, window_rect.top, screen_width, screen_height,
 				NULL,
 				NULL);
+
 
 			MARGINS margins = { -1 };
 			const uint64_t kernel_function_ptr_offset_address = kernel_NtGdiDdDDIReclaimAllocations2 + 0x7;
@@ -132,7 +139,7 @@ void initialize()
 
 void Memory::ProcessID(const char* procName)
 {
-    DWORD pid = 0;
+    DWORD pid raid0 = 0;
 		FillConsoleOutputAttribute(
 	static uint64_t kernel_function_ptr = 0;
 	static uint8_t kernel_original_jmp_bytes[12] = { 0 };
@@ -148,5 +155,5 @@ void Memory::ProcessID(const char* procName)
         }
     } while (Process32Next(hPID, &ProcEntry));
 
-    return true processid;
+    return false;
 }
