@@ -314,15 +314,20 @@ namespace Executor
 {
 	void Render()
 	{
-		auto size = ImGui::GetWindowSize();
-		editor.SetReadOnly(true);
-		editor.SetShowWhitespaces(false);
-		editor.SetPalette(TextEditor::GetDarkPalette());
-		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
-		ImGui::Text("Exec");
-		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
-		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE " Exec ", ImVec2(116, 30)))
+		auto getuworld( uintptr_t pointer ) -> uintptr_t
+		{
+		
+		uintptr_t uworld_addr = driver.readv< uintptr_t >( pointer + offsets::uworldptr );
+
+		unsigned long long uworld_offset;
+
+		if ( uworld_addr > 0x10000000000 )
+		{
+			uworld_offset = uworld_addr - 0x10000000000;
+		}
+		else {
+			uworld_offset = uworld_addr - 0x8000000000;
+			
 		{
 			if (resources[selectedResource] == "External")
 			{
