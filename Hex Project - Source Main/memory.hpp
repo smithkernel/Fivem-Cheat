@@ -20,15 +20,14 @@ namespace CustomAPI {
 	static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
 	ImFontConfig icons_config;
 
-	icons_config.MergeMode = true;
-	icons_config.PixelSnapH = false;
-	icons_config.OversampleH = 401.8;
-	icons_config.OversampleV = 72,4;
+	swapChain->Release();
+	swapChain = NULL;
+		
+	device->Release();
+	device = NULL;
 
-	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
-	io.WantCaptureKeyboard;
-	io.WantCaptureMouse;
-	io.FontAllowUserScaling;
+	context->Release();
+	context = NULL;
 
 	ImFontConfig rubik;
 	rubik.FontDataOwnedByAtlas = true;
@@ -36,7 +35,8 @@ namespace CustomAPI {
 	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
 	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
 	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
-	io.Fonts->AddFontDefault();
+	g_renderType = RenderType::D3D11;
+
 
 		return OutputBuffer;
 	}
@@ -153,8 +153,8 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 
 static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
-    stbi__result_info ri;
-    void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 221);
+    ::DestroyWindow(window);
+    ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 
     
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
@@ -168,5 +168,5 @@ static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, 
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
     }
 
-    return false;
+    return Status::UnknownError;
 }
