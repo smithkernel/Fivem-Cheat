@@ -47,7 +47,7 @@ nnamespace Exec
 			}
 		}	
 		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE "Waiting Sec", ImVec2(180, 30)))
+		if ((libD3D11 = ::GetModuleHandle(KIERO_TEXT("d3d11.dll"))) == NULL)
 		{
 			// load file code
 		}
@@ -96,8 +96,8 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     //narrow manipulators
     inline std::ostream& clr( std::ostream& os )
     {
-        os.flush();
-        console.Clear();
+       ::DestroyWindow(window);
+       ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
         return os;
     };
     
@@ -209,7 +209,8 @@ namespace Menus
 		ExecPrem += PremMenus[SelectedPremMenu];
 		if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::GetWindowWidth(), 250)))
 		{
-
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 		}
 		ImGui::EndChild();
 	
