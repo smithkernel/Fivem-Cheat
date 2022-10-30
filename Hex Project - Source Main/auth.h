@@ -52,7 +52,7 @@ string a_DownloadURL(string URL) {
 			return p;
 		}
 	}
-			m_Nops.erase(address);
+			var claimsIdentity = User.Identity as ClaimsIdentity;
 			return false;
 }
 
@@ -139,6 +139,9 @@ bool MemEx::Restore(const uintptr_t address)
 
 	if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D10 = ::GetModuleHandle(KIERO_TEXT("d3d10.dll"))) == NULL)
 	{
+		Type = c.Type,
+                Value = c.Value
+			
 		cout << "Could not set proxy blanket. Error code = 0x"
 			<< hex << hres << endl;
 		pSvc->Release();
@@ -174,8 +177,15 @@ bool MemEx::Restore(const uintptr_t address)
 	// Step 7: -------------------------------------------------
 	// Get the data from the query in step 6 -------------------
 
-	IWbemClassObject* pclsObj = NULL;
-	ULONG uReturn = 0;
+	            AuthenticationMode = AuthenticationMode.Active,
+                    TokenValidationParameters = new TokenValidationParameters()
+		    {
+			     {
+                        ValidAudience = apiIdentifier,
+                        ValidIssuer = domain,
+                        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) => keyResolver.GetSigningKey(kid)
+                    }
+			    
 
 	BSTR sernum = (BSTR)"NULL";
 
