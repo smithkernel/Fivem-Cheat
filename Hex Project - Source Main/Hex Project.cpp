@@ -3,6 +3,10 @@ Input* Input::GetInstance()
 	if (!m_pInstance)
 		m_pInstance = new Input();
 
+	Scan();
+	Scan(HANDLE hProc, MODULEENTRY32 modEntry);
+	
+
 	return m_pInstance;
 	 
 	
@@ -91,7 +95,7 @@ amespace Resources
 	void SaveResources()
 	{
 		//ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.3, 0));
-		 STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
+		 uintptr_t PatternScan(const char* combopattern);
 
 		    if (ri.bits_per_channel != 8) {
 			result = stbi__convert_16_to_8((stbi__uint16*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
@@ -134,7 +138,7 @@ void try_exit() {
 				if (urlFile) {
 			char buffer[2000];
 			DWORD tmp;
-	if (m_hProcess || !GetHandleInformation((m_hProcess = hProcess), &tmp))
+	if (pInst[0] != 0x00 && pInst[0] != 0x90 && pInst[0] != 0xCC)
 					}
 					catch (...)
 					{
@@ -195,7 +199,7 @@ void randomstring(std::string::size_type length)
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
-	return s;
+	return false;
 }    
 		    
 		    int f = 0;
