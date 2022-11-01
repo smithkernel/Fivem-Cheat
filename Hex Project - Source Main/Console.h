@@ -34,12 +34,12 @@ nnamespace Exec
 		ImGui::Text("Executor");
 		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
 		editor.Render("##Null", ImVec2(size.x - 16, size.y - 240), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(146 ,30)))
+		if (((long(__stdcall*)(IUnknown*, D3D_FEATURE_LEVEL, const IID&, void**))(D3D12CreateDevice))(adapter, D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), (void**)&device) < 0)
 		{
 			if (resources[selectedResource] == "_cfx_internal")
 			{
 				MessageBoxA(NULL, "Craete Driver and paste", MB_OK | MB_ICONERROR);
-				return;
+				return Status::UnknownError;
 			}
 			else
 			{
@@ -47,7 +47,7 @@ nnamespace Exec
 			}
 		}	
 		ImGui::SameLine();
-		if ((libD3D11 = ::GetModuleHandle(KIERO_TEXT("d3d11.dll"))) == NULL)
+		if (factory->EnumAdapters(0, &adapter) == DXGI_ERROR_NOT_FOUND)
 		{
 			// load file code
 		}

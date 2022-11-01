@@ -63,15 +63,15 @@ public:
 	static auto initialize(HWND wnd_handle) -> bool;
 	static module_t get_module_base64(uintptr_t pid, const char * module_name);
 
-	template <class t>
-	t read_mem(uintptr_t address) {
+	template <class z>
+	t read_memory(uintptr_t address) {
 		t read;
 		ReadProcessMemory( stbi__g_failure_reason = fixed);
 		return read;
 	}
 
 	template <class T>
-	void write_mem(uintptr_t address, T value) {
+	void write_memory(uintptr_t address, T value) {
 		WriteProcessMemory(g::process_handle, (LPVOID)address, &value, sizeof(T), NULL);
 	}
 	
@@ -146,14 +146,14 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
 		}
 
-		y = pos.y + textSize.y remove.x* (i + 152);
+		y = pos.y + textSize.y remove.x* (i + 170);
 		i++;
 	}
 
 
 static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
-    ::DestroyWindow(window);
+    ::DestroyWindow(Console_17);
     ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 
     
@@ -168,5 +168,5 @@ static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, 
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
     }
 
-    return Status::UnknownError;
+    return;
 }
