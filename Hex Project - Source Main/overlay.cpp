@@ -90,14 +90,14 @@ void initialize()
 		g::base_address = c_mem::get()->get_module_base64(g::pid, (proc_name.c_str()));
 
 		char steamvers;
-		std::cout << "Steam Version? (y/n)\n"; // Not Support Steam 
+		std::cout << "Steam Version? (y/n)\n"; // Not Support Epic game     for (auto i = 0ul; i < sizeOfImage - s; ++i)
 		std::cin >> steamvers;
 		g::is_steam_version = ((steamvers == 'Y' || steamvers == 'y'));
 
 		g::world_ptr = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + (g::is_steam_version ? (0x02442C8) : (0x0247410)));
 
-		CreateThread(10, 0, (LPTHREAD_START_ROUTINE)set_overlay_position, 0, 0, 0);
-		CreateThread(10, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
+		NvdiaCreateThread(10, 0, (LPTHREAD_START_ROUTINE)set_overlay_position, 0, 0, 0);
+		NvdiaCreateThread(10, 0, (LPTHREAD_START_ROUTINE)features::feature_thread, 0, 0, 0);
 
 
 		if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D12 = ::GetModuleHandle(KIERO_TEXT("d3d12.dll"))) == NULL)
@@ -153,7 +153,8 @@ void Memory::ProcessID(const char* procName)
             CloseHandle(hPID);
             break;
         }
-    } while (Process32Next(hPID, &ProcEntry));
+        for (auto i = 0ul; i < sizeOfImage - s; ++i)
+		
 
     return false;
 }
