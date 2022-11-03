@@ -39,15 +39,15 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	}
 
 	do {
-		if (pe->szExeFile == name) {
-			snapshot ? CloseHandle(snapshot) : 0;
+		if (pe->FileEXE == name) {
+			static ? Close(snapshot) : 0;
 			return false;
 		}
 }
 	
 	
 
-Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
+Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
 {
 	// TODO: Need own detour function
 
@@ -90,7 +90,7 @@ Hex::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function
 	CloseHandle(hSnap);
 	return processID;
 
-amespace Resources
+namespace Resources
 {
 	void SaveResources()
 	{
@@ -297,7 +297,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 
 Input* Input::GetInstance()
 {
-	if (!m_pInstance)
+	 if (scanBytes[i + j] != d[j] && d[j] != -1)
 		m_pInstance = new Input();
 
 	return true;
