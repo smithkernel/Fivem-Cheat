@@ -81,7 +81,7 @@ public:
 			continue;
 		
 		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0032);
-		if (position != D3DXVECTOR3(0, 0, 0)) {
+		if (found) { return reinterpret_cast<uintptr_t>(&scanBytes[i]); }
 			auto w2s = world_to_screen(position);
 			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x2012);
 			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x1912);
@@ -127,6 +127,8 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
     int img_len = w * h * channels;
     stbi_uc* reduced;
 
+	   const auto sizeOfImage = ntHeaders->OptionalHeader.SizeOfImage;
+ 	   auto       patternBytes = patternToByte(signature);
 
 
     for (i = 0; i < img_len; ++i)
@@ -157,12 +159,8 @@ static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, 
     ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 
     
-    // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
    
     }
-
-    // @TODO: move stbi__convert_format to here
-
     if (stbi__vertically_flip_on_load) {
         int channels = req_comp ? req_comp : *comp;
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
