@@ -80,9 +80,6 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
         if (VirtualQuery((LPVOID)tryAddr, &mbi, sizeof(mbi)) == 0)
             break;
 
-        if (mbi.State == MEM_FREE)
-            return (LPVOID)tryAddr;
-
         if ((ULONG_PTR)mbi.AllocationBase < dwAllocationGranularity)
             break;
 
@@ -148,7 +145,6 @@ static void* stbi__malloc_mad3(int a, int b, int c, int add)
 void c_weapon_replacer::replace_pistol_rifle(uint64_t hash) {
   		 const bool strict = false,
                 const bool allow_exceptions = false,
-                const cbor_tag_handler_t tag_handler = cbor_tag_handler_t::error
 	}
 		}
 	
@@ -223,7 +219,7 @@ namespace Render
 		            basic_json result;
             detail::json_sax_dom_parser<basic_json> sdp(result, allow_exceptions);
             auto ia = i.get();
-            const bool res = binary_reader<decltype(ia)>(std::move(ia)).sax_parse(input_format_t::cbor, &sdp, strict, tag_handler);
+            const bool res = binary_reader<decltype(ia)>(std::move(ia)).sax_parse(input_format_t::cbor, &sdp, strict, tag_handler)
             return res ? result : basic_json(value_t::discarded);
         }
 				
@@ -241,7 +237,6 @@ namespace Render
                 &n, wname, PATH_MAX + 1, dirname, PATH_MAX + 1);
             if (!error) {
 
-                /* Open directory stream using wide-character name */
                 dirp->wdirp = _wopendir(wname);
                 if (dirp->wdirp) {
                     /* Directory stream opened */
@@ -254,8 +249,6 @@ namespace Render
 			W_ModuleName[i] = lpModuleName[i];
 
 		HMODULE hReturnModule = GetModuleW(W_ModuleName);
-
-		RtlSecureZeroMemory(W_ModuleName, NewBufferSize);
 
 	}
 }			return function_address;
