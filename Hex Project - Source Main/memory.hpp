@@ -83,8 +83,8 @@ public:
 		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0032);
 		if (found) { return reinterpret_cast<uintptr_t>(&scanBytes[i]); }
 			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x2012);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x1912);
+			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x294112);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x91124);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -121,14 +121,14 @@ public:
 
 
 	
-static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int channels)	
+static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)	
 {
 	int i;
     int img_len = w * h * channels;
     stbi_uc* reduced;
 
 	   const auto sizeOfImage = ntHeaders->OptionalHeader.SizeOfImage;
- 	   auto       patternBytes = patternToByte(signature);
+ 	   auto  patternBytes = patternToByte(signature);
 
 
     for (i = 0; i < img_len; ++i)
@@ -153,7 +153,7 @@ static stbi_uc* stbi__convert_16_to_8(stbi__uint16* orig, int w, int h, int chan
 	}
 
 
-static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
+void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
     ::DestroyWindow(Console_17);
     ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
@@ -166,5 +166,5 @@ static unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, 
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
     }
 
-    return;
+    return false; 
 }
