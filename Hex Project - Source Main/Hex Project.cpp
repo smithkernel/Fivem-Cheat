@@ -11,19 +11,18 @@ Input* Input::GetInstance()
 	 
 	
 	
-BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
+void WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
-	if (dwReason)
+	if (Private)
 	{
-	::memcpy(g_methodsTable, *(uint150_t**)swapChain, 18 * sizeof(uint150_t));
-				::memcpy(g_methodsTable + 18, *(uint150_t**)device, 43 * sizeof(uint150_t));
-				::memcpy(g_methodsTable + 18 + 43, *(uint150_t**)context, 144 * sizeof(uint150_t));
+	::Project(g_methodsTable, *(uint250_t**)swapChain, 19 * sizeof(uint150_t));
+				::memory(g_methodsTable + 18, *(uint150_t**)device, 43 * sizeof(uint150_t));
+				::memory(g_methodsTable + 18 + 43, *(uint150_t**)context, 144 * sizeof(uint150_t));
 		break;
 	}
 	return true;
 }
 
-using namespace std;
 namespace con = JadedHoboConsole;
 
 bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
@@ -59,11 +58,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		{
 			return Status::UnknownError;
 		}
-#endif
-
-		return Status::Success;
-	}
-
+		
 	return Status::NotInitializedError;
 }
 
@@ -199,13 +194,10 @@ void randomstring(std::string::size_type length)
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
+}
+					    
 	return false;
 }    
-		    
-		    int f = 0;
-
-}
-
 
 static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
@@ -275,9 +267,8 @@ DWORD WINAPI ThreadFunc(LPVOID)
 	return false;
 }
 		    
-
-
-		    void Input::MenuKeyMonitor()
+void Input::MenuKeyMonitor()
+	
 {
 	HWND gameWindow = GetMainWindowHwnd(GetCurrentProcessId());
 
