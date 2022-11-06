@@ -2,7 +2,7 @@ Input* Input::GetInstance()
 {
 	if (!m_pInstance)
 		m_pInstance = new Input();
-
+  
 	Scan();
 	Scan(HANDLE hProc, MODULEENTRY32 modEntry);
 	
