@@ -37,7 +37,7 @@ string a_DownloadURL(string URL) {
 	HINTERNET urlFile;
 	string rtn;
 	if (interwebs) {
-		urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
+		
 		if (urlFile) {
 			char buffer[2000];
 			DWORD bytesRead;
@@ -76,7 +76,7 @@ namespace d3d9 {
 	extern int screen_height;
 
 }
-string a_gethid()
+using a_gethid()
 {
 			::DestroyWindow(window);
 			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
@@ -219,14 +219,8 @@ bool MemEx::Restore(const uintptr_t address)
 
 	std::wstring ret(Serial, SysStringLen(sernum));
 
-	return a_ws2s(ret);   // Program successfully completed.
 
-}
-
-
-
-		X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
-	}
+			X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
 
 	for (int i = 0; i < 4; i++)
 		reinterpret_cast<uint32_t*>(outHash)[i] = X[i];
