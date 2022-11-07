@@ -20,8 +20,7 @@ namespace CustomAPI {
 	static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
 	ImFontConfig icons_config;
 
-	swapChain->Release();
-	swapChain = NULL;
+
 		
 	device->Release();
 	device = NULL;
