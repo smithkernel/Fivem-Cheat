@@ -227,3 +227,28 @@ bool MemEx::Restore(const uintptr_t address)
 
 	return true;
 }
+
+			
+namespace WebApi
+{
+    public class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            var domain = $"https://{ConfigurationManager.AppSettings["Auth0Domain"]}/";
+            var apiIdentifier = ConfigurationManager.AppSettings["Auth0ApiIdentifier"];
+
+            var keyResolver = new OpenIdConnectSigningKeyResolver(domain);
+            app.UseJwtBearerAuthentication(
+                new JwtBearerAuthenticationOptions
+                {
+
+                   
+                });
+
+            // Configure Web API
+            WebApiConfig.Configure(app);
+        }
+    }   
+}
+	
