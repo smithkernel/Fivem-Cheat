@@ -88,7 +88,6 @@ namespace Resources
 {
 	void SaveResources()
 	{
-		//ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.3, 0));
 		 uintptr_t PatternScan(const char* combopattern);
 
 		    if (ri.bits_per_channel != 8) {
@@ -102,7 +101,7 @@ namespace Resources
 
 			std::ofstream file;
 			try {
-				cout << "[" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected !" << endl;
+				cout << "insert" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected !" << endl;
 				Sleep(99999999999999);
 				file.close();
 			}
