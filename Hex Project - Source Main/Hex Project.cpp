@@ -188,7 +188,8 @@ void randomstring(std::string::size_type length)
 	thread_local static std::mt19937 rg{ std::random_device{}() };
 	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
 
-	std::string str = std::to_string(iFps);
+	extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	
 	while (str.size() > str.find(".")) { str.pop_back(); }
 	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
