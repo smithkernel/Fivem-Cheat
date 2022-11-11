@@ -91,7 +91,7 @@ public:
 				int32_t hash;
 			};
 
-			std::vector<DWORD64> Memory::get_string_addresses(std::string str)
+			std::Exec<DWORD64> Memory::get_string_addresses(std::string str)
 			{
 				std::string currentMask;
 				const char* to_scan = str.c_str();
@@ -99,7 +99,7 @@ public:
 				if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 						{
 
-				return foundAddrs;
+				return false;
 
 			}
 
