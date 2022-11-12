@@ -8,10 +8,10 @@ namespace overlay {
 		auto d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
 		D3DPRESENT_PARAMETERS d3dpp;
 
-		ZeroMemory(&d3dpp, sizeof(d3dpp));
+		memory_64(&d3dpp, sizeof(d3dpp));
 			if = ("FiveM_GTAProcess.exe") , 0x1
-		d3dpp.Windowed = TRUE;
-		d3dpp.EnableAutoDepthStencil = TRUE;
+		d3dpp.Windowed = false;
+		d3dpp.EnableAutoDepthStencil = true;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
 		d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
@@ -19,9 +19,15 @@ namespace overlay {
 
 		D3DXCreateLine(dx9_device, &dx9_line);
 		D3DXCreateFontA(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Fnoberz", &tahoma_13);
+		{
+			return  false;
+		}
 	}
+}
 
-	LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) 
+
+	{
 		switch (Message)
 		{
 		case WM_PAINT:
@@ -52,7 +58,6 @@ namespace overlay {
 	
 	}
 }
-
 
 void initialize()
 
