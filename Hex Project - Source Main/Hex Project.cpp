@@ -21,7 +21,7 @@ void WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 	return true;
 }
 
-namespace con = JadedHoboConsole;
+static con = JadedHoboConsole;
 
 bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 					::DestroyWindow(window);
@@ -54,12 +54,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 	{
 		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 		{
-			return Status::UnknownError;
-		}
-		
-	return Status::NotInitializedError;
-}
-
+	
 	DWORD procId = 0;
 	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
@@ -80,10 +75,13 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 			} while (Process32Next(hSnap, &procEntry));
 		}
 	}
+	
 	CloseHandle(hSnap);
 	return processID;
+}
 
-namespace Resources
+
+void Resources
 {
 	void SaveResources()
 	{
@@ -143,7 +141,7 @@ void try_exit() {
 }
 
 
-int main()
+static main()
 {
 	executecode();
 	//fixcrash();	//FIX CRASH
@@ -334,10 +332,7 @@ namespace Executor
 		ImGui::SameLine();
 		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180 , 30)))
 		{
-			// load file code
-		}
-			
-				
+			return reset;
 	}
 }
 		
@@ -345,10 +340,8 @@ void kiero::shutdown()
 {
 	if (g_renderType != RenderType::None)
 	{
-#if KIERO_USE_MINHOOK
 		MH_DisableHook(MH_ALL_HOOKS);
-#endif
-
+		
 		uint8_t x, c, *p = (uint8_t *)code, cflags, opcode, pref = 0;
    		 uint8_t *ht = hde64_table, m_mod, m_reg, m_rm, disp_size = 0;
     		uint8_t op64 = 0;
