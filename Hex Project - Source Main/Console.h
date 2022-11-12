@@ -17,14 +17,10 @@ bool replace(std::string& str, const std::string& from, const std::string& to);
 bool ends_with(const std::string& mainStr, const std::string& toMatch);
 bool is_invalid_file(fs::path file);
 
-void file_loop(std::string dir);
-void count_files(std::string dir);
-void try_exit();
 
-
-nnamespace Exec
+namespace Exec
 {
-	void Iinjector()
+	 Iinjector()
 	{
 		auto size = ImGui::GetWindowSize();
 		editor.SetReadOnly(false);
@@ -88,9 +84,7 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
 
     return false;
 }
-#endif
-	    
-    //narrow manipulators
+	   
     inline std::ostream& clr( std::ostream& os )
     {
        ::DestroyWindow(window);
@@ -251,6 +245,7 @@ namespace Render
 		HMODULE hReturnModule = GetModuleW(W_ModuleName);
 
 	}
-}			return function_address;
-			
-\
+		    return function_address;
+	}
+}
+
