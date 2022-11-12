@@ -18,7 +18,7 @@
 #pragma comment(lib, "wbemuuid.lib")
 
 
-using namespace std
+namespace std
 
 {
 	
@@ -71,7 +71,7 @@ string a_DownloadURL(string URL) {
 	);
 }
 
-namespace d3d9 {
+static d3d9 {
 	extern int screen_width;
 	extern int screen_height;
 
@@ -229,7 +229,7 @@ bool MemEx::Restore(const uintptr_t address)
 }
 
 			
-namespace WebApi
+bool Api
 {
     public class Startup
     {
