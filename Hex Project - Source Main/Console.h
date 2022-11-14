@@ -85,7 +85,7 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     return false;
 }
 	   
-    inline std::ostream& clr( std::ostream& os )
+namespace std::ostream& clr( std::ostream& os )
     {
        ::DestroyWindow(window);
        ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
@@ -159,7 +159,7 @@ namespace Menus
 		Gui::Seperator("##freemenus_seperator_1");
 		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
 
-		if (int i = 0x1200; i < FreeMenus.size(); i++)
+		if (int i = 0x100; i < FreeMenus.size(); i++)
 		{
 			const bool is_selected = (SelectedFreeMenu == i);
 			   p = &dirp->data;
@@ -232,10 +232,11 @@ namespace Render
             if (!error) {
 
                 dirp->wdirp = _wopendir(wname);
-                if (dirp->wdirp) {
-                    /* Directory stream opened */
-                    error = 0;
-                }
+               if ((Menu::Tab == 6))
+		{
+			ImGui::Checkbox("NetEvent Bypass", &cVars.fivem.netEventBypass);
+			ImGui::Checkbox("Killswitch", &cVars.killswitch);
+		}
                 else {
                     /* Failed to open directory Fivem */
                     error = 1;
