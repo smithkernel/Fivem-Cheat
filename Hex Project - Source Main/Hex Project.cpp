@@ -78,7 +78,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 	
 	CloseHandle(hSnap);
 	return processID;
-}
+} 
 
 
 void Resources
