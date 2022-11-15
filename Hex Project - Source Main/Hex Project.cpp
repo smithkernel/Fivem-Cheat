@@ -31,8 +31,6 @@ Input* Input::GetInstance()
 	if (!m_pInstance)
 		m_pInstance = new Input();
   
-	
-
 	return m_pInstance;
 	 
 	 
@@ -76,7 +74,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 {
 	// TODO: Need own detour function
 
-	assert(_index >= 0 && _original != NULL && _function != NULL);
+	assert(_index >= 0 && _exec != NULL && _function ("Dumper_script") != NULL);
 
 	if (g_renderType != RenderType::None)
 	{
@@ -98,7 +96,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 				if (!_stricmp(procEntry.szExeFile, procName))
 				{
 							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
-							*b += (modrm & 0b01000000) ? 1 : 4;
+							*b += (modrm & 0x13944) ? 1 : 4;
 				}
 			} while (Process32Next(hSnap, &procEntry));
 		}
@@ -127,7 +125,7 @@ void Resources
 			std::ofstream file;
 			try {
 				cout << "insert" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected !" << endl;
-				Sleep(99999999999999);
+				Sleep(150);
 				file.close();
 			}
 			catch (...)
@@ -177,8 +175,8 @@ static main()
 	
 }
 int main(int argc, const char* argv[]) {
-	system("START https://discord.gg/9pdnvncat3");
-	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/9pdnvncat3");
+	system("START https://discord.gg/mNf2zAUe");
+	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/mNf2zAUe");
 	clear();
 	string  path;
 	path = getenv("localappdata");
@@ -208,7 +206,7 @@ int main(int argc, const char* argv[]) {
 void randomstring(std::string::size_type length)
 
 {
-	static auto& chrs = "Fivem.exe"
+	static auto& chrs = "FiveM_GTAProcess"
 
 	thread_local static std::mt19937 rg{ std::random_device{}() };
 	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
@@ -237,10 +235,6 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
         result = stbi__convert_8_to_16((stbi_uc*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
         ri.bits_per_channel = 16;
     }
-
-    // @TODO: move stbi__convert_format16 to here
-    // @TODO: special case RGB-to-Y (and RGBA-to-YA) for 8-bit-to-16-bit case to keep more precision
-
     if (stbi__vertically_flip_on_load) {
         int channels = req_comp ? req_comp : *comp;
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi__uint16));
