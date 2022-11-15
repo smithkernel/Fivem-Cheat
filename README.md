@@ -5,7 +5,7 @@
 ![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=for-the-badge&logo=github)&nbsp;
  
 
- 
+  
 
 ## 🔎 〢 How To Setup 
 - Oh sorry, it's not free. We just show we work and we are **Legit only.** | `Buy In Discord`
