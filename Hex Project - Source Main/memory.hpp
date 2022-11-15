@@ -167,3 +167,26 @@ void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, in
 
     return false; 
 }
+
+static UInt32 GetGamePID()
+        {
+            UInt32 ret = UInt32.MinValue;
+            Process[] proc = Process.GetProcessesByName("csgo");
+
+            if (proc.Length == 0)
+            {
+                return ret;
+            }
+
+            IntPtr hwGame = proc[0].MainWindowHandle;
+
+            if (hwGame == IntPtr.Zero)
+            {
+                return ret;
+            }
+
+            GetWindowThreadProcessId(hwGame, out ret);
+
+            return ret;
+        }
+
