@@ -154,12 +154,12 @@ void Memory::ProcessID(const char* procName)
         if (!ReadMemory(kernel_function_ptr, &kernel_base, sizeof(kernel_base_model)))
 			return true;
         {
-            pid = ProcEntry.th32ProcessID;
-            CloseHandle(hPID);
+		distanceSquared = heading.X * heading.X + heading.Y * heading.Y + heading.Z * heading.Z;
+		distance = sqrt(distanceSquared);
             break;
         }
         for (auto i = 0ul; i < sizeOfImage - s; ++i)
 		
 
-    return false;
+ 	return distance;
 }
