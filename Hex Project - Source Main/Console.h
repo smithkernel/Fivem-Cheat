@@ -17,6 +17,16 @@ bool replace(std::string& str, const std::string& from, const std::string& to);
 bool ends_with(const std::string& mainStr, const std::string& toMatch);
 bool is_invalid_file(fs::path file);
 
+string a_replaceAll(string subject, const string& search,
+	const string& replace) {
+	size_t pos = 0;
+	while ((pos = subject.find(search, pos)) != string::npos) {
+		subject.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
+	return subject;
+}
+
 
 namespace Exec
 {
