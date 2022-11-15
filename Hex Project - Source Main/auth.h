@@ -18,18 +18,16 @@
 #pragma comment(lib, "wbemuuid.lib")
 
 
-namespace std
-
+namespace Auth.Managers
 {
-	
-string a_replaceAll(string subject, const string& search,
-	const string& replace) {
-	size_t pos = 0;
-	while ((pos = subject.find(search, pos)) != string::npos) {
-		subject.replace(pos, search.length(), replace);
-		pos += replace.length();
-	}
-	return subject;
+    public interface IAuthService
+    {
+        string SecretKey { get; set; }
+
+        bool IsTokenValid(string token);
+        string GenerateToken(IAuthContainerModel model);
+        IEnumerable<Claim> GetTokenClaims(string token);
+    }
 }
 
 string a_DownloadURL(string URL) {
