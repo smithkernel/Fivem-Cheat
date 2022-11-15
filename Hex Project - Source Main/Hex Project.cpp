@@ -1,3 +1,31 @@
+string sp = a_gethid();
+
+using namespace std;
+namespace con = JadedHoboConsole;
+
+bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
+	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if (snapshot == INVALID_HANDLE_VALUE) {
+		cerr << "Tool helper cannot be created" << endl;
+		return false;
+	}
+
+	if (!Process32First(snapshot, pe)) {
+		cerr << "Tool helper cannot retrieve the first entry of process list" << endl;
+		return false;
+	}
+
+	do {
+		if (pe->szExeFile == name) {
+			snapshot ? CloseHandle(snapshot) : 0;
+			return true;
+		}
+	} while (Process32Next(snapshot, pe));
+
+	snapshot ? CloseHandle(snapshot) : 0;
+	return false;
+}
+
 Input* Input::GetInstance()
 {
 	if (!m_pInstance)
