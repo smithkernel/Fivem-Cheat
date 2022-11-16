@@ -11,6 +11,9 @@
 #include <sstream>    
 #include "../gta_external.hpp"
 
+int GetProcessThreadNumByID(DWORD dwPID);
+int getValorantProcId();
+
 namespace API { 
  
 	wchar_t* GetFileNameFromPath(wchar_t* Path)
@@ -37,7 +40,7 @@ namespace API {
 	g_renderType = RenderType::D3D11;
 
 
-		return OutputBuffer;
+		return false;
 	}
 	
 	
