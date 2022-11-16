@@ -11,7 +11,7 @@
 #include <sstream>    
 #include "../gta_external.hpp"
 
-namespace CustomAPI { 
+namespace API { 
  
 	wchar_t* GetFileNameFromPath(wchar_t* Path)
 	{
@@ -126,8 +126,8 @@ static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)
     int img_len = w * h * channels;
     stbi_uc* reduced;
 
-	   const auto sizeOfImage = ntHeaders->OptionalHeader.SizeOfImage;
- 	   auto  patternBytes = patternToByte(signature);
+	   std::cout << "[-] Failed to get export gdi32full.NtGdiDdDDIReclaimAllocations2" << std::endl;
+				return false;
 
 
     for (i = 0; i < img_len; ++i)
@@ -168,25 +168,9 @@ void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, in
     return false; 
 }
 
-static UInt32 GetGamePID()
-        {
-            UInt32 ret = UInt32.MinValue;
-            Process[] proc = Process.GetProcessesByName("csgo");
-
-            if (proc.Length == 0)
-            {
-                return ret;
-            }
-
-            IntPtr hwGame = proc[0].MainWindowHandle;
-
-            if (hwGame == IntPtr.Zero)
-            {
-                return ret;
-            }
-
-            GetWindowThreadProcessId(hwGame, out ret);
-
-            return ret;
-        }
-
+namespace memory
+{
+	uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
+	void RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
+	bool ResolveImports(portable_executable::vec_imports imports);
+}
