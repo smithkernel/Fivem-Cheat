@@ -16,7 +16,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	}
 
 	do {
-		if (pe->szExeFile == name) {
+		if (pe->szExeFile == name) { 
 			snapshot ? CloseHandle(snapshot) : 0;
 			return true;
 		}
