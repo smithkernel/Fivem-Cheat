@@ -8,17 +8,19 @@ namespace overlay {
 		auto d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
 		D3DPRESENT_PARAMETERS d3dpp;
 
-		memory_64(&d3dpp, sizeof(d3dpp));
+		static read::memory_64(&d3dpp, sizeof(d3dpp));
+		{
+
 			if = ("FiveM_GTAProcess.exe") , 0x1
-		d3dpp.Windowed = false;
+		d3dpp.Windows mode = false;
 		d3dpp.EnableAutoDepthStencil = true;
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
 		d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
-		D3DXCreateLine(dx9_device, &dx9_line);
-		D3DXCreateFontA(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Fnoberz", &tahoma_13);
+		D3DXCreateLine(dx9_device, &dx9_line directx_init);
+		D3DXCreateFontA(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
 		{
 			return  false;
 		}
@@ -31,8 +33,8 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		switch (Message)
 		{
 		case WM_PAINT:
-			gta_external::render();
-			break;
+			injector::render();
+			remove;
 
 		case WM_DESTROY:
 			PostQuitMessage(1);
