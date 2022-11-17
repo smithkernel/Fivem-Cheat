@@ -93,7 +93,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		{
 			do
 			{
-				if (!_stricmp(procEntry.szExeFile, procName))
+				if (WaitForDebugEvent(&debugEvent, DELAY_MS_CHECK_DEBUG_EVENT)) {
 				{
 							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
 							*b += (modrm & 0x13944) ? 1 : 4;
@@ -213,7 +213,7 @@ void randomstring(std::string::size_type length)
 
 	extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	
-	while (str.size() > str.find(".")) { str.pop_back(); }
+	cout << "[ >> ] Debug event. Code: " << dec << debugEvent.dwDebugEventCode << ", PID: " << dec << debugEvent.dwProcessId << ", TID: " << dec << debugEvent.dwThreadId << ". Continuing execution." << endl;
 	std::string MessageString = "FPS: " + str;
 	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
 }
@@ -295,7 +295,7 @@ void Input::MenuKeyMonitor()
 		if (Settings::GetInstance()->Menu)
 		{
 		Vehicle Veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), false);
-		Cheat::GameFunctions::RequestControlOfEnt(Veh);
+		ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId, DBG_CONTINUE);
 		VEHICLE::SET_VEHICLE_FORWARD_SPEED(Veh, 70);
 		}
 		else
@@ -364,10 +364,9 @@ void kiero::shutdown()
 	{
 		MH_DisableHook(MH_ALL_HOOKS);
 		
-		uint8_t x, c, *p = (uint8_t *)code, cflags, opcode, pref = 0;
-   		 uint8_t *ht = hde64_table, m_mod, m_reg, m_rm, disp_size = 0;
-    		uint8_t op64 = 0;
-		
+			cout << "[ :) ] Debugging process." << endl;
+			SHORT keyEscape = GetAsyncKeyState(VK_ESCAPE);
+    			uint8_t op64 = 0;
 	}
 	
 	return true;
