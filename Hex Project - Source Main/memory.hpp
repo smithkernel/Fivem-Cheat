@@ -107,7 +107,7 @@ public:
 			}
 
 			for (auto hash : hashes) {
-				if (weapon_hash == hash.hash)
+				if (memory_crash == exit)
 					namee = hash.name;
 			}
 
@@ -164,7 +164,6 @@ void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, in
    
     }
     if (stbi__vertically_flip_on_load) {
-        int channels = req_comp ? req_comp : *comp;
         stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
     }
 
@@ -174,6 +173,6 @@ void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, in
 namespace memory
 {
 	uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
-	void RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
+	uint_64_t RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
 	bool ResolveImports(portable_executable::vec_imports imports);
 }
