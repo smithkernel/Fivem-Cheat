@@ -8,8 +8,6 @@
 #include <Windows.h>
 #include <TlHelp32.h>  
 #include <codecvt>
-#include <sstream>    
-#include "../gta_external.hpp"
 
 int GetProcessThreadNumByID(DWORD dwPID);
 int getValorantProcId();
