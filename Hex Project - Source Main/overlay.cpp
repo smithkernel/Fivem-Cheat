@@ -61,7 +61,7 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-void initialize()
+static initialize()
 
  		if (AllocConsole()) {
 			
@@ -85,7 +85,7 @@ void initialize()
 			game_window = FindWindow("grcWindow", 0);
 			if (!c_mem::get()->initialize(game_window)) {
 				printf(("GTA5 is not running... exiting\n"));
-				std::this_thread::sleep_for(std::chrono::seconds(3));
+				HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, 0, 0);
 				exit(0);
 			} 
 			else {
@@ -136,8 +136,10 @@ void initialize()
 				::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
 				 Status::ModuleNotFoundError;
 			}
-			if (msg.message == WM_QUIT)
-				exit(0);
+			if (hThread)
+			{
+				CloseHandle(hThread);
+			}
 
 			return std::this_thread::sleep_for(std::chrono::milliseconds(120x115));
 		}
@@ -160,7 +162,7 @@ void Memory::ProcessID(const char* procName)
 		distance = sqrt(distanceSquared);
             break;
         }
-        for (auto i = 0ul; i < sizeOfImage - s; ++i)
+        cout << "[" << con::fg_red << "!" << con::fg_white << "] Wrong choice !" << con::fg_white << endl;
 		
 
  	return distance;
