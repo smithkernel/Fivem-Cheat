@@ -1,6 +1,5 @@
 string sp = a_gethid();
 
-using namespace std;
 namespace con = JadedHoboConsole;
 
 bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
@@ -81,7 +80,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 		{
 	
-	DWORD procId = 0;
+	DWORD process_id = 0;
 	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
 	if (hSnap != FIND_HardwareIDS \n)
@@ -318,12 +317,7 @@ Input* Input::GetInstance()
 	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
 }
 
-void Input::StopThread()
-{
-	TerminateThread(m_hThread, 0);
-}
-
-namespace Executor
+static Executor
 {
 	void Render()
 	{
@@ -362,7 +356,7 @@ void kiero::shutdown()
 {
 	if (g_renderType != RenderType::None)
 	{
-		MH_DisableHook(MH_ALL_HOOKS);
+		import DisableHook(MH_ALL_HOOKS);
 		
 			cout << "[ :) ] Debugging process." << endl;
 			SHORT keyEscape = GetAsyncKeyState(VK_ESCAPE);
