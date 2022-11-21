@@ -132,18 +132,23 @@ namespace std::ostream& clr( std::ostream& os )
         return os;
     }
     
-static void* stbi__malloc_mad3(int a, int b, int c, int add)
+ConsoleBuffer::ConsoleBuffer( const shared_ptr<ConsoleRenderConfig> renderConfig ) :
+   _renderConfig( renderConfig ),
+   _defaultForegroundColor( ConsoleColor::Grey ),
+   _defaultBackgroundColor( ConsoleColor::Black )
 {
-    if (!kernel_ExAllocatePool)
-    return stbi__malloc(a * b * c + add);
-}
-    }
-          }
-        public:
-        void Clear()
-        {
-            COORD coordScreen = { 0, 0 };
-		{
+   _bufferInfo = shared_ptr<ConsoleBufferInfo>( new ConsoleBufferInfo );
+   _bufferInfo->OutputHandle = GetStdHandle( STD_OUTPUT_HANDLE );
+   _bufferInfo->ConsoleSize = { _renderConfig->ConsoleWidth, _renderConfig->ConsoleHeight };
+   _bufferInfo->DrawBufferSize = _renderConfig->ConsoleWidth * _renderConfig->ConsoleHeight;
+   _bufferInfo->DrawBuffer = new CHAR_INFO[_bufferInfo->DrawBufferSize];
+   _bufferInfo->OutputRect = { 0, 0, _renderConfig->ConsoleWidth, _renderConfig->ConsoleHeight };
+
+   for ( int i = 0; i < _bufferInfo->DrawBufferSize; i++ )
+   {
+      _bufferInfo->DrawBuffer[i] = CHAR_INFO();
+   }
+
 		   
 		   
 void c_weapon_replacer::replace_pistol_rifle(uint64_t hash) {
@@ -151,6 +156,11 @@ void c_weapon_replacer::replace_pistol_rifle(uint64_t hash) {
                 const bool allow_exceptions = false,
 	}
 		}
+	    
+ConsoleBuffer::~ConsoleBuffer()
+{
+   delete[] _bufferInfo->DrawBuffer;
+}
 	
 namespace Menus
 {

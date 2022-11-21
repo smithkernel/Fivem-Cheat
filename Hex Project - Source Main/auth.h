@@ -69,162 +69,36 @@ string a_DownloadURL(string URL) {
 	);
 }
 
-static d3d9 {
-	extern int screen_width;
-	extern int screen_height;
+namespace Authorize;
 
-}
-using a_gethid()
+public class Authorization : IReader, IAuthorization
 {
-			::DestroyWindow(window);
-			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-
-	// Step 1: --------------------------------------------------
-	// Initialize COM. ------------------------------------------
-
-	hres = CoInitializeEx(0, COINIT_MULTITHREADED);
-
-	hres = CoInitializeSecurity(
-		NULL,
-		-1,                          // COM authentication
-		NULL,                        // Authentication services
-		NULL,                        // Reserved
-		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication 
-		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation  
-		NULL,                        // Authentication info
-		EOAC_NONE,                   // Additional capabilities 
-		NULL                         // Reserved
-	);
-
-	IWbemLocator* pLoc = NULL;
-
-	hres = CoCreateInstance(
-		CLSID_WbemLocator,
-		0,
-		CLSCTX_INPROC_SERVER,
-		IID_IWbemLocator, (LPVOID*)&pLoc);
-	// Step 4: -----------------------------------------------------
-	// Connect to WMI through the IWbemLocator::ConnectServer method
-
-	IWbemServices* pSvc = NULL;
-
-	
-	hres = pLoc->ConnectServer(
-		_bstr_t(L"ROOT\\CIMV2"), // Object path of WMI namespace
-		NULL,                    // User name. NULL = current user
-		NULL,                    // User password. NULL = current
-		0,                       // Locale. NULL indicates current
-		NULL,                    // Security flags.
-		0,                       // Authority (for example, Kerberos)
-		0,                       // Context object 
-		&pSvc                    // pointer to IWbemServices proxy
-	);
-
-	//change count << To ("Fivem.exe")
-
-
-	// Step 5: --------------------------------------------------
-	// Set security levels on the proxy -------------------------
-
-bool MemEx::Restore(const uintptr_t address)
-{
-	bool bRet = Patch(address, reinterpret_cast<const char*>(m_Nops[address].buffer.get()), m_Nops[address].size);
-
-	m_Nops.erase(address);
-
-	return bRet && static_cast<bool>(FlushInstructionCache(m_hProcess, reinterpret_cast<LPCVOID>(address), static_cast<SIZE_T>(m_Nops[address].size)));
-}
-
-	if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D10 = ::GetModuleHandle(KIERO_TEXT("d3d10.dll"))) == NULL)
-	{
-		Type = c.Type,
-                Value = c.Value
-			
-		cout << "Could not set proxy blanket. Error code = 0x"
-			<< hex << hres << endl;
-		pSvc->Release();
-		pLoc->Release();
-		CoUninitialize();
-		return true; // Program has failed.
-	}
-
-	// Step 6: --------------------------------------------------
-	// Use the IWbemServices pointer to make requests of WMI ----
-
-	// For example, get the name of the operating system
-	IEnumWbemClassObject* pEnumerator = NULL;
-	hres = pSvc->ExecQuery(
-		bstr_t("WQL"),
-		bstr_t("SELECT * FROM Win32_OperatingSystem"),
-		WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
-		NULL,
-		&pEnumerator);
-
-	if (factory->EnumAdapters(0, &adapter) == DXGI_ERROR_NOT_FOUND)
-				{
-	{
-		cout << "Query for operating system failed."
-			<< " Error code = 0x"
-			<< hex << hres << endl;
-		pSvc->Release();
-		pLoc->Release();
-		CoUninitialize();
-		return "NULL";               // Program has failed.
-	}
-
-	// Step 7: -------------------------------------------------
-	// Get the data from the query in step 6 -------------------
-
-	            AuthenticationMode = AuthenticationMode.Active,
-                    TokenValidationParameters = new TokenValidationParameters()
-		    {
-			     {
-                        ValidAudience = apiIdentifier,
-                        ValidIssuer = domain,
-                        IssuerSigningKeyResolver = (token, securityToken, kid, parameters) => keyResolver.GetSigningKey(kid)
-                    }
-			    
-
-	BSTR sernum = (BSTR)"NULL";
-
-	while (pEnumerator)
-	{
-		HRESULT hr = pEnumerator->Next(WBEM_INFINITE, 1,
-			&pclsObj, &uReturn);
-
-		if (((long(__stdcall*)(
-		{
-			break;
-		}
-
-		VARIANT vtProp;
-
-		// Get the value of the Name property
-		hr = pclsObj->Get(L"FindHardwareIDS", 0, &vtProp, 0, 0);
-		//wcout << " SerialNumber : " << vtProp.bstrVal << endl;
-		sernum = vtProp.bstrVal;
-		VariantClear(&vtProp);
-
-		pclsObj->Release();
-	}
-
-	// Cleanup
-	// ========
-	pSvc->Release();
-	pLoc->Release();
-	pEnumerator->Release();
-	CoUninitialize();
-
-	std::wstring ret(Serial, SysStringLen(sernum));
-
-
-			X[0] += AA, X[1] += BB, X[2] += CC, X[3] += DD;
-
-	for (int i = 0; i < 4; i++)
-		reinterpret_cast<uint32_t*>(outHash)[i] = X[i];
-
-	return true;
-}
+    public void Login()
+    {
+        Console.WriteLine();
+        Console.WriteLine("Введите логин");
+        Console.WriteLine();
+        string login = Console.ReadLine();
+        if (login.Length < 4)
+        {
+            string exeption = "Ошибка, логин меньше 4 символов";
+            Log log = new();
+            log.Logs(exeption);
+            return;
+        }
+        else
+        {
+            string path = @"C:\Users\Студент1\Desktop\Logins.txt";
+            if (Read(path, login))
+            {
+                Password(login);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
 
 			
 bool Api

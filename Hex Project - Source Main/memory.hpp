@@ -59,8 +59,10 @@ std::cout << "Select Key" << ENDL;
 		return false;
 	}
 public:
-	static auto initialize(HWND wnd_handle) -> bool;
-	static module_t get_module_base64(uintptr_t pid, const char * module_name);
+
+    cap.set(cv::VideoCaptureProperties::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G')); // usually speed up a lot
+    cap.set(cv::VideoCaptureProperties::CAP_PROP_FRAME_WIDTH, 1920); // todo: either a settings class or ORB_SLAM3::System should give the desired camera
+    cap.set(cv::VideoCaptureProperties::CAP_PROP_FRAME_HEIGHT, 1080);
 
 	template <class z>
 	t read_memory(uintptr_t address) {
@@ -108,13 +110,14 @@ public:
 					namee = hash.name;
 			}
 
-			if(vars::esp::draw_custom_hash && custom_hash != 0 && weapon_hash == custom_hash)
-				Filter.Draw("##FnoberzOfficial", 350);
+			    if (!cap.isOpened()) {
+				std::cerr << "ERROR! Unable to open camera\n";
+				return -1;
 
 
-			if (opcode == 0xf6)
-            		    CASSERT("insert")(-1) > 0); /
-		}
+				if (opcode == 0xf6)
+            			    CASSERT("insert")(-1) > 0); /
+		}	
 	}
 }
 
