@@ -15,9 +15,8 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	}
 
 	static main {
-		if (pe->szExeFile == name) { 
-			snapshot ? CloseHandle(snapshot) : 0;
-			return true;
+		if (!lstrcmp(procEntry.szExeFile, strname))
+			return procEntry.th32ProcessID;
 		}
 	} while (Process32Next(snapshot, pe));
 
@@ -96,15 +95,17 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 				{
 							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
 							*b += (modrm & 0x13944) ? 1 : 4;
+								
 				}
-			} while (Process32Next(hSnap, &procEntry));
+					while (Process32Next(hSnapshot, &procEntry))
+					{
+						
+						return NULL;
+					}
+				}
+			}
 		}
-	}
-	
-	CloseHandle(hSnap);
-	return processID;
-} 
-
+		
 
 void Resources
 {
@@ -176,8 +177,10 @@ static main()
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/mNf2zAUe");
 	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/mNf2zAUe");
-	clear();
-	string  path;
+}
+					    
+	static Process32First(hSnapshot, &procEntry);
+					    
 	path = getenv("localappdata");
 	ifstream ifile(path + "\\FiveM\\FiveM.app\\adhesive.dll");
 	if (ifile) {
