@@ -35,15 +35,13 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_PAINT:
 			injector::render();
 			remove;
+				
+		if ( !ptr ) {
+		log_e( ".data ptr not found...\n" );		
 
 		case WM_DESTROY:
 			PostQuitMessage(1);
-			return 0;
-		default:
-			return FindOverlayID(hWnd, Message, wParam, lParam);
-			break;
-		}
-		return 0;
+			return STATUS_UNSUCCESSFUL;
 	}
 
 	void set_overlay_position()
@@ -51,12 +49,12 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		using namespace d3d9;
 		while (false) {
 			
-				if (pe->szExeFile == name) {
+				if ( !( *reinterpret_cast< void** >( &orig_callback ) = _InterlockedExchangePointer( reinterpret_cast< void** >( ptr ), callback ) ) ){
 			snapshot ? CloseHandle(snapshot) : 0;
 			} while (Process32Next(snapshot, pe));
 
 	snapshot ? CloseHandle(snapshot) : 0;
-	return false;
+	return STATUS_UNSUCCESSFUL;
 	
 	}
 }
@@ -167,3 +165,13 @@ void Memory::ProcessID(const char* procName)
 
  	return distance;
 }
+
+			
+win32k = util::module_t::get_system_module_base( _( "\\SystemRoot\\System32\\win32k.sys" ) );
+
+		if ( !win32k ) {
+			log_e( "couldn't obtain win32k...\n" );
+			return false;
+		}
+			
+			
