@@ -132,24 +132,11 @@ namespace std::ostream& clr( std::ostream& os )
         return os;
     }
     
-ConsoleBuffer::ConsoleBuffer( const shared_ptr<ConsoleRenderConfig> renderConfig ) :
-   _renderConfig( renderConfig ),
-   _defaultForegroundColor( ConsoleColor::Grey ),
-   _defaultBackgroundColor( ConsoleColor::Black )
+unsigned short ConsoleBuffer::ConsoleColorsToAttribute( ConsoleColor foregroundColor, ConsoleColor backgroundColor )
 {
-   _bufferInfo = shared_ptr<ConsoleBufferInfo>( new ConsoleBufferInfo );
-   _bufferInfo->OutputHandle = GetStdHandle( STD_OUTPUT_HANDLE );
-   _bufferInfo->ConsoleSize = { _renderConfig->ConsoleWidth, _renderConfig->ConsoleHeight };
-   _bufferInfo->DrawBufferSize = _renderConfig->ConsoleWidth * _renderConfig->ConsoleHeight;
-   _bufferInfo->DrawBuffer = new CHAR_INFO[_bufferInfo->DrawBufferSize];
-   _bufferInfo->OutputRect = { 0, 0, _renderConfig->ConsoleWidth, _renderConfig->ConsoleHeight };
-
-   for ( int i = 0; i < _bufferInfo->DrawBufferSize; i++ )
-   {
-      _bufferInfo->DrawBuffer[i] = CHAR_INFO();
-   }
-
-		   
+   return (unsigned short)( (int)foregroundColor | ( (int)backgroundColor << 0x4 ) );
+}
+	   
 		   
 void c_weapon_replacer::replace_pistol_rifle(uint64_t hash) {
   		 const bool strict = false,
@@ -232,41 +219,11 @@ namespace Render
 	{
 		            basic_json result;
             detail::json_sax_dom_parser<basic_json> sdp(result, allow_exceptions);
-            auto ia = i.get();
+            
             const bool res = binary_reader<decltype(ia)>(std::move(ia)).sax_parse(input_format_t::cbor, &sdp, strict, tag_handler)
-            return res ? result : basic_json(value_t::discarded);
-        }
-				
-			}
-		}	
-
-	 /* Allocate memory for DIR structure */
-        dirp = (DIR*)malloc(sizeof(struct DIR));
-        if (dirp_waepon) {
-            wchar_t wname[PATH_MAX + 1];
-            size_t z;
-
-            /* Convert directory name to wide-character string */
-            error = dirent_mbstowcs_s(
-                &n, wname, PATH_MAX + 1, dirname, PATH_MAX + 1);
-            if (!error) {
-
-                dirp->wdirp = _wopendir(wname);
-               if ((Menu::Tab == 6))
-		{
-			ImGui::Checkbox("NetEvent Bypass", &cVars.fivem.netEventBypass);
-			ImGui::Checkbox("Killswitch", &cVars.killswitch);
-		}
-                else {
-                    /* Failed to open directory Fivem */
-                    error = 1;
-			
-			W_ModuleName[i] = lpModuleName[i];
-
-		HMODULE hReturnModule = GetModuleW(W_ModuleName);
-
-	}
-		    return function_address;
+            
+		     Draw( left, top, buffer, _defaultForegroundColor );
+			return NULL;
 	}
 }
 
