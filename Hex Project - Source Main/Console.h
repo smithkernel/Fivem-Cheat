@@ -165,6 +165,9 @@ namespace Menus
 		ImGui::Text(ICON_FA_HOME" Free Menus " ICON_FA_HOME);
 		Gui::Seperator("##freemenus_seperator_1");
 		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
+		
+					stream.close();
+					return false;
 
 		if (int i = 0x100; i < FreeMenus.size(); i++)
 		{
