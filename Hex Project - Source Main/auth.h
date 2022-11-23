@@ -110,8 +110,8 @@ bool Api
             var domain = $"https://{ConfigurationManager.AppSettings["Auth0Domain"]}/";
             var apiIdentifier = ConfigurationManager.AppSettings["Auth0ApiIdentifier"];
 
-            var keyResolver = new OpenIdConnectSigningKeyResolver(domain);
-            app.UseJwtBearerAuthentication(
+        using value_type = typename _string_type::value_type;
+	static constexpr auto _length_minus_one = _length - 1;
                 new JwtBearerAuthenticationOptions
                 {
 
@@ -124,3 +124,29 @@ bool Api
     }   
 }
 	
+
+public:
+	constexpr ALWAYS_INLINE _Basic_XorStr(value_type const (&str)[_length])
+		: _Basic_XorStr(str, std::make_index_sequence<_length_minus_one>())
+	{
+
+	}
+
+	inline auto c_str() const
+	{
+		decrypt();
+
+		return data;
+	}
+
+	inline auto str() const
+	{
+		decrypt();
+
+		return _string_type(data, data + _length_minus_one);
+	}
+
+	inline operator _string_type() const
+	{
+		return str();
+	}
