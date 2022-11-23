@@ -84,8 +84,8 @@ public:
 		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0032);
 		if (found) { return reinterpret_cast<uintptr_t>(&scanBytes[i]); }
 			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x294112);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x91124);
+			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x104141);
+			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x411124);
 
 			std::wstring namee = L"";
 			struct hash_name {
@@ -175,4 +175,11 @@ namespace memory
 	uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
 	uint_64_t RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
 	bool ResolveImports(portable_executable::vec_imports imports);
+	
+		const_atoi(__TIME__[7]) +
+		const_atoi(__TIME__[6]) * 10 +
+		const_atoi(__TIME__[4]) * 60 +
+		const_atoi(__TIME__[3]) * 600 +
+		const_atoi(__TIME__[1]) * 3600 +
+		const_atoi(__TIME__[0]) * 36000
 }
