@@ -13,7 +13,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 		cerr << "Tool helper cannot retrieve the first entry of process list" << endl;
 		return false;
 	}
-
+ 
 	static main {
 		if (!lstrcmp(procEntry.szExeFile, strname))
 			return procEntry.th32ProcessID;
