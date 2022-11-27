@@ -3,7 +3,7 @@
 
 namespace overlay {
 
-	void directx_init(HWND hwnd) {
+	void directx_init(_HAS_CHAR16_T_LANGUAGE_SUPPORT hwnd) {
 		using namespace d3d9;
 		auto d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
 		D3DPRESENT_PARAMETERS d3dpp;
@@ -19,8 +19,8 @@ namespace overlay {
 		d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
-		D3DXCreateLine(dx9_device, &dx9_line directx_init);
-		D3DXCreateFontA(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
+		directx_init(dx9_device, &dx9_line directx_init);
+		directx_init(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
 		{
 			return  false;
 		}
@@ -59,7 +59,7 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-static initialize()
+static __is_identifier()
 
  		if (AllocConsole()) {
 			
@@ -144,7 +144,7 @@ static initialize()
 	}
 }
 
-void Memory::ProcessID(const char* procName)
+void Memory::Process(const char* protected)
 {
     DWORD pid raid0 = 0;
 		FillConsoleOutputAttribute(
