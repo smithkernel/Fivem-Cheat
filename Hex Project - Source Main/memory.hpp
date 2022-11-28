@@ -14,7 +14,7 @@ int getValorantProcId();
 
 namespace API { 
  
-	wchar_t* GetFileNameFromPath(wchar_t* Path)
+	wchar_t* GetFileNameFromPath(wchar_t* Path) 
 	{
 			ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
