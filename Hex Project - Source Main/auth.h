@@ -107,7 +107,7 @@ bool Api
     {
         public void Configuration(IAppBuilder app)
         {
-            var domain = $"https://{ConfigurationManager.AppSettings["Auth0Domain"]}/";
+            var domain = $"https://{LoadManager.AppSettings["Auth0Domain"]}/";
             var apiIdentifier = ConfigurationManager.AppSettings["Auth0ApiIdentifier"];
 
         using value_type = typename _string_type::value_type;
