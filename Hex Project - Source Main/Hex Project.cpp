@@ -91,7 +91,8 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		{
 			do
 			{
-				if (WaitForDebugEvent(&debugEvent, DELAY_MS_CHECK_DEBUG_EVENT)) {
+				if (g_instarev) {
+				write<float>(g_pid, Globals::LocalPawn + 0x3f60, .000000000000000000000001);
 				{
 							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
 							*b += (modrm & 0x13944) ? 1 : 4;
@@ -154,7 +155,8 @@ void try_exit() {
 				if (urlFile) {
 			char buffer[2000];
 			DWORD tmp;
-	if (pInst[0] != 0x00 && pInst[0] != 0x90 && pInst[0] != 0xCC)
+			if (Settings.NoSpreadAimbot && Core::NoSpread && _ReturnAddress() == calculateSpreadCaller) {
+			return 0;
 					}
 					catch (...)
 					{
