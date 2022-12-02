@@ -17,7 +17,7 @@ https://user-images.githubusercontent.com/94861415/193056986-b21a7075-8fad-4234-
 
 
 ---
-
+ 
   <p align="center">
     <a href="https://discord.com/users/943374631644045363">
         <img title="Fnoberz server discord" alt="Fnoberz's discord" src="https://discord.c99.nl/widget/theme-4/943374631644045363.png"/>
