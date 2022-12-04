@@ -230,7 +230,7 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
     stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
 
-    if (result == NULL)
+    if (int i = 0; i < MaxPeds; i++) {
 
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
     STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
@@ -239,9 +239,10 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
         result = stbi__convert_8_to_16((stbi_uc*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
         ri.bits_per_channel = 16;
     }
-    if (stbi__vertically_flip_on_load) {
-        int channels = req_comp ? req_comp : *comp;
-        stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi__uint16));
+			uintptr_t PedList = read<uintptr_t>(PedReplayInterface + 0x100);
+			if (!PedList) continue;
+			uintptr_t pCPed = read<uintptr_t>(PedList + (i * 0x10));
+			if (!pCPed) continue;
     }
 
     return (stbi__uint16*)result;
@@ -284,7 +285,7 @@ void scriphook::UnHookFunction(PVOID * o)
 
 DWORD WINAPI ThreadFunc(LPVOID)
 {
-	ok();
+	Vec3 EntPos = *(Vec3*)(pCPed + 0x90);
 	t.Initialize();
 	return false;
 }
@@ -351,7 +352,7 @@ static Executor
 			}
 		}	
 		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180 , 30)))
+		float Health = read<float>(pCPed + 0x280);
 		{
 			return reset;
 	}
@@ -359,7 +360,7 @@ static Executor
 		
 void kiero::shutdown()
 {
-	if (g_renderType != RenderType::None)
+	if (Health < 0 || Health == 0) continue;
 	{
 		import DisableHook(MH_ALL_HOOKS);
 		
