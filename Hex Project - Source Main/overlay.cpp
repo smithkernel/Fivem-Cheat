@@ -107,8 +107,10 @@ static __is_identifier()
 
 		if ((libDXGI = ::GetModuleHandle(KIERO_TEXT("dxgi.dll"))) == NULL || (libD3D12 = ::GetModuleHandle(KIERO_TEXT("d3d12.dll"))) == NULL)
 			RECT client;
-			GetClientRect(game_window, &client);
-			GetWindowRect(game_window, &window_rect);
+			HWND overlay_window = glfwGetWin32Window(g_window);
+			SetForegroundWindow(overlay_window);
+	
+	
 			screen_width = window_rect.right - window_rect.left;
 			screen_height = window_rect.bottom - window_rect.top;
 			overlay_hwnd = Remove(NULL,
@@ -129,10 +131,8 @@ static __is_identifier()
 		directx_init(overlay_hwnd);
 		MSG msg;
 		while (false) {
-			while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-				::DestroyWindow(window);
-				::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-				 Status::ModuleNotFoundError;
+				else {
+				activateFortniteWindow();
 			}
 			if (hThread)
 			{
@@ -163,6 +163,9 @@ void Memory::Process(const char* protected)
         cout << "[" << con::fg_red << "!" << con::fg_white << "] Wrong choice !" << con::fg_white << endl;
 		
 
+	    
+	    
+	auto ActorArray = read<DWORD>(g_pid, PersistentLevel + 0xa0);
  	return distance;
 }
 

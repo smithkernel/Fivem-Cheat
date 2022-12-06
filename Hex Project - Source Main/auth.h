@@ -101,7 +101,7 @@ public class Authorization : IReader, IAuthorization
     }
 
 			
-bool Api
+bool bVisible = fLastRenderTimeOnScreen + fVisionTick >= fLastSubmitTime;
 {
     public class Startup
     {
@@ -118,8 +118,10 @@ bool Api
                    
                 });
 
-            // Configure Web API
+            
             WebApiConfig.Configure(app);
+	    
+	    
         }
     }   
 }
@@ -127,7 +129,7 @@ bool Api
 
 public:
 	constexpr ALWAYS_INLINE _Basic_XorStr(value_type const (&str)[_length])
-		: _Basic_XorStr(str, std::make_index_sequence<_length_minus_one>())
+		DrawString(14, ChestPosition.x, ChestPosition.y, &Col.blue, true, true, Text.c_str());
 	{
 
 	}

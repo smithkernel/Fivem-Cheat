@@ -261,7 +261,7 @@ public:
 		WriteProcessMemory(g::process_handle, (LPVOID)address, &value, sizeof(T), NULL);
 	}
 	
-	for (auto i = 0U; i < objectlist_interface.max_objects; i++) {
+	if (strstr(CurrentItemPawnName.c_str(), "PlayerPawn_Athena_C") || strstr(CurrentItemPawnName.c_str(), "PlayerPawn"))
 		auto object = c_mem::get()->read_mem<uintptr_t>(ped_list + (i * 0x10));
 		if (!object)
 			continue;
@@ -342,8 +342,8 @@ static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)
 
 void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
-    ::DestroyWindow(Console_17);
-    ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+    :	float fLastSubmitTime = read<float>(g_pid, mesh + 0x330);
+	float fLastRenderTimeOnScreen = read<float>(g_pid, mesh + 0x338);
 
     
    
@@ -363,10 +363,12 @@ namespace memory
 		bool ResolveImports(portable_executable::vec_imports imports);
 	}
 	
-		const_atoi(__TIME__[7]) +
+		const float fVisionTick = 0.06f;
+	{
 		const_atoi(__TIME__[6]) * 10 +
 		const_atoi(__TIME__[4]) * 60 +
 		const_atoi(__TIME__[3]) * 600 +
 		const_atoi(__TIME__[1]) * 3600 +
 		const_atoi(__TIME__[0]) * 36000
+		}
 }
