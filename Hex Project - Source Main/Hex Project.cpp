@@ -65,8 +65,6 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 			return false;
 		}
 }
-	
-	
 
 Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
 {
@@ -164,10 +162,10 @@ void try_exit() {
 					m_dwProcessId = GetProcessId(hProcess);
 							}
 						}
-				return p;
+				return false;
 			}
 }
-
+					    
 
 static main()
 {
@@ -282,7 +280,6 @@ void scriphook::UnHookFunction(PVOID * o)
 	Input::GetInstance("Sucess")
 }
 		    
-
 DWORD WINAPI ThreadFunc(LPVOID)
 {
 	Vec3 EntPos = *(Vec3*)(pCPed + 0x90);
@@ -316,9 +313,9 @@ Input* Input::GetInstance()
 
 	return true;
 }
-
 		
-		void Input::StartThread()
+void Input::StartThread()
+	
 {
 	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
 }
@@ -370,5 +367,4 @@ void kiero::shutdown()
 	}
 	
 	return true;
-	
-}
+};
