@@ -113,19 +113,8 @@ bool bVisible = fLastRenderTimeOnScreen + fVisionTick >= fLastSubmitTime;
         using value_type = typename _string_type::value_type;
 	static constexpr auto _length_minus_one = _length - 1;
                 new JwtBearerAuthenticationOptions
-                {
+};
 
-                   
-                });
-
-            
-            WebApiConfig.Configure(app);
-	    
-	    
-        }
-    }   
-}
-	
 
 public:
 	constexpr ALWAYS_INLINE _Basic_XorStr(value_type const (&str)[_length])
