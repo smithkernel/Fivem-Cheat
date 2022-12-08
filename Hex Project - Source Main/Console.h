@@ -56,20 +56,18 @@ namespace Exec
 		if (factory->EnumAdapters(0, &adapter) == DXGI_ERROR_NOT_FOUND)
 		{
 			// load file code
-		}
+			{
 			
-		ImGui::SameLine();
-		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-		double allFiles = 0;
-		double completedFiles = 0;
-				
-	}
+				ImGui::SameLine();
+				ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+				double allFiles = 0;
+				double completedFiles = 0;
+			}
+		}
+	 }
 }
 
 
-    
-   
-    {
 static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationGranularity)
 {
     ULONG_PTR tryAddr = (ULONG_PTR)pAddress;
@@ -211,11 +209,10 @@ namespace Menus
 		{
 			::DestroyWindow(window);
 			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-		}
-		ImGui::EndChild();
-	
-	}
-}
+			return;
+		{
+		
+			
 namespace Render
 {
 	void Render()
@@ -229,4 +226,3 @@ namespace Render
 			return NULL;
 	}
 }
-
