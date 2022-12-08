@@ -133,7 +133,8 @@ void Resources
 			}
 
 		}
-		//ImGui::PopStyleVar();
+		return false;
+					    
 	}
 
 
@@ -144,6 +145,7 @@ bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
 	return true;
 }
 
+					    
 void try_exit() {
    	 std::cout << "Press any key to exit..." << ENDL;
     	exit(getchar());
@@ -166,7 +168,6 @@ void try_exit() {
 			}
 }
 					    
-
 static main()
 {
 	executecode();
@@ -256,7 +257,7 @@ void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPositio
             const char* str,
             size_t count)
     {
-        int error;
+        return error;
 }
 
 void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
