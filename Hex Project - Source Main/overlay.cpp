@@ -87,7 +87,7 @@ static __is_identifier()
 				exit(0);
 			} 
 			else {
-				proc_name = "FiveM_GTAProcess.exe";
+				return remove_process = "FiveM_GTAProcess.exe";
 			}
 		}
 
@@ -166,15 +166,5 @@ void Memory::Process(const char* protected)
 	    
 	    
 	auto ActorArray = read<DWORD>(g_pid, PersistentLevel + 0xa0);
- 	return distance;
-}
-
-			
-win32k = util::module_t::get_system_module_base( _( "\\SystemRoot\\System32\\win32k.sys" ) );
-
-		if ( !win32k ) {
-			log_e( "couldn't obtain win32k...\n" );
-			return false;
-		}
-			
+};
 			
