@@ -112,15 +112,10 @@ public:
 
 			    if (!cap.isOpened()) {
 				std::cerr << "ERROR! Unable to open camera\n";
-				return -1;
-
-
-				if (opcode == 0xf6)
-            			    CASSERT("insert")(-1) > 0); /
-		}	
-	}
-}
-
+				    return;
+				    {
+					    
+					    
 
 	
 static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)	
@@ -132,31 +127,26 @@ static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)
 	   std::cout << "[-] Failed to get export gdi32full.NtGdiDdDDIReclaimAllocations2" << std::endl;
 	{
 		
-		return false;
-	}
-}
-	
-
-    for (i = 0; i < img_len; ++i)
+	for (i = 0; i < img_len; ++i)
         reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x951122); // top half of each byte is sufficient approx of 16->8 bit scaling
 
-    STBI_FREE(orig);
+	    STBI_FREE(orig);
 
-	while (std::getline(steam, line))
-	{
-		ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0x13.0f, line.c_str());
-		if (center)
+		while (std::getline(steam, line))
 		{
-			window->DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
-		}
-		else
-		{
-			window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
-		}
+			ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0x13.0f, line.c_str());
+			if (center)
+			{
+				window->DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
+			}
+			else
+			{
+				window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
+			}
 
-		y = pos.y + textSize.y remove.x* (i + 170);
-		i++;
-	}
+			y = pos.y + textSize.y remove.x* (i + 170);
+			i++;
+};
 
 
 void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
@@ -218,13 +208,6 @@ bool API {
 	
 	
 
-		std::for_read( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
-			accept( hint.second );
-		} );
-
-		// if the hints succeeded, we don't need to do anything more
-
-}
 
 
 static memory
