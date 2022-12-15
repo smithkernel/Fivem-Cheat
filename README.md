@@ -6,14 +6,38 @@
  
         
  
-## 🔎 〢 How To Setup 
-- Oh sorry, it's not free. We just show we work and we are **Legit only.** | `Buy In Discord`
-- Our customer recorded a video and tested it. Don't be surprised if it's not my name.
-- Thanks For `IMGUI` [Hammafia](https://www.elitepvpers.com/forum/grand-theft-auto-trading/4713198-hammafia-com-fivem-lua-executor.html)
+ ## 🎁 | How To Use
+- You need to **create** a [Drver Kernel](https://www.youtube.com/watch?v=xh5cCUuQfL8&t=1090s&ab_channel=EthanEDITS) and when it's done you put the Source in the Driver folder.
+- It's time for fun / use it at your own risk 
+- Other question & help / [Discord Server](https://discord.gg/MBTkVcJefp)
+ 
+
+    
+    
    
-  
-  
-https://user-images.githubusercontent.com/94861415/193056986-b21a7075-8fad-4234-b675-8b3ab6554f0e.mp4
+## FEATURE
+
+#### Lua Exec
+- Injector .lua Scripts
+
+#### Dumper Scripts
+- dumper Scripts infect both files and clients as well.
+
+#### Bypass
+- bypass Anti-cheat Ex: FivemGuard, Chocohax, 2K Anticheat
+
+
+#### External
+- aimbot , esp , super jump , norecoil , godmode | best for pvp
+   
+#### Resource | Eventlogger | TriggerEvent
+- All
+
+
+
+https://user-images.githubusercontent.com/94861415/207129032-f052db84-fac5-429f-85a5-e6a138f22c2b.mp4
+
+
 
  
 ---
@@ -57,4 +81,3 @@ A website that I created to introduce myself from start to finish. hope you like
 
 <h2 align="center"> Copyright © 2021 - 2022
 
-##### <p align="center">  FNOBERZ OFFICIAL / JOIN DISCORD [CLOUD PROJECT](https://discord.gg/JUwFCGHbV4)

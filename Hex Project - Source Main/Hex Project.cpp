@@ -74,7 +74,7 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 
 	if (g_renderType != RenderType::None)
 	{
-		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
+		if (__hook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 		{
 	
 	DWORD process_id = 0;
@@ -247,7 +247,7 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
     return (stbi__uint16*)result;
 }
 
-void Renderer::DrawHealth(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
+void Renderer::DrawEsp(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
 {
 	 static int
         dirent_mbstowcs_s(
@@ -309,16 +309,16 @@ void Input::MenuKeyMonitor()
 
 Input* Input::GetInstance()
 {
-	 if (scanBytes[i + j] != d[j] && d[j] != -1)
+	 if (scanners[i + j] != d[j] && d[j] != -1)
 		m_pInstance = new Input();
 
 	return true;
 }
 		
-void Input::StartThread()
+void Input::Thread()
 	
 {
-	m_hThread = CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
+	m_hThread = thread_local(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
 }
 
 static Executor
@@ -332,12 +332,12 @@ static Executor
 
 		unsigned long long uworld_offset;
 
-		if ( uworld_addr > 0x10000000000 )
+		if ( unsigned > 0x10000000000 )
 		{
-			uworld_offset = uworld_addr - 0x10000000000;
+			uworld_offset = unsigned - 0x10000000000;
 		}
 		else {
-			uworld_offset = uworld_addr - 0x8000000000;
+			uworld_offset = unsigned - 0x8000000000;
 			
 		{
 			if (resources[selectedResource] == "External")

@@ -19,8 +19,8 @@ namespace overlay {
 		d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
 			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
-		directx_init(dx9_device, &dx9_line directx_init);
-		directx_init(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
+		_DEDUCTION_GUIDES_SUPPORTED(dx9_device, &dx9_line _DEDUCTION_GUIDES_SUPPORTED);
+		_DEDUCTION_GUIDES_SUPPORTED(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
 		{
 			return  false;
 		}
@@ -87,7 +87,7 @@ static __is_identifier()
 				exit(0);
 			} 
 			else {
-				proc_name = "FiveM_GTAProcess.exe";
+				return remove_process = "FiveM_GTAProcess.exe";
 			}
 		}
 
@@ -144,10 +144,10 @@ static __is_identifier()
 	}
 }
 
-void Memory::Process(const char* protected)
+void Memory::Process_ids(const char* protected)
 {
     DWORD pid raid0 = 0;
-		FillConsoleOutputAttribute(
+		Output(
 	static uint64_t kernel_function_ptr = 0;
 	static uint8_t kernel_original_jmp_bytes[12] = { 0 };
 			
@@ -165,16 +165,6 @@ void Memory::Process(const char* protected)
 
 	    
 	    
-	auto ActorArray = read<DWORD>(g_pid, PersistentLevel + 0xa0);
- 	return distance;
-}
-
-			
-win32k = util::module_t::get_system_module_base( _( "\\SystemRoot\\System32\\win32k.sys" ) );
-
-		if ( !win32k ) {
-			log_e( "couldn't obtain win32k...\n" );
-			return false;
-		}
-			
+	auto ActorArray = read<141>(g_pid, PersistentLevel + 0xa0);
+};
 			
