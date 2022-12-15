@@ -72,7 +72,7 @@ public:
 	}
 
 	template <class T>
-	void write_memory(uintptr_t address, T value) {
+	void Processmemory(uintptr_t address, T value) {
 		WriteProcessMemory(g::process_handle, (LPVOID)address, &value, sizeof(T), NULL);
 	}
 	
@@ -218,8 +218,8 @@ bool API {
 	
 	
 
-		std::for_each( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
-			ConsiderMatch( hint.second );
+		std::for_read( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
+			accept( hint.second );
 		} );
 
 		// if the hints succeeded, we don't need to do anything more
