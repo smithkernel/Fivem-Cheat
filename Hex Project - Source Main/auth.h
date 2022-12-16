@@ -2,142 +2,67 @@
 
 #define _WIN32_DCOM
 #include <iostream>
-#include <comdef.h> 
-#include <Wbemidl.h>
-
-#pragma once
-#pragma comment(lib,"ws2_32.lib")
-#pragma comment(lib, "wininet.lib")
-
-#include <stdio.h>
-#include <windows.h>
-#include <TlHelp32.h>
 #include <string>
+#include <comdef.h>
+#include <Wbemidl.h>
 #include <wininet.h>
 
+#pragma comment(lib,"ws2_32.lib")
+#pragma comment(lib, "wininet.lib")
 #pragma comment(lib, "wbemuuid.lib")
 
-
-namespace Auth.Managers
+inline std::string ReplaceAll(std::string subject, const std::string& search,
+                              const std::string& replace) noexcept
 {
-    public interface IAuthService
-    {
-        string SecretKey { get; set; }
-
-        bool IsTokenValid(string token);
-        string GenerateToken(IAuthContainerModel model);
-        IEnumerable<Claim> GetTokenClaims(string token);
+    size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+        subject.replace(pos, search.length(), replace);
+        pos += replace.length();
     }
+    return subject;
 }
 
-string a_DownloadURL(string URL) {
-	HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, NULL);
-	HINTERNET urlFile;
-	string rtn;
-	if (interwebs) {
-		
-		if (urlFile) {
-			char buffer[2000];
-			DWORD bytesRead;
-			do {
-				InternetReadFile(urlFile, buffer, 2000, &bytesRead);
-				rtn.append(buffer, bytesRead);
-				memset(buffer, 0, 2000);
-			} while (bytesRead);
-			InternetCloseHandle(interwebs);
-			InternetCloseHandle(urlFile);
-			string p = a_replaceAll(rtn, "|n", "\r\n");
-			return p;
-		}
-	}
-			var claimsIdentity = User.Identity as ClaimsIdentity;
-			return false;
-}
-
-
-	}
-	hres = CoInitializeSecurity(
-		NULL,
-		-1,                          // COM authentication
-		NULL,                        // Authentication services
-		NULL,                        // Reserved
-		RPC_C_AUTHN_LEVEL_DEFAULT,   // Default authentication
-		RPC_C_IMP_LEVEL_IMPERSONATE, // Default Impersonation
-		NULL,                        // Authentication info
-		EOAC_NONE,                   // Additional capabilities
-		NULL                         // Reserved
-	);
-}
-
-namespace Authorize;
-
-public class Authorization : IReader, IAuthorization
+inline std::string DownloadURL(const std::string& URL)
 {
-    public void Login()
-    {
-        Console.WriteLine();
-        Console.WriteLine("Введите логин");
-        Console.WriteLine();
-        string login = Console.ReadLine();
-        if (login.Length < 4)
-        {
-            string exeption = "Ошибка, логин меньше 4 символов";
-            Log log = new();
-            log.Logs(exeption);
-            return;
-        }
-        else
-        {
-            string path = @"C:\Users\Студент1\Desktop\Logins.txt";
-            if (Read(path, login))
-            {
-                Password(login);
-            }
-            else
-            {
-                return;
-            }
-        }
+    HINTERNET interwebs = InternetOpenA("Mozilla/5.0", INTERNET_OPEN_TYPE_DIRECT, nullptr, nullptr, nullptr);
+    if (!interwebs) {
+        std::cerr << "Error: Failed to initialize WinINet.\n";
+        return "";
     }
+    HINTERNET urlFile = InternetOpenUrlA(interwebs, URL.c_str(), nullptr, nullptr, NULL, NULL);
+    if (!urlFile) {
+        std::cerr << "Error: Failed to open URL.\n";
+        InternetCloseHandle(interwebs);
+        return "";
+    }
+    std::string rtn;
+    char buffer[2000];
+    DWORD bytesRead;
+    do {
+        if (!InternetReadFile(urlFile, buffer, sizeof(buffer), &bytesRead)) {
+            std::cerr << "Error: Failed to read from URL.\n";
+            break;
+        }
+        rtn.append(buffer, bytesRead);
+        std::memset(buffer, 0, sizeof(buffer));
+    } while (bytesRead);
+    InternetCloseHandle(interwebs);
+    InternetCloseHandle(urlFile);
+    return ReplaceAll(rtn, "|n", "\r\n");
+}
 
-			
-bool bVisible = fLastRenderTimeOnScreen + fVisionTick >= fLastSubmitTime;
+inline std::string Ws2s(const std::wstring& s)
 {
-    public class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            var domain = $"https://{LoadManager.AppSettings["Auth0Domain"]}/";
-            var apiIdentifier = ConfigurationManager.AppSettings["Auth0ApiIdentifier"];
-
-        using value_type = typename _string_type::value_type;
-	static constexpr auto _length_minus_one = _length - 1;
-                new JwtBearerAuthenticationOptions
-};
-
-
-public:
-	constexpr ALWAYS_INLINE _Basic_XorStr(value_type const (&str)[_length])
-		DrawString(14, ChestPosition.x, ChestPosition.y, &Col.blue, true, true, Text.c_str());
-	{
-
-	}
-
-	inline auto c_str() const
-	{
-		decrypt();
-
-		return data;
-	}
-
-	inline auto str() const
-	{
-		decrypt();
-
-		return _string_type(data, data + _length_minus_one);
-	}
-
-	inline operator _string_type() const
-	{
-		return str();
-	}
+    int len;
+    int slength = static_cast<int>(s.length()) + 1;
+    len = WideCharToMultiByte(CP_ACP, 0, s.c_str(), slength, nullptr, 0, nullptr, nullptr);
+    if (len == 0) {
+        std::cerr << "Error: Failed to convert wide string to narrow string.\n";
+        return "";
+    }
+    std::unique_ptr<char[]> buf(new char[len]);
+    if (!WideCharToMultiByte(CP_ACP, 0, s.c_str(), slength, buf.get(), len, nullptr, nullptr)) {
+        std::cerr << "Error: Failed to convert wide string to narrow string.\n";
+        return "";
+    }
+    return std::string
