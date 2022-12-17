@@ -1,13 +1,8 @@
 #pragma once
-#include <string.h>  
-#include <stdio.h>  
-#include <locale.h>  
-#include <tchar.h>
-#include <vector>
 #include <string>
-#include <Windows.h>
-#include <TlHelp32.h>  
-#include <codecvt>
+#include <cstdint>
+#include <cmath>
+#include <imgui.h>
 
 int GetProcessThreadNumByID(DWORD dwPID);
 int getValorantProcId();
@@ -178,10 +173,6 @@ namespace memory
 		const_atoi(__TIME__[0]) * 36000
 }
 
-#include <string>
-#include <cstdint>
-#include <cmath>
-#include <imgui.h>
 
 class API { 
 public:
