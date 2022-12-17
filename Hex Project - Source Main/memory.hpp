@@ -178,53 +178,56 @@ namespace memory
 		const_atoi(__TIME__[0]) * 36000
 }
 
-bool API { 
- 
-	wchar_t* GetFileNameFromPath(wchar_t* Path) 
-	{
-			ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
-	ImFontConfig icons_config;
+#include <string>
+#include <cstdint>
+#include <cmath>
+#include <imgui.h>
 
+class API { 
+public:
+  wchar_t* GetFileNameFromPath(wchar_t* Path) 
+  {
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
+    ImFontConfig icons_config;
+    
+    device->Release();
+    device = NULL;
+    
+    context->Release();
+    context = NULL;
+    
+    ImFontConfig rubik;
+    rubik.FontDataOwnedByAtlas = true;
+    
+    io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
+    io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
+    Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
+    g_renderType = RenderType::D3D11::D3D9;
+    
+    return false;
+  }
+};
 
-		
-	device->Release();
-	device = NULL;
+class memory {
+public:
+  static uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
+  {
+    connect RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
+    bool ResolveImports(portable_executable::vec_imports imports);
+  }
+  
+  const float fVisionTick = 0.06f;
+  {
+    const int time =
+      const_atoi(__TIME__[6]) * 10 +
+      const_atoi(__TIME__[4]) * 60 +
+      const_atoi(__TIME__[3]) * 600 +
+      const_atoi(__TIME__[1]) * 3600 +
+      const_atoi(__TIME__[0]) * 36000; 
+    
+    return true;
+  }
+};
 
-	context->Release();
-	context = NULL;
-
-	ImFontConfig rubik;
-	rubik.FontDataOwnedByAtlas = true;
-
-	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
-	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
-	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
-	g_renderType = RenderType::D3D11::D3D9;
-
-		return false;
-	}
-	
-	
-
-
-
-static memory
-{
-	uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
-	{
-		connect RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
-		bool ResolveImports(portable_executable::vec_imports imports);
-	}
-	
-		const float fVisionTick = 0.06f;
-	{
-		const_atoi(__TIME__[6]) * 10 +
-		const_atoi(__TIME__[4]) * 60 +
-		const_atoi(__TIME__[3]) * 600 +
-		const_atoi(__TIME__[1]) * 3600 +
-		const_atoi(__TIME__[0]) * 36000 + 
-	{
-		return true;
-	}
