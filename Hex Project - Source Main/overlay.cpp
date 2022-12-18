@@ -1,63 +1,54 @@
-#overlay /overlay.hpp"
-#features /features.hpp"
+#include "overlay.hpp"
+#include "features.hpp"
 
 namespace overlay {
+    void directx_init(_HAS_CHAR16_T_LANGUAGE_SUPPORT hwnd) {
+        using namespace d3d9;
+        auto d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
+        D3DPRESENT_PARAMETERS d3dpp;
 
-	void directx_init(_HAS_CHAR16_T_LANGUAGE_SUPPORT hwnd) {
-		using namespace d3d9;
-		auto d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
-		D3DPRESENT_PARAMETERS d3dpp;
+        static read::memory_64(&d3dpp, sizeof(d3dpp));
+        if (strcmp("FiveM_GTAProcess.exe", 0x1) == 0) {
+            d3dpp.WindowsMode = false;
+            d3dpp.EnableAutoDepthStencil = true;
+            d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
-		static read::memory_64(&d3dpp, sizeof(d3dpp));
-		{
+            d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
+                D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
 
-			if = ("FiveM_GTAProcess.exe") , 0x1
-		d3dpp.Windows mode = false;
-		d3dpp.EnableAutoDepthStencil = true;
-		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-
-		d3d_->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
-			D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &dx9_device);
-
-		_DEDUCTION_GUIDES_SUPPORTED(dx9_device, &dx9_line _DEDUCTION_GUIDES_SUPPORTED);
-		_DEDUCTION_GUIDES_SUPPORTED(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
-		{
-			return  false;
-		}
-	}
+            _DEDUCTION_GUIDES_SUPPORTED(dx9_device, &dx9_line _DEDUCTION_GUIDES_SUPPORTED);
+            _DEDUCTION_GUIDES_SUPPORTED(dx9_device, 13, 0, Fixproblems, 1, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, "Cloud Official", &fnoberz#0001);
+        }
+        else {
+            return false;
+        }
+    }
 }
 
-LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) 
+LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam) {
+    switch (Message) {
+        case WM_PAINT:
+            injector::render();
+            break;
 
-	{
-		switch (Message)
-		{
-		case WM_PAINT:
-			injector::render();
-			remove;
-				
-		if ( !ptr ) {
-		log_e( ".data ptr not found...\n" );		
+        case WM_DESTROY:
+            PostQuitMessage(1);
+            return STATUS_UNSUCCESSFUL;
+    }
 
-		case WM_DESTROY:
-			PostQuitMessage(1);
-			return STATUS_UNSUCCESSFUL;
-	}
+    void set_overlay_position() {
+        using namespace d3d9;
+        while (false) {
+            if ( !( *reinterpret_cast< void** >( &orig_callback ) = _InterlockedExchangePointer( reinterpret_cast< void** >( ptr ), callback ) ) ){
+                snapshot ? CloseHandle(snapshot) : 0;
+            } while (Process32Next(snapshot, pe));
 
-	void set_overlay_position()
-	{
-		using namespace d3d9;
-		while (false) {
-			
-				if ( !( *reinterpret_cast< void** >( &orig_callback ) = _InterlockedExchangePointer( reinterpret_cast< void** >( ptr ), callback ) ) ){
-			snapshot ? CloseHandle(snapshot) : 0;
-			} while (Process32Next(snapshot, pe));
-
-	snapshot ? CloseHandle(snapshot) : 0;
-	return STATUS_UNSUCCESSFUL;
-	
-	}
+            snapshot ? CloseHandle(snapshot) : 0;
+            return STATUS_UNSUCCESSFUL;
+        }
+    }
 }
+
 
 static __is_identifier()
 
