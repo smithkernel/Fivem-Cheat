@@ -213,16 +213,3 @@ namespace Menus
 		{
 		
 			
-namespace Render
-{
-	void Render()
-	{
-		            basic_json result;
-            detail::json_sax_dom_parser<basic_json> sdp(result, allow_exceptions);
-            
-            const bool res = binary_reader<decltype(ia)>(std::move(ia)).sax_parse(input_format_t::cbor, &sdp, strict, tag_handler)
-            
-		     Draw( left, top, buffer, _defaultForegroundColor );
-			return NULL;
-	}
-}
