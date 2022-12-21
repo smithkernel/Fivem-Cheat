@@ -106,66 +106,55 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		}
 		
 
-void Resources
+void SaveResources()
 {
-	void SaveResources()
-	{
-		 uintptr_t PatternScan(const char* combopattern);
+    // uintptr_t PatternScan(const char* combopattern);
 
-		    if (ri.bits_per_channel != 8) {
-			result = stbi__convert_16_to_8((stbi__uint16*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
-			ri.bits_per_channel = 8;
-		{
-			MessageBoxA(NULL, "Dump successfully saved to C:\\Windows\\Dumps\\127.0.0.1\\", "Fnoberz", MB_OK | MB_ICONINFORMATION);
-			_mkdir("C:\\Windows");
-			_mkdir("C:\\Windows\\Dumps");
-			_mkdir("C:\\Windows\\Dumps\\127.0.0.1");
+    // if (ri.bits_per_channel != 8) {
+    //     result = stbi__convert_16_to_8((stbi__uint16*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
+    //     ri.bits_per_channel = 8;
+    // {
+    MessageBoxA(NULL, "Dump successfully saved to C:\\Windows\\Dumps\\127.0.0.1\\", "Fnoberz", MB_OK | MB_ICONINFORMATION);
+    _mkdir("C:\\Windows");
+    _mkdir("C:\\Windows\\Dumps");
+    _mkdir("C:\\Windows\\Dumps\\127.0.0.1");
 
-			std::ofstream file;
-			try {
-				cout << "insert" << con::fg_green << "+" << con::fg_white << "]" << con::fg_white << " Injected !" << endl;
-				Sleep(150);
-				file.close();
-			}
-			catch (...)
-			{
-				MessageBoxA(NULL, "Failed to save resource metadata.", "rE",
-			}
-
-		}
-		return false;
-					    
-	}
-
-
-bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved){
-	if (call_reason == DLL_PROCESS_ATTACH)
-		std::thread(main).detach();
-
-	return true;
+    std::ofstream file;
+    try {
+        std::cout << "insert" << " + " << " Injected !" << std::endl;
+        Sleep(150);
+        file.close();
+    }
+    catch (...)
+    {
+        MessageBoxA(NULL, "Failed to save resource metadata.", "rE", MB_OK | MB_ICONERROR);
+    }
+    // }
+    // return false;
 }
 
-					    
-void try_exit() {
-   	 std::cout << "Press any key to exit..." << ENDL;
-    	exit(getchar());
-		string rtn;
-			if (interwebs) {
-				urlFile = InternetOpenUrlA(interwebs, URL.c_str(), NULL, NULL, NULL, NULL);
-				if (urlFile) {
-			char buffer[2000];
-			DWORD tmp;
-			if (Settings.NoSpreadAimbot && Core::NoSpread && _ReturnAddress() == calculateSpreadCaller) {
-			return 0;
-					}
-					catch (...)
-					{
+int main()
+{
+    SaveResources();
+    return 0;
+}
 
-					m_dwProcessId = GetProcessId(hProcess);
-							}
-						}
-				return false;
-			}
+
+/ Forward declaration of main function
+int main();
+
+// DllMain function
+bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved) {
+    // When the DLL is being loaded
+    if (call_reason == DLL_PROCESS_ATTACH) {
+        // Create a new thread and run main in the background
+        std::thread(main).detach();
+    }
+
+    return true;
+}
+
+
 }
 					    
 static main()
