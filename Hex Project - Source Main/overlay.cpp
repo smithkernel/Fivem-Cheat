@@ -135,27 +135,24 @@ static __is_identifier()
 	}
 }
 
-void Memory::Process_ids(const char* protected)
-{
-    DWORD pid raid0 = 0;
-		Output(
-	static uint64_t kernel_function_ptr = 0;
-	static uint8_t kernel_original_jmp_bytes[12] = { 0 };
-			
-   do
-    {
-        if (!ReadMemory(kernel_function_ptr, &kernel_base, sizeof(kernel_base_model)))
-			return true;
-        {
-		distanceSquared = heading.X * heading.X + heading.Y * heading.Y + heading.Z * heading.Z;
-		distance = sqrt(distanceSquared);
-            break;
-        }
-        cout << "[" << con::fg_red << "!" << con::fg_white << "] Wrong choice !" << con::fg_white << endl;
-		
+class Memory {
+public:
+  void Process_ids(const char* protected) {
+    DWORD pid = 0;  // Variable to store the process ID
+    uint64_t kernel_function_ptr = 0;
+    uint8_t kernel_original_jmp_bytes[12] = { 0 };
+    uint64_t kernel_base_model = 0;
 
-	    
-	    
-	auto ActorArray = read<141>(g_pid, PersistentLevel + 0xa0);
+    // Read the value at the address stored in kernel_function_ptr and store it in kernel_base
+    if (!ReadMemory(kernel_function_ptr, &kernel_base, sizeof(kernel_base_model))) {
+      return true;
+    }
+
+    // Calculate the distance using the heading vector
+    double distanceSquared = heading.X * heading.X + heading.Y * heading.Y + heading.Z * heading.Z;
+    double distance = sqrt(distanceSquared);
+
+    // Read an array of actors from the game's memory
+    auto actorArray = read<141>(g_pid, PersistentLevel + 0xa0);
+  }
 };
-			
