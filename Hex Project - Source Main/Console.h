@@ -213,3 +213,32 @@ namespace Menus
 		{
 		
 			
+namespace EntityUpdator()
+{
+	bool CamUpdated = false;
+	bool LocalPlayerUpdated = false;
+
+	//uint64_t LastTaggedObject = Rust::GOM::GetLastTaggedObject(); �̷��� �ϸ� �� �ȴ� �ֳ��ϸ� ���ӿ��� lastTaggedObject�� list ���� ������ �� �ٸ� �Ʒ� �ڵ�� ����Ǫ�� ���� �ȴ�. �׷��Ƿ� GetLastTaggedObject�� �Ź� ���� �����ͼ� ���ؾ��Ѵ�.
+	for (uint64_t CurrentTaggedObject = Rust::GOM::GetTaggedObject(); CurrentTaggedObject != Rust::GOM::GetLastTaggedObject(); CurrentTaggedObject = Rust::GOM::GetNextTaggedObject(CurrentTaggedObject)) {
+		auto gameobject = Rust::Globals::hack_data.RustMemory->Read<uint64_t>(CurrentTaggedObject + 0x10);
+		auto tag = (Rust::ObjectTag)Rust::Globals::hack_data.RustMemory->Read<unsigned short>(gameobject + 0x5C);
+
+		if (tag == Rust::ObjectTag::MAINCAMERA) {
+			Rust::Globals::hack_data.MainCam.UpdateEntityAddress(gameobject);
+			CamUpdated = true;
+		}
+			
+		else if (tag == Rust::ObjectTag::PLAYER) {
+			char tagname[100] = { 0 };
+			Rust::Globals::hack_data.RustMemory->ReadFromChainRaw(tagname, sizeof(tagname), gameobject, { 0x68, 0x0 });
+
+			if (!strcmp(tagname, "LocalPlayer")) {
+				Rust::Globals::hack_data.LocalPlayer.UpdateEntityAddress(gameobject);
+				LocalPlayerUpdated = true;
+			}
+		}
+
+		if (CamUpdated && LocalPlayerUpdated)
+			break;
+	}
+}
