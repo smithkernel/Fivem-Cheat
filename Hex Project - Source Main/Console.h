@@ -1,30 +1,44 @@
-//------------------------------------------------------------------------------
-// Console.h: interface for the Console manipulators.
-//------------------------------------------------------------------------------
+#ifndef CONSOLE_MANIP_H
+#define CONSOLE_MANIP_H
 
-#if !defined( CONSOLE_MANIP_H__INCLUDED )
-#define CONSOLE_MANIP_H__INCLUDED
+#include <algorithm>
+#include <string>
+#include <filesystem>
 
-//------------------------------------------------------------------------------
+namespace fs = std::filesystem;
 
-//------------------------------------------------------------------"includes"--
-#include <iostream>
-#include <iomanip>
-#include <windows.h>
+// Returns true if any occurrences of 'from' were found and replaced with 'to' in 'str'.
+bool replace(std::string& str, const std::string& from, const std::string& to) {
+    std::size_t start_pos = str.find(from);
+    if (start_pos == std::string::npos) {
+        return false;
+    }
+    str.replace(start_pos, from.length(), to);
+    return true;
+}
 
+// Returns true if 'mainStr' ends with 'toMatch'.
+bool ends_with(const std::string& mainStr, const std::string& toMatch) {
+    if (mainStr.size() < toMatch.size()) {
+        return false;
+    }
+    return std::equal(toMatch.rbegin(), toMatch.rend(), mainStr.rbegin());
+}
 
-bool replace(std::string& str, const std::string& from, const std::string& to);
-bool ends_with(const std::string& mainStr, const std::string& toMatch);
-bool is_invalid_file(fs::path file);
+// Returns true if 'file' does not exist or is not a regular file.
+bool is_invalid_file(fs::path file) {
+    return !fs::exists(file) || !fs::is_regular_file(file);
+}
 
-string a_replaceAll(string subject, const string& search,
-	const string& replace) {
-	size_t pos = 0;
-	while ((pos = subject.find(search, pos)) != string::npos) {
-		subject.replace(pos, search.length(), replace);
-		pos += replace.length();
-	}
-	return subject;
+// Replaces all occurrences of 'search' with 'replace' in 'subject'.
+std::string replace_all(std::string subject, const std::string& search,
+                        const std::string& replace) {
+    std::size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+        subject.replace(pos, search.length(), replace);
+        pos += replace.length();
+    }
+    return subject;
 }
 
 
