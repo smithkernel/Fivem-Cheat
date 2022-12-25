@@ -6,14 +6,15 @@
  
           
  
- ## 🎁 | How To Use
-- You need to **create** a [Drver Kernel](https://www.youtube.com/watch?v=xh5cCUuQfL8&t=1090s&ab_channel=EthanEDITS) and when it's done you put the Source in the Driver folder.
-- It's time for fun / use it at your own risk 
-- Other question & help / [Discord Server](https://discord.gg/MBTkVcJefp)
+ ## 📜 How To Use
+ 
+- Create a executable injector
+- Merge it into a folder main
+- compile
+- Start exe & `PLAY`
+- Help [Discord Server](https://discord.gg/MBTkVcJefp)
  
 
-    
-    
    
 ## FEATURE
 
@@ -34,26 +35,21 @@
 - All
 
 
-
 https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-b987-b325c6f3aa76.mp4
 
 
 
-
- 
----
+--- 
 
   <p align="center">
-    <a href="https://discord.com/users/943374631644045363">
-        <img title="Fnoberz server discord" alt="Fnoberz's discord" src="https://discord.c99.nl/widget/theme-4/943374631644045363.png"/>
+    <a href="https://discord.gg/MBTkVcJefp">
+        <img title="Slackes server discord" alt="Slackes discord" src="https://discordapp.com/api/guilds/880135738077896764/widget.png?style=banner2"/>
     </a>
 </p> 
  
-### 💬 ・HELP & SUPPORT | [Discord](https://discord.gg/MBTkVcJefp) 
+## 💬 ・[Discord](https://discord.gg/MBTkVcJefp) 
 
-
- ### 🛒〢 `PRIVATE CHEAT`
- More Here [Information](https://github.com/Club-CC/Detail)
+ ### 🛒〢 `PRODUCT`
  
 <table>
 <tr>
@@ -63,17 +59,18 @@ https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-
 </table>
 
   
-### 🎯 〢 Product Cheat
+### 🥊 〢 Private Cheat
 
-- Lifetime + Update Free
+- Lifetime 
+- Free Updates 
+- Undetected
 - Custom Feature if you want `(Example: Aimbot + Esp + Skin Changers)`
-- Undetected and can be played on the main account.
 
+### ⚓〢 Warranty
 
-### 💯〢 Warranty Product.
-
-- Support 24 Hr + Update Free
-- IF Banned = REFUND
+- Support 24 Hr
+- Update Free
+- If banned = `REFUND`
 
 A website that I created to introduce myself from start to finish. hope you like it [Slackes.me](http://slackes.me/)
 
