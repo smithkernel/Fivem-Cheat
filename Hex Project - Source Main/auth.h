@@ -96,4 +96,13 @@ void LoginNow()
 	}
 }
 
+void TextEditor::SetLanguageDefinition(const LanguageDefinition& aLanguageDef)
+{
+	mLanguageDefinition = aLanguageDef;
+	mRegexList.clear();
 
+	for (auto& r : mLanguageDefinition.mTokenRegexStrings)
+		mRegexList.push_back(std::make_pair(std::regex(r.first, std::regex_constants::optimize), r.second));
+
+	Colorize();
+}
