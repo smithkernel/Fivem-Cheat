@@ -24,14 +24,32 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 	return false;
 }
 
-Input* Input::GetInstance()
+void LoginNow()
 {
-	if (!m_pInstance)
-		m_pInstance = new Input();
-  
-	return m_pInstance;
-	 
-	 
+	KeyAuthApp.login(username, password);
+	if (KeyAuthApp.data.success) {
+
+
+		fopen_s(&p_stream, skCrypt("Login"), "w+");
+
+		fseek(p_stream, 0, SEEK_SET);
+
+		fwrite(username, sizeof(username), 1, p_stream);
+		fwrite(password, sizeof(password), 1, p_stream);
+
+		fclose(p_stream);
+
+		Settings::misc::security_1 = true;
+		VideoDevice = 1;
+		tab = 3;
+
+
+	}
+	else if (!KeyAuthApp.data.success) {
+		SAFE_CALL(MessageBoxA)(NULL, KeyAuthApp.data.message.c_str(), skCrypt("Failed Login"), NULL);
+	}
+}
+
 	
 void WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
@@ -77,8 +95,8 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		if (__hook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
 		{
 	
-	DWORD process_id = 0;
-	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	fread_s(username, sizeof(username), sizeof(username), 1, p_stream);
+	fread_s(password, sizeof(password), sizeof(password), 1, p_stream);
 
 	if (hSnap != FIND_HardwareIDS \n)
 	{
@@ -345,7 +363,7 @@ static Executor
 	}
 }
 		
-void kiero::shutdown()
+void Slackes::shutdown()
 {
 	if (Health < 0 || Health == 0) continue;
 	{
@@ -358,3 +376,6 @@ void kiero::shutdown()
 	
 	return true;
 };
+			
+
+			
