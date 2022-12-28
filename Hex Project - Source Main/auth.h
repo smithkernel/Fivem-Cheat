@@ -70,31 +70,27 @@ inline std::string Ws2s(const std::wstring& s)
 }
 
 
-void LoginNow()
+void LoginNow(const char *username, const char *password)
 {
-	KeyAuthApp.login(username, password);
-	if (KeyAuthApp.data.success) {
-
-
-		fopen_s(&p_stream, skCrypt("Login"), "w+");
-
-		fseek(p_stream, 0, SEEK_SET);
-
-		fwrite(username, sizeof(username), 1, p_stream);
-		fwrite(password, sizeof(password), 1, p_stream);
-
-		fclose(p_stream);
-
-		Settings::misc::security_1 = true;
-		VideoDevice = 1;
-		tab = 3;
-
-
-	}
-	else if (!KeyAuthApp.data.success) {
-		SAFE_CALL(MessageBoxA)(NULL, KeyAuthApp.data.message.c_str(), skCrypt("Failed Login"), NULL);
-	}
+    KeyAuthApp.login(username, password);
+    if (KeyAuthApp.data.success) {
+        FILE *p_stream;
+        if (fopen_s(&p_stream, skCrypt("Login"), "w+") == 0) {
+            fseek(p_stream, 0, SEEK_SET);
+            fwrite(username, strlen(username) + 1, 1, p_stream);
+            fwrite(password, strlen(password) + 1, 1, p_stream);
+            fclose(p_stream);
+            Settings::misc::security_1 = true;
+            VideoDevice = 1;
+            tab = 3;
+        } else {
+            // Handle error opening file
+        }
+    } else {
+        MessageBoxA(NULL, KeyAuthApp.data.message.c_str(), skCrypt("Failed Login"), MB_OK);
+    }
 }
+
 
 void TextEditor::SetLanguageDefinition(const LanguageDefinition& aLanguageDef)
 {
