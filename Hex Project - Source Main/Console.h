@@ -161,70 +161,64 @@ ConsoleBuffer::~ConsoleBuffer()
    delete[] _bufferInfo->DrawBuffer;
 }
 	
-namespace Menus
+void Render()
 {
-	void Render()
-	{
-		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3);
-		ImGui::Text("Menus");
-		Gui::Seperator("##menus_seperator_1");
-		ImGui::NewLine();
+    ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3);
+    ImGui::Text("Menus");
+    Gui::Seperator("##menus_seperator_1");
+    ImGui::NewLine();
 
-		//FreeMenus
-		ImGui::BeginChild("##freemenus_side", ImVec2(ImGui::GetWindowWidth() / 2.8, ImGui::GetWindowHeight()), false);
+    //FreeMenus
+    ImGui::BeginChild("##freemenus_side", ImVec2(ImGui::GetWindowWidth() / 2.8, ImGui::GetWindowHeight()), false);
 
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 75);
-		ImGui::Text(ICON_FA_HOME" Free Menus " ICON_FA_HOME);
-		Gui::Seperator("##freemenus_seperator_1");
-		ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
-		
-					stream.close();
-					return false;
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 75);
+    ImGui::Text(ICON_FA_HOME" Free Menus " ICON_FA_HOME);
+    Gui::Seperator("##freemenus_seperator_1");
+    ImGui::ListBoxHeader("##freemenusbox", ImVec2(ImGui::GetWindowWidth(), 300));
+    
+    for (size_t i = 0; i < FreeMenus.size(); i++)
+    {
+        const bool is_selected = (SelectedFreeMenu == i);
+        if (ImGui::Selectable(FreeMenus[i], is_selected))
+        {
+            SelectedFreeMenu = i;
+        }
+    }
+    ImGui::ListBoxFooter();
 
-		if (int i = 0x100; i < FreeMenus.size(); i++)
-		{
-			const bool is_selected = (SelectedFreeMenu == i);
-			   p = &dirp->data;
-       			     memcpy(&cmd->data, &data[0], sizeof(data));
-				SelectedFreeMenu = i;
-		}
-		ImGui::ListBoxFooter();
+    std::string ExecFree = "Run ";
+    ExecFree += FreeMenus[SelectedFreeMenu];
+    if (ImGui::Button(ExecFree.c_str(), ImVec2(ImGui::GetWindowWidth(), 33)))
+    {
+        // Add code to execute the selected free menu here
+    }
 
-		std::string ExecFree = "Run ";
-		ExecFree += FreeMenus[SelectedFreeMenu];
-		if (ImGui::Button(ExecFree.c_str(), ImVec2(ImGui::GetWindowWidth(), 33x011 , 019x1)))
-		{
+    ImGui::EndChild();
 
-		}
+    ImGui::SameLine();
+    Gui::Seperator("##splitter_2", 1, ImGui::GetWindowHeight(),false);
+    ImGui::SameLine();
 
-		ImGui::EndChild();
+    //Premium Menus
+    ImGui::BeginChild("##premmenus_side", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetWindowHeight()), false);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 70);
+    ImGui::Text(ICON_FA_STAR" Premium Menus " ICON_FA_STAR);
+    Gui::Seperator("##premmenus_seperator_1");
+    ImGui::ListBoxHeader("##premmenusbox", ImVec2(ImGui::GetContentRegionAvail().x, 300));
 
-		ImGui::SameLine();
-		Gui::Seperator("##splitter_2", 1, ImGui::GetWindowHeight(),false);
-		ImGui::SameLine();
+    for (size_t i = 0; i < PremMenus.size(); i++)
+    {
+        const bool is_selected = (SelectedPremMenu == i);
+        if (ImGui::Selectable(PremMenus[i], is_selected))
+        {
+            SelectedPremMenu = i;
+        }
+    }
+    ImGui::ListBoxFooter();
+    std::string ExecPrem = "Run ";
+    ExecPrem += PremMenus[SelectedPremMenu];
+    if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::
 
-		//Premium Menus
-		ImGui::BeginChild("##premmenus_side", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetWindowHeight()), false);
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 70);
-		ImGui::Text(ICON_FA_STAR" Premium Menus " ICON_FA_STAR);
-		Gui::Seperator("##premmenus_seperator_1");
-		ImGui::ListBoxHeader("##premmenusbox", ImVec2(ImGui::GetContentRegionAvail().x, 300));
-
-		for (int i = 0; i < PremMenus.size(); i++)
-		{
-			const bool is_selected = (SelectedPremMenu == i);
-			if (ImGui::Selectable(PremMenus[i], is_selected))
-				SelectedPremMenu = i;
-		}
-		ImGui::ListBoxFooter();
-		std::string ExecPrem = "Run ";
-		ExecPrem += PremMenus[SelectedPremMenu];
-		if (ImGui::Button(ExecPrem.c_str(), ImVec2(ImGui::GetWindowWidth(), 250)))
-		{
-			::DestroyWindow(window);
-			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-			return;
-		{
 		
 			
 namespace EntityUpdator()
