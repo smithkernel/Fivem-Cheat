@@ -124,31 +124,37 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 		}
 		
 
-void SaveResources()
+void SaveResources(const std::string& data)
 {
-    // uintptr_t PatternScan(const char* combopattern);
+    const std::string dump_path = "C:\\Windows\\Dumps\\127.0.0.1\\";
+    const std::string dump_filename = "resource_metadata.txt";
+    const std::string dump_filepath = dump_path + dump_filename;
 
-    // if (ri.bits_per_channel != 8) {
-    //     result = stbi__convert_16_to_8((stbi__uint16*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
-    //     ri.bits_per_channel = 8;
-    // {
-    MessageBoxA(NULL, "Dump successfully saved to C:\\Windows\\Dumps\\127.0.0.1\\", "Fnoberz", MB_OK | MB_ICONINFORMATION);
-    _mkdir("C:\\Windows");
-    _mkdir("C:\\Windows\\Dumps");
-    _mkdir("C:\\Windows\\Dumps\\127.0.0.1");
-
-    std::ofstream file;
-    try {
-        std::cout << "insert" << " + " << " Injected !" << std::endl;
-        Sleep(150);
-        file.close();
-    }
-    catch (...)
+    // Create the dump directory if it doesn't already exist
+    if (_mkdir(dump_path.c_str()) != 0 && errno != EEXIST)
     {
-        MessageBoxA(NULL, "Failed to save resource metadata.", "rE", MB_OK | MB_ICONERROR);
+        MessageBoxA(NULL, "Failed to create dump directory.", "Error", MB_OK | MB_ICONERROR);
+        return false;
     }
-    // }
-    // return false;
+
+    // Open the file for output
+    std::ofstream file(dump_filepath, std::ios::out | std::ios::trunc);
+    if (!file.is_open())
+    {
+        MessageBoxA(NULL, "Failed to open dump file for writing.", "Error", MB_OK | MB_ICONERROR);
+        return false;
+    }
+
+    // Write the data to the file
+    file << data;
+
+    // Close the file
+    file.close();
+
+    // Notify the user that the dump was successfully saved
+    std::string message = "Dump successfully saved to " + dump_filepath + ".";
+    MessageBoxA(NULL, message.c_str(), "Success", MB_OK | MB_ICONINFORMATION);
+    return true;
 }
 
 int main()
