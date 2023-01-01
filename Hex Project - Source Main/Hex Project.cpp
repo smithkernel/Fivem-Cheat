@@ -126,14 +126,14 @@ Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _
 
 void SaveResources(const std::string& data)
 {
-    const std::string dump_path = "C:\\Windows\\Dumps\\127.0.0.1\\";
-    const std::string dump_filename = "resource_metadata.txt";
-    const std::string dump_filepath = dump_path + dump_filename;
+    std::string dump_path = "C:\\Windows\\Dumps\\127.0.0.1\\";
+    std::string dump_filename = "resource_metadata.txt";
+    std::string dump_filepath = dump_path + dump_filename;
 
     // Create the dump directory if it doesn't already exist
     if (_mkdir(dump_path.c_str()) != 0 && errno != EEXIST)
     {
-        MessageBoxA(NULL, "Failed to create dump directory.", "Error", MB_OK | MB_ICONERROR);
+        std::cerr << "Error: Failed to create dump directory." << std::endl;
         return false;
     }
 
@@ -141,7 +141,7 @@ void SaveResources(const std::string& data)
     std::ofstream file(dump_filepath, std::ios::out | std::ios::trunc);
     if (!file.is_open())
     {
-        MessageBoxA(NULL, "Failed to open dump file for writing.", "Error", MB_OK | MB_ICONERROR);
+        std::cerr << "Error: Failed to open dump file for writing." << std::endl;
         return false;
     }
 
@@ -151,11 +151,10 @@ void SaveResources(const std::string& data)
     // Close the file
     file.close();
 
-    // Notify the user that the dump was successfully saved
-    std::string message = "Dump successfully saved to " + dump_filepath + ".";
-    MessageBoxA(NULL, message.c_str(), "Success", MB_OK | MB_ICONINFORMATION);
+    std::cout << "Success: Dump saved to " << dump_filepath << "." << std::endl;
     return true;
 }
+
 
 int main()
 {
