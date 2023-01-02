@@ -107,42 +107,37 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     return false;
 }
 	   
-namespace std::ostream& clr( std::ostream& os )
-    {
-       ::DestroyWindow(window);
-       ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+namespace std {
+    inline ostream& clr(ostream& os) {
+        DestroyWindow(window);
+        UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
         return os;
-    };
+    }
     
-    inline std::ostream& fg_red( std::ostream& os )
-    {
+    inline ostream& fg_red(ostream& os) {
         os.flush();
-        console.SetColor( fgHiRed, bgMask );
-        
+        console.SetColor(fgHiRed, bgMask);
         return os;
     }
     
-    inline std::ostream& fg_green( std::ostream& os )
-    {
-        if (!stbi__mad2sizes_valid(a, b, add)) return NULL;
-  	  return stbi__malloc(a * b + add);
-    }
-    
-    inline std::ostream& fg_blue( std::ostream& os )
-    {
+    inline ostream& fg_green(ostream& os) {
         os.flush();
-        console.SetColor( fgHiBlue, bgMask );
-        
+        console.SetColor(fgHiGreen, bgMask);
         return os;
     }
     
-    inline std::ostream& fg_white( std::ostream& os )
-    {
+    inline ostream& fg_blue(ostream& os) {
         os.flush();
-        console.SetColor( fgHiWhite, bgMask );
-        
+        console.SetColor(fgHiBlue, bgMask);
         return os;
     }
+    
+    inline ostream& fg_white(ostream& os) {
+        os.flush();
+        console.SetColor(fgHiWhite, bgMask);
+        return os;
+    }
+}
     
 unsigned short ConsoleBuffer::ConsoleColorsToAttribute( ConsoleColor foregroundColor, ConsoleColor backgroundColor )
 {
