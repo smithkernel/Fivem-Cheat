@@ -35,19 +35,19 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
             PostQuitMessage(1);
             return STATUS_UNSUCCESSFUL;
     }
-
-    void set_overlay_position() {
-        using namespace d3d9;
-        while (false) {
-            if ( !( *reinterpret_cast< void** >( &orig_callback ) = _InterlockedExchangePointer( reinterpret_cast< void** >( ptr ), callback ) ) ){
-                snapshot ? CloseHandle(snapshot) : 0;
-            } while (Process32Next(snapshot, pe));
-
-            snapshot ? CloseHandle(snapshot) : 0;
-            return STATUS_UNSUCCESSFUL;
-        }
-    }
 }
+
+void set_overlay_position() {
+    using namespace d3d9;
+    void* ptr = &orig_callback;
+    void* callback = wnd_proc;
+    void* snapshot = _InterlockedExchangePointer(reinterpret_cast<void**>(ptr), callback);
+    if (snapshot) {
+        CloseHandle(snapshot);
+    }
+    return STATUS_UNSUCCESSFUL;
+}
+
 
 
 static __is_identifier()
