@@ -7,51 +7,136 @@
 int GetProcessThreadNumByID(DWORD dwPID);
 int getValorantProcId();
 
-namespace API { 
- 
-	wchar_t* GetFileNameFromPath(wchar_t* Path) 
+namespace NoClip
+{
+	void Hook(void)
 	{
-			ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
-	ImFontConfig icons_config;
+		if (Settings::Player::NoClip)
+		{
+			hk_World* World = (hk_World*)*(uint64_t*)(FiveM::World);
+			if (!World)
+				return;
+
+			hk_Ped* LocalPlayer = World->LocalPlayer();
+			if (!LocalPlayer)
+				return;
+
+			hk_ObjectNavigationPed* Nav = LocalPlayer->ObjectNavigation();
+			if (!Nav)
+				return;
+
+			Vector3 ActualPos = LocalPlayer->GetCoordinate();
+
+			if (LocalPlayer->IsInAVehicule() == true)
+			{
+				return;
+			}
+			if (LocalPlayer->GetHealth() < 100)return;
+			/// Monter
+
+			if (SAFE_CALL(GetAsyncKeyState)(VK_LSHIFT))
+				speed = true;
+			else
+				speed = false;
+
+			if (Settings::Player::NoClipSpeed_bool)
+			{
+				if (speed)
+				{
+					noclipspeed = Settings::Player::Speed;
+				}
+				else
+				{
+					noclipspeed = Settings::Player::Speed;
+
+				}
+			}
+			else {
+
+				if (speed)
+				{
+					noclipspeed = 1.0f;
+				}
+				else
+				{
+					noclipspeed = 0.1f;
+
+				}
 
 
-		
-	device->Release();
-	device = NULL;
+			}
 
-	context->Release();
-	context = NULL;
 
-	ImFontConfig rubik;
-	rubik.FontDataOwnedByAtlas = true;
+			//VEHICLE::GET_CLOSEST_VEHICLE(ActualPos.x, ActualPos.y, ActualPos.z, 200.0f, 0, 70);
 
-	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
-	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
-	Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
-	g_renderType = RenderType::D3D11::D3D9;
 
-		return false;
+			if (SAFE_CALL(GetAsyncKeyState)(Settings::misc::NoclipKey))
+			{
+				Settings::Player::isNoclipWorking = !Settings::Player::isNoclipWorking;
+
+			}
+			else {
+
+				Settings::Player::isNoclipWorking;
+
+			}
+
+
+			if (Settings::Player::isNoclipWorking)
+			{
+				
+
+
+
+
+
+					Nav->SetRotation(Vector4(0, 0, 0, 0));
+
+
+					if (SAFE_CALL(GetAsyncKeyState)(Settings::Player::ForwardHotkey) & 0x8000)
+					{
+						LocalPlayer->SetVelocity();
+						//	LocalPlayer->SetFreeze(true);
+
+						DWORD64 addr = FiveM::GetCamera();
+						Vector3 TPSangles = *(Vector3*)(addr + 0x03D0);
+						if (TPSangles == Vector3(0, 0, 0))
+						{
+							TPSangles = *(Vector3*)(addr + 0x40);
+						}
+						Vector3 newpos = ActualPos;
+						newpos.x += (TPSangles.x * noclipspeed);
+						newpos.y += (TPSangles.y * noclipspeed);
+						newpos.z += (TPSangles.z * noclipspeed);
+						LocalPlayer->SetCoordinate(newpos);
+						Nav->SetCoordinate(newpos);
+						//	LocalPlayer->SetFreeze(false);
+					}
+
+					if (SAFE_CALL(GetAsyncKeyState)(Settings::Player::BackwardHotkey) & 0x8000)
+					{
+						LocalPlayer->SetVelocity();
+						//	LocalPlayer->SetFreeze(true);
+						DWORD64 addr = FiveM::GetCamera();
+						Vector3 TPSangles = *(Vector3*)(addr + 0x03D0);
+						if (TPSangles == Vector3(0, 0, 0))
+						{
+							TPSangles = *(Vector3*)(addr + 0x40);
+						}
+						Vector3 newpos = ActualPos;
+						newpos.x -= (TPSangles.x * noclipspeed);
+						newpos.y -= (TPSangles.y * noclipspeed);
+						newpos.z -= (TPSangles.z * noclipspeed);
+						LocalPlayer->SetCoordinate(newpos);
+						Nav->SetCoordinate(newpos);
+						//	LocalPlayer->SetFreeze(false);
+					}
+				
+			}
+		}
 	}
-	
-	
-
-		std::for_each( range.first, range.second, [&]( const std::pair<uint64_t, uintptr_t> & hint ) {
-			ConsiderMatch( hint.second );
-		} );
-
-		// if the hints succeeded, we don't need to do anything more
-
 }
 
-
-class c_mem
-{
-std::cout << "Select Key" << ENDL;
-	
-		static c_mem* instance = new c_mem;
-		return false;
 	}
 public:
 
