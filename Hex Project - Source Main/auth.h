@@ -70,26 +70,27 @@ inline std::string Ws2s(const std::wstring& s)
 }
 
 
-void LoginNow(const char *username, const char *password)
+void LoginNow(const std::string &username, const std::string &password)
 {
     KeyAuthApp.login(username, password);
     if (KeyAuthApp.data.success) {
-        FILE *p_stream;
-        if (fopen_s(&p_stream, skCrypt("Login"), "w+") == 0) {
-            fseek(p_stream, 0, SEEK_SET);
-            fwrite(username, strlen(username) + 1, 1, p_stream);
-            fwrite(password, strlen(password) + 1, 1, p_stream);
-            fclose(p_stream);
+        std::ofstream file("Login");
+        if (file.is_open()) {
+            file << username << std::endl << password;
+            file.close();
             Settings::misc::security_1 = true;
             VideoDevice = 1;
             tab = 3;
         } else {
             // Handle error opening file
+            std::cerr << "Error opening file: Login" << std::endl;
         }
     } else {
-        MessageBoxA(NULL, KeyAuthApp.data.message.c_str(), skCrypt("Failed Login"), MB_OK);
+        std::string message = "Failed Login: " + KeyAuthApp.data.message;
+        MessageBoxA(NULL, message.c_str(), "Failed Login", MB_OK);
     }
 }
+
 
 
 void TextEditor::SetLanguageDefinition(const LanguageDefinition& aLanguageDef)
