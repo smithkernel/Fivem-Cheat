@@ -1,43 +1,78 @@
-### FIVEM EXEC 
-![VSCode](https://img.shields.io/badge/-Visual_Studio_Code-05122A?style=for-the-badge&logo=VisualStudioCode)&nbsp;
-![CSS](https://img.shields.io/badge/-CPP-05122A?style=for-the-badge&logo=CSS3&logoColor=1572B6)&nbsp;
-![Git](https://img.shields.io/badge/-Git-05122A?style=for-the-badge&logo=git)&nbsp;
-![GitHub](https://img.shields.io/badge/-GitHub-05122A?style=for-the-badge&logo=github)&nbsp;
+<h1 align="center">
+  Fivem Exec 💉
+</h1>
+
+<p align="center">
+  Exec Powerful
+</p>
+
+
+
+<p align="center">
+  <img src="https://img.shields.io/github/languages/top/Slackes/Fivem-Source?style=flat-square"/>
+  <img src="https://img.shields.io/github/last-commit/Slackes/Fivem-Source?style=flat-square"/>
+  <img src="https://img.shields.io/github/stars/Slackes/Fivem-Source?color=5ac18e&label=Stars&style=flat-square"/>
+
+</p>
+
+---
+
+## <a id="content"></a>📜 〢 Read
+
+- Read the instructions carefully.
+- Exec for Fivem's latest version, which you can check for updates yourself.
+
+## <a id="features"></a>🛑 〢 Features
+
+```
+FEATURE
  
-          
- 
- ## 📜 How To Use
- 
-- Create a executable injector
-- Merge it into a folder main
-- compile
-- Start exe & `PLAY`
-- Help [Discord Server](https://discord.gg/MBTkVcJefp)
- 
+Basic
+- Exec 
+- Dumper Scripts (All Client)
+- Resource
+- Webhook Delete
 
-   
-## FEATURE
-
-#### Lua Exec
-- Injector .lua Scripts
-
-#### Dumper Scripts
-- dumper Scripts infect both files and clients as well.
-
-#### Bypass
-- bypass Anti-cheat Ex: FivemGuard, Chocohax, 2K Anticheat
+Misc
+- Save & Config
+- Lua
+```
 
 
-#### External
-- aimbot , esp , super jump , norecoil , godmode | best for pvp
-   
-#### Resource | Eventlogger | TriggerEvent
-- All
+
+---
+
+## <a id="setup"></a> 📁 〢 Install
+
+You can use the normal Injector published on Github to compile it.
+
+1. Use a basic Injector with a source. which you can find on Github.
+2. `Fivem-Source/Hex Project - Source Main/(Source)` Delete all files in the folder and paste Source.
+3. Compile via Sln
+4. Enter the game and open Insert, then paste the menu you want to use.
+
+<br>
+
+  
+   You will need Visual Studio to compile it.:
+
+- [Visual Studio](https://visualstudio.microsoft.com/):
+
+
+
+
+
+## <a id="warn"></a> ❕ 〢 Warning 
+ This is the free version. So use it at your own risk. Use for case studies only. It will be your responsibility.
+
+## <a id="setup2"></a> 📞 〢 Support
+- If you have any questions or don't understand the instructions, join Discord for help.
+- [Discord](https://discord.gg/MBTkVcJefp)
+
+---
 
 
 https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-b987-b325c6f3aa76.mp4
-
-
 
 --- 
 
@@ -76,6 +111,8 @@ A website that I created to introduce myself from start to finish. hope you like
 
 ---
 
+  <br>
 
-<h2 align="center"> Copyright © 2021 - 2022
-
+<p align="center">
+  Copyright © 2021 - 2022
+<br>
