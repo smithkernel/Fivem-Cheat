@@ -24,19 +24,20 @@
 
 ## <a id="features"></a>🛑 〢 Features
 
-```
-FEATURE
- 
-Basic
-- Exec 
+### Exec
+- Injector .dll 8 .lua 
 - Dumper Scripts (All Client)
 - Resource
 - Webhook Delete
+- LUA Menu
 
-Misc
+### MISC
+- Godmode 
+- Aimbot 
+- SuperJump
 - Save & Config
-- Lua
-```
+- Bypass 
+
 
 
 
