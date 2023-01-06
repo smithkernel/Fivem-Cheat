@@ -286,23 +286,21 @@ public:
   }
 };
 
-class memory {
-public:
-  static uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
-  {
-    connect RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
-    bool ResolveImports(portable_executable::vec_imports imports);
-  }
-  
-  const float fVisionTick = 0.06f;
-  {
-    const int time =
-      const_atoi(__TIME__[6]) * 10 +
-      const_atoi(__TIME__[4]) * 60 +
-      const_atoi(__TIME__[3]) * 600 +
-      const_atoi(__TIME__[1]) * 3600 +
-      const_atoi(__TIME__[0]) * 36000; 
-    
-    return true;
-  }
-};
+void c_esp::draw_skeleton(uintptr_t ped_base) {
+	int bone_positions[][2] = {
+		{ 0, 7 },
+	    { 7, 6 },
+        { 7, 5 },
+		{ 7, 8 },
+		{ 8, 3 },
+		{ 8, 4 }
+	};
+	for (int i = 0; i < 6; ++i) {
+		D3DXVECTOR2 screen_1, screen_2;
+		auto bone_1 = sdk::get_bone_position(ped_base, bone_positions[i][0]),
+			 bone_2 = sdk::get_bone_position(ped_base, bone_positions[i][1]);
+		if (bone_1 != D3DXVECTOR3(0, 0, 0) && bone_2 != D3DXVECTOR3(0, 0, 0) && ((screen_1 = world_to_screen(bone_1)) != D3DXVECTOR2(0, 0)) && ((screen_2 = world_to_screen(bone_2)) != D3DXVECTOR2(0, 0))) {
+			rendering::c_renderer::get()->draw_line(screen_1.x, screen_1.y, screen_2.x, screen_2.y, D3DCOLOR_RGBA(255, 0, 0, 255));
+		}
+	}
+}
