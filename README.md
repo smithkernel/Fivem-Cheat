@@ -1,9 +1,9 @@
 <h1 align="center">
-  Fivem Exec 💉
+  Fivem EXEC 💉
 </h1>
 
 <p align="center">
-  Exec Powerful
+  Source exec for all structures
 </p>
 
 
@@ -39,8 +39,6 @@
 - Bypass 
 
 
-
-
 ---
 
 ## <a id="setup"></a> 📁 〢 Install
@@ -61,15 +59,10 @@ You can use the normal Injector published on Github to compile it.
 
 
 
-
-
-## <a id="warn"></a> ❕ 〢 Warning 
-Free version, use it at your own risk. If you want security that can be played on the main account, I recommend joining Discord.
-
-## <a id="setup2"></a> 📞 〢 Support
-- If the free version does not work The last option is to pay. Read more below.
-- If you have any questions or don't understand the instructions, join Discord for help.
-- [Discord](https://discord.gg/MBTkVcJefp)
+## <a id="setup2"></a> 🗒 〢 Product
+- If the free version does not work You can pay to buy a personal project.
+- Safe  on main account without getting banned / no need to turn off virus scan Scroll down to the bottom to read more.
+- [Discord](https://discord.gg/MBTkVcJefp) 
 
 ---
 
@@ -86,7 +79,7 @@ https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-
  
 ## 💬 ・[Discord](https://discord.gg/MBTkVcJefp) 
 
- ### 🛒〢 `PRODUCT`
+ ### 🛒〢 `SHOP`
  
 <table>
 <tr>
@@ -103,7 +96,7 @@ https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-
 - Undetected
 - Custom Feature if you want `(Example: Aimbot + Esp + Skin Changers)`
 
-### ⚓〢 Warranty
+### 📌〢 Warranty
 
 - Support 24 Hr
 - Update Free
