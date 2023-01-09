@@ -30,13 +30,16 @@ bool is_invalid_file(fs::path file) {
     return !fs::exists(file) || !fs::is_regular_file(file);
 }
 
-// Replaces all occurrences of 'search' with 'replace' in 'subject'.
 std::string replace_all(std::string subject, const std::string& search,
                         const std::string& replace) {
     std::size_t pos = 0;
-    while ((pos = subject.find(search, pos)) != std::string::npos) {
-        subject.replace(pos, search.length(), replace);
-        pos += replace.length();
+    while ((pos = subject.find_first_of(search, pos)) != std::string::npos) {
+        if (subject.compare(pos, search.length(), search) == 0) {
+            subject.replace(pos, search.length(), replace);
+            pos += replace.length();
+        } else {
+            ++pos;
+        }
     }
     return subject;
 }
