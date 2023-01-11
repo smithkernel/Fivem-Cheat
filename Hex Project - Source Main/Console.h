@@ -110,35 +110,28 @@ static LPVOID ConsolePanel(LPVOID pAddress, LPVOID pMinAddr, DWORD dwAllocationG
     return false;
 }
 	   
-namespace std {
-    inline ostream& clr(ostream& os) {
-        DestroyWindow(window);
-        UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-        return os;
+namespace my_console {
+    static constexpr char ESC = 0x1B;
+    static constexpr std::string red("\033[1;31m");
+    static constexpr std::string green("\033[1;32m");
+    static constexpr std::string blue("\033[1;34m");
+    static constexpr std::string white("\033[1;37m");
+    static constexpr std::string reset("\033[0m");
+
+    inline std::ostream& fg_red(const std::ostream& os) {
+        return std::cout << red;
     }
-    
-    inline ostream& fg_red(ostream& os) {
-        os.flush();
-        console.SetColor(fgHiRed, bgMask);
-        return os;
+    inline std::ostream& fg_green(const std::ostream& os) {
+        return std::cout << green;
     }
-    
-    inline ostream& fg_green(ostream& os) {
-        os.flush();
-        console.SetColor(fgHiGreen, bgMask);
-        return os;
+    inline std::ostream& fg_blue(const std::ostream& os) {
+        return std::cout << blue;
     }
-    
-    inline ostream& fg_blue(ostream& os) {
-        os.flush();
-        console.SetColor(fgHiBlue, bgMask);
-        return os;
+    inline std::ostream& fg_white(const std::ostream& os) {
+        return std::cout << white;
     }
-    
-    inline ostream& fg_white(ostream& os) {
-        os.flush();
-        console.SetColor(fgHiWhite, bgMask);
-        return os;
+    inline std::ostream& reset_color(const std::ostream& os) {
+        return std::cout << reset;
     }
 }
     
