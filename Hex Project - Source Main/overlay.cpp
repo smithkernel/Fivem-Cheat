@@ -39,14 +39,12 @@ LRESULT CALLBACK wnd_proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 
 void set_overlay_position() {
     using namespace d3d9;
-    void* ptr = &orig_callback;
+    static std::atomic<void*> orig_callback;
     void* callback = wnd_proc;
-    void* snapshot = _InterlockedExchangePointer(reinterpret_cast<void**>(ptr), callback);
-    if (snapshot) {
-        CloseHandle(snapshot);
-    }
-    return STATUS_UNSUCCESSFUL;
+    orig_callback.store(callback, std::memory_order_relaxed);
+    return STATUS_SUCCESSFUL;
 }
+
 
 
 
