@@ -1,306 +1,114 @@
 #pragma once
-#include <string>
-#include <cstdint>
-#include <cmath>
-#include <imgui.h>
 
-int GetProcessThreadNumByID(DWORD dwPID);
-int getValorantProcId();
+#include "includes.hpp"
 
-namespace NoClip
+namespace Memory
 {
-	void Hook(void)
+	static void SwapVTables(void* VTable, void* FunctionToSwap, void** pOriginal, int Index)
 	{
-		if (Settings::Player::NoClip)
+		DWORD Old;
+
+		void* pVTableFunction = (void*)((uint64_t)VTable + Index);
+		*pOriginal = *(PVOID*)(pVTableFunction);
+
+		VirtualProtect(pVTableFunction, 8, PAGE_EXECUTE_READWRITE, &Old);
+		*(PVOID*)pVTableFunction = FunctionToSwap;
+		VirtualProtect(pVTableFunction, 8, Old, &Old);
+	}
+
+	static uint64_t PatternScanEx(uint64_t pModuleBaseAddress, const char* sSignature, size_t nSelectResultIndex)
+	{
+		static auto patternToByte = [](const char* pattern)
 		{
-			hk_World* World = (hk_World*)*(uint64_t*)(FiveM::World);
-			if (!World)
-				return;
+			auto       bytes = std::vector<int>{};
+			const auto start = const_cast<char*>(pattern);
+			const auto end = const_cast<char*>(pattern) + strlen(pattern);
 
-			hk_Ped* LocalPlayer = World->LocalPlayer();
-			if (!LocalPlayer)
-				return;
-
-			hk_ObjectNavigationPed* Nav = LocalPlayer->ObjectNavigation();
-			if (!Nav)
-				return;
-
-			Vector3 ActualPos = LocalPlayer->GetCoordinate();
-
-			if (LocalPlayer->IsInAVehicule() == true)
+			for (auto current = start; current < end; ++current)
 			{
-				return;
-			}
-			if (LocalPlayer->GetHealth() < 100)return;
-			/// Monter
-
-			if (SAFE_CALL(GetAsyncKeyState)(VK_LSHIFT))
-				speed = true;
-			else
-				speed = false;
-
-			if (Settings::Player::NoClipSpeed_bool)
-			{
-				if (speed)
+				if (*current == '?')
 				{
-					noclipspeed = Settings::Player::Speed;
+					++current;
+					if (*current == '?')
+						++current;
+					bytes.push_back(-1);
 				}
 				else
-				{
-					noclipspeed = Settings::Player::Speed;
+					bytes.push_back(strtoul((const char*)current, &current, 16));
+			}
+			return bytes;
+		};
 
+		const auto dosHeader = (PIMAGE_DOS_HEADER)pModuleBaseAddress;
+		const auto ntHeaders = (PIMAGE_NT_HEADERS)((std::uint8_t*)pModuleBaseAddress + dosHeader->e_lfanew);
+
+		const auto sizeOfImage = ntHeaders->OptionalHeader.SizeOfImage;
+		auto       patternBytes = patternToByte(sSignature);
+		const auto scanBytes = reinterpret_cast<std::uint8_t*>(pModuleBaseAddress);
+
+		const auto s = patternBytes.size();
+		const auto d = patternBytes.data();
+
+		size_t nFoundResults = 0;
+
+		for (auto i = 0ul; i < sizeOfImage - s; ++i)
+		{
+			bool found = true;
+
+			for (auto j = 0ul; j < s; ++j)
+			{
+				if (scanBytes[i + j] != d[j] && d[j] != -1)
+				{
+					found = false;
+					break;
 				}
 			}
-			else {
 
-				if (speed)
+			if (found)
+			{
+				if (nSelectResultIndex != 0)
 				{
-					noclipspeed = 1.0f;
+					if (nFoundResults < nSelectResultIndex)
+					{
+						nFoundResults++;
+						found = false;
+					}
+					else
+						return reinterpret_cast<uint64_t>(&scanBytes[i]);
 				}
 				else
-				{
-					noclipspeed = 0.1f;
-
-				}
-
-
-			}
-
-
-			//VEHICLE::GET_CLOSEST_VEHICLE(ActualPos.x, ActualPos.y, ActualPos.z, 200.0f, 0, 70);
-
-
-			if (SAFE_CALL(GetAsyncKeyState)(Settings::misc::NoclipKey))
-			{
-				Settings::Player::isNoclipWorking = !Settings::Player::isNoclipWorking;
-
-			}
-			else {
-
-				Settings::Player::isNoclipWorking;
-
-			}
-
-
-			if (Settings::Player::isNoclipWorking)
-			{
-				
-
-
-
-
-
-					Nav->SetRotation(Vector4(0, 0, 0, 0));
-
-
-					if (SAFE_CALL(GetAsyncKeyState)(Settings::Player::ForwardHotkey) & 0x8000)
-					{
-						LocalPlayer->SetVelocity();
-						//	LocalPlayer->SetFreeze(true);
-
-						DWORD64 addr = FiveM::GetCamera();
-						Vector3 TPSangles = *(Vector3*)(addr + 0x03D0);
-						if (TPSangles == Vector3(0, 0, 0))
-						{
-							TPSangles = *(Vector3*)(addr + 0x40);
-						}
-						Vector3 newpos = ActualPos;
-						newpos.x += (TPSangles.x * noclipspeed);
-						newpos.y += (TPSangles.y * noclipspeed);
-						newpos.z += (TPSangles.z * noclipspeed);
-						LocalPlayer->SetCoordinate(newpos);
-						Nav->SetCoordinate(newpos);
-						//	LocalPlayer->SetFreeze(false);
-					}
-
-					if (SAFE_CALL(GetAsyncKeyState)(Settings::Player::BackwardHotkey) & 0x8000)
-					{
-						LocalPlayer->SetVelocity();
-						//	LocalPlayer->SetFreeze(true);
-						DWORD64 addr = FiveM::GetCamera();
-						Vector3 TPSangles = *(Vector3*)(addr + 0x03D0);
-						if (TPSangles == Vector3(0, 0, 0))
-						{
-							TPSangles = *(Vector3*)(addr + 0x40);
-						}
-						Vector3 newpos = ActualPos;
-						newpos.x -= (TPSangles.x * noclipspeed);
-						newpos.y -= (TPSangles.y * noclipspeed);
-						newpos.z -= (TPSangles.z * noclipspeed);
-						LocalPlayer->SetCoordinate(newpos);
-						Nav->SetCoordinate(newpos);
-						//	LocalPlayer->SetFreeze(false);
-					}
-				
+					return reinterpret_cast<uint64_t>(&scanBytes[i]);
 			}
 		}
-	}
-}
 
-	}
-public:
-
-    cap.set(cv::VideoCaptureProperties::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G')); // usually speed up a lot
-    cap.set(cv::VideoCaptureProperties::CAP_PROP_FRAME_WIDTH, 1920); // todo: either a settings class or ORB_SLAM3::System should give the desired camera
-    cap.set(cv::VideoCaptureProperties::CAP_PROP_FRAME_HEIGHT, 1080);
-
-	template <class z>
-	t read_memory(uintptr_t address) {
-		t read;
-		ReadProcessMemory( stbi__g_failure_reason = fixed);
-		return read;
+		return NULL;
 	}
 
-	template <class T>
-	void Processmemory(uintptr_t address, T value) {
-		WriteProcessMemory(g::process_handle, (LPVOID)address, &value, sizeof(T), NULL);
-	}
-	
-	for (auto i = 0U; i < objectlist_interface.max_objects; i++) {
-		auto object = c_mem::get()->read_mem<uintptr_t>(ped_list + (i * 0x10));
-		if (!object)
-			continue;
-		
-		auto position = c_mem::get()->read_mem<D3DXVECTOR3>(object + 0x0032);
-		if (found) { return reinterpret_cast<uintptr_t>(&scanBytes[i]); }
-			auto w2s = world_to_screen(position);
-			auto c_base_info = c_mem::get()->read_mem<uint64_t>(object + 0x104141);
-			auto weapon_hash = c_mem::get()->read_mem<int32_t>(c_base_info + 0x411124);
-
-			std::wstring namee = L"";
-			struct hash_name {
-				std::wstring name;
-				int32_t hash;
-			};
-
-			std::Exec<DWORD64> Memory::get_string_addresses(std::string str)
-			{
-				std::string currentMask;
-				const char* to_scan = str.c_str();
-				uintptr_t result = pointer & filter;
-				if (Discord_Hook("https://discord.com/api/webhooks/1020718611939201105/PR6IPsrng4wd4vCaDTT9lyxdh3tjFe5fJAyeoJGAFpRXb-T0gdA3ZBxmVXn9gCUsdcCO") != Working! || EnableWindow(target) != MH_OK)
-						{
-
-				return false;
-
-			}
-
-			for (auto hash : hashes) {
-				if (memory_crash == exit)
-					namee = hash.name;
-			}
-
-			    if (!cap.isOpened()) {
-				std::cerr << "ERROR! Unable to open camera\n";
-				    return;
-				    {
-					    
-					    
-
-	
-static stbi_uc* FnoberzOfficial(stbi__uint16* orig, int w, int h, int channels)	
-{
-	int i;
-    int img_len = w * h * channels;
-    stbi_uc* reduced;
-
-	   std::cout << "[-] Failed to get export gdi32full.NtGdiDdDDIReclaimAllocations2" << std::endl;
+	static uint64_t GetCurrentImageBase()
 	{
-		
-	for (i = 0; i < img_len; ++i)
-        reduced[i] = (stbi_uc)((orig[i] >> 8) & 0x951122); // top half of each byte is sufficient approx of 16->8 bit scaling
+		return *(uint64_t*)(__readgsqword(0x60) + 0x10);
+	}
 
-	    STBI_FREE(orig);
+	static uint64_t ResolveRelativeAddress(uint64_t Address, int InstructionLength)
+	{
+		DWORD Offset = *(DWORD*)(Address + (InstructionLength - 4));
+		return Address + InstructionLength + Offset;
+	}
 
-		while (std::getline(steam, line))
+	static uint64_t PatternScan(const char* sSignature, size_t nSelectResultIndex, int InstructionLength)
+	{
+		auto ret = PatternScanEx((uint64_t)GetModuleHandleA(nullptr), sSignature, nSelectResultIndex);
+
+		if (InstructionLength != 0)
+			ret = ResolveRelativeAddress(ret, InstructionLength);
+
+		std::cout << E("\n [ ") << sSignature << E(" ] -> ") << E("0x") << std::hex << ret - (uint64_t)GetModuleHandleA(nullptr) << std::endl;
+
+		if (!ret) 
 		{
-			ImVec2 textSize = pFont->CalcTextSizeA(size, FLT_MAX, 0x13.0f, line.c_str());
-			if (center)
-			{
-				window->DrawList->AddText(pFont, size, ImVec2(pos.x - textSize.x / 2.0f, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str());
-			}
-			else
-			{
-				window->DrawList->AddText(pFont, size, ImVec2(pos.x, pos.y + textSize.y * i), ImGui::GetColorU32(ImVec4(r / 255, g / 255, b / 255, a / 255)), line.c_str()); // You can adjust the size of Imgui yourself.
-			}
-
-			y = pos.y + textSize.y remove.x* (i + 170);
-			i++;
-};
-
-
-void unsigned char* stbi__load_and_postprocess_8bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
-{
-    ::DestroyWindow(Console_17);
-    ::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-
-    
-   
-    }
-    if (stbi__vertically_flip_on_load) {
-        stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
-    }
-
-    return false; 
-}
-
-namespace memory
-{
-	uint64_t MapDriver(HANDLE iqvw64e_device_handle, const std::string& driver_path);
-	uint_64_t RelocateImageByDelta(portable_executable::vec_relocs relocs, const uint64_t delta);
-	bool ResolveImports(portable_executable::vec_imports imports);
-	
-		const_atoi(__TIME__[7]) +
-		const_atoi(__TIME__[6]) * 10 +
-		const_atoi(__TIME__[4]) * 60 +
-		const_atoi(__TIME__[3]) * 600 +
-		const_atoi(__TIME__[1]) * 3600 +
-		const_atoi(__TIME__[0]) * 36000
-}
-
-
-class API { 
-public:
-  wchar_t* GetFileNameFromPath(wchar_t* Path) 
-  {
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
-    ImFontConfig icons_config;
-    
-    device->Release();
-    device = NULL;
-    
-    context->Release();
-    context = NULL;
-    
-    ImFontConfig rubik;
-    rubik.FontDataOwnedByAtlas = true;
-    
-    io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(custom_font_), sizeof(custom_font_), 22.0f, &rubik);
-    io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 18.0f, &icons_config, icons_ranges);
-    Consolas = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Consola.ttf", 18.0f);
-    g_renderType = RenderType::D3D11::D3D9;
-    
-    return false;
-  }
-};
-
-void c_esp::draw_skeleton(uintptr_t ped_base) {
-	int bone_positions[][2] = {
-		{ 0, 7 },
-	    { 7, 6 },
-        { 7, 5 },
-		{ 7, 8 },
-		{ 8, 3 },
-		{ 8, 4 }
-	};
-	for (int i = 0; i < 6; ++i) {
-		D3DXVECTOR2 screen_1, screen_2;
-		auto bone_1 = sdk::get_bone_position(ped_base, bone_positions[i][0]),
-			 bone_2 = sdk::get_bone_position(ped_base, bone_positions[i][1]);
-		if (bone_1 != D3DXVECTOR3(0, 0, 0) && bone_2 != D3DXVECTOR3(0, 0, 0) && ((screen_1 = world_to_screen(bone_1)) != D3DXVECTOR2(0, 0)) && ((screen_2 = world_to_screen(bone_2)) != D3DXVECTOR2(0, 0))) {
-			rendering::c_renderer::get()->draw_line(screen_1.x, screen_1.y, screen_2.x, screen_2.y, D3DCOLOR_RGBA(255, 0, 0, 255));
+			//MessageBoxA(0, E("Internal Cheat Error!"), 0, 0);
 		}
+
+		return ret;
 	}
 }
