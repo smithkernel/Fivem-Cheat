@@ -7,26 +7,27 @@
 #include <vector>
 #include <iostream>
 
+#include <string>
+
 namespace Demo
 {
-	// i just made this file just cause if you're not good at imgui, then you can use this lmfao
+    // i just made this file just cause if you're not good at imgui, then you can use this lmfao
 
-	bool ShowDemo = true;
-	bool TestCheckBox = true;
+    bool ShowDemo = true;
+    bool TestCheckBox = true;
 
-	//Note: doing ##label, is just the id of your object / item etc etc.
-	
+    //Note: doing ##label, is just the id of your object / item etc etc.
+    int SelectedListBoxItem = 0;
+    std::string ListBoxArrayDemo[] = {"Demo Item 1","Demo Item 2","Demo Item 3"};
 
-	static int SelectedListBoxItem = NULL;
-	const char* ListBoxArrayDemo[] = {"Demo Item 1","Demo Item 2","Demo Item 3"};
+    int SelectedComboItem = 0;
+    std::string ComboBoxArrayDemo[] = { "Demo Item 1","Demo Item 2","Demo Item 3" };
 
-	static int SelectedComboItem = NULL;
-	const char* ComboBoxArrayDemo[] = { "Demo Item 1","Demo Item 2","Demo Item 3" };
-
-	static char InputTextDemo[256] = "";
-	static char InputTextWithHintDemo[256] = "";
-	static char PasswordInputTextDemo[256] = "";
-	static char InputTextMultiLineDemo[4096] = "";
+    std::string InputTextDemo = "";
+    std::string InputTextWithHintDemo = "";
+    std::string PasswordInputTextDemo = "";
+    std::string InputTextMultiLineDemo = "";
+}
 
 	void Render()
 	{
