@@ -350,35 +350,54 @@ namespace KeyAuth {
 			}
 		}
 
-		void license(std::string key) {
+void license(std::string user_key) {
+    // Generate initialization vector for encryption
+    std::string iv = encryption::sha256(encryption::iv_key());
 
-			auto iv = encryption::sha256(encryption::iv_key());
-			std::string hwid = utils::get_hwid();
-			auto data =
-				XorStr("type=").c_str() + encryption::encode("license") +
-				XorStr("&key=").c_str() + encryption::encrypt(key, enckey, iv) +
-				XorStr("&hwid=").c_str() + encryption::encrypt(hwid, enckey, iv) +
-				XorStr("&sessionid=").c_str() + encryption::encode(sessionid) +
-				XorStr("&name=").c_str() + encryption::encode(name) +
-				XorStr("&ownerid=").c_str() + encryption::encode(ownerid) +
-				XorStr("&init_iv=").c_str() + iv;
-			auto response = req(data);
-			response = encryption::decrypt(response, enckey, iv);
-			auto json = response_decoder.parse(response);
+    // Get hardware ID of the machine
+    std::string hardware_id = utils::get_hwid();
 
-			if (json[("success")])
-			{
-				// optional success message
-				load_user_data(json[("info")]);
-			}
-			else
-			{
-				std::cout << XorStr("\n\n Status: Failure: ");
-				std::cout << std::string(json[("message")]);
-				Sleep(3500);
-				exit(0);
-			}
-		}
+    // Create data to send to server
+    std::string data = 
+        "type=" + encryption::encode("license") +
+        "&key=" + encryption::encrypt(user_key, enckey, iv) +
+        "&hwid=" + encryption::encrypt(hardware_id, enckey, iv) +
+        "&sessionid=" + encryption::encode(sessionid) +
+        "&name=" + encryption::encode(name) +
+        "&ownerid=" + encryption::encode(ownerid) +
+        "&init_iv=" + iv;
+
+    // Send data to server and get response
+    std::string response;
+    try {
+        response = req(data);
+    } catch (std::exception& e) {
+        std::cerr << "Error: Failed to send data to server: " << e.what() << std::endl;
+        return;
+    }
+
+    // Decrypt response and parse as json object
+    try {
+        response = encryption::decrypt(response, enckey, iv);
+    } catch (std::exception& e) {
+        std::cerr << "Error: Failed to decrypt response: " << e.what() << std::endl;
+        return;
+    }
+
+    json json_response = response_decoder.parse(response);
+
+    // Check if request was successful
+    if (json_response["success"]) {
+        try {
+            load_user_data(json_response["info"]);
+        } catch (std::exception& e) {
+            std::cerr << "Error: Failed to load user data: " << e.what() << std::endl;
+        }
+    } else {
+        std::cout << "Status: Failure: " << json_response["message"] << std::endl;
+    }
+}
+
 
 		void ban() {
 
