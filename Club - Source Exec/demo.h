@@ -29,46 +29,47 @@ namespace Demo
     std::string InputTextMultiLineDemo = "";
 }
 
-	void Render()
-	{
-		ImGui::Separator();
-		ImGui::Columns(2); // Creating 2 columns
-		ImGui::SetColumnOffset(1, ImGui::GetWindowWidth() / 2); // comment this out if you want to be able to move the column around :)
-		ImGui::Checkbox("TestBox", &TestCheckBox);
-		ImGui::PushItemWidth(ImGui::GetWindowWidth() / 3);  //ImGui::PushItemWidth(float item_width) just expands the item width
-		ImGui::ListBox("##ListBoxDemo", &SelectedListBoxItem, ListBoxArrayDemo, IM_ARRAYSIZE(ListBoxArrayDemo));
-		ImGui::PopItemWidth(); //If you don't pop the items width after you call the 'ImGui::PushItemWidth(float item_width)' function, you will get an error
+void Render()
+{
+    ImGui::Separator();
+    ImGui::BeginColumns("##Columns", 2); // Creating 2 columns and providing an ID for the columns
+    ImGui::SetColumnOffset(1, ImGui::GetWindowWidth() / 2); // comment this out if you want to be able to move the column around :)
+    ImGui::Checkbox("TestBox", &TestCheckBox);
 
-		ImGui::Button("My Button"); // Just a button with no custom size etc, it just defaults
-		ImGui::Button("My custom sized button", ImVec2(200, 30)); // We added a 'ImVec2' which is just x & y coords. The first param of ImVec2 is an x value(item width) and the second is a y value(item height).
-		if (ImGui::Button("If ImGui::Button", ImVec2(200, 30)))
-		{
-			// If the button is pressed then... do your code.
-		}
+    // Use ImGui::PushID() and ImGui::PopID() to create unique IDs for each element
+    ImGui::PushID("ListBoxDemo");
+    ImGui::PushItemWidth(ImGui::GetWindowWidth() / 3);  //ImGui::PushItemWidth(float item_width) just expands the item width
+    ImGui::ListBox("##ListBox", &SelectedListBoxItem, ListBoxArrayDemo, IM_ARRAYSIZE(ListBoxArrayDemo));
+    ImGui::PopItemWidth(); //If you don't pop the items width after you call the 'ImGui::PushItemWidth(float item_width)' function, you will get an error
+    ImGui::PopID();
 
-		ImGui::Text("My custom text"); // This only takes 1 param, just some text lol
+    ImGui::Button("My Button"); // Just a button with no custom size etc, it just defaults
+    ImGui::Button("My custom sized button", ImVec2(200, 30)); // We added a 'ImVec2' which is just x & y coords. The first param of ImVec2 is an x value(item width) and the second is a y value(item height).
 
-		ImGui::TextColored(ImColor(255, 0, 0, 255), "My Custom Red Color Text!"); // Colored text, just takes 2 params, A ImVec4 color & text.
+    // Use ImGui::BeginGroup() and ImGui::EndGroup() to group related elements together
+    ImGui::BeginGroup();
+    if (ImGui::Button("If ImGui::Button", ImVec2(200, 30)))
+    {
+        // If the button is pressed then... do your code.
+    }
+    ImGui::EndGroup();
 
-		ImGui::Text("Hover me!");
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("This is a custom tool tip!");
+    ImGui::Text("My custom text"); // This only takes 1 param, just some text lol
 
-		ImGui::PushItemWidth(ImGui::GetWindowWidth() / 3);
-		ImGui::Combo("##DemoCombo", &SelectedComboItem, ComboBoxArrayDemo, IM_ARRAYSIZE(ComboBoxArrayDemo));
-		ImGui::PopItemWidth();
+    ImGui::TextColored(ImColor(255, 0, 0, 255), "My Custom Red Color Text!"); // Colored text, just takes 2 params, A ImVec4 color & text.
 
-		ImGui::NextColumn(); // The other side of the column
+    // Use ImGui::BeginTooltip() and ImGui::EndTooltip() to create a tooltip
+    ImGui::Text("Hover me!");
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::BeginTooltip();
+        ImGui::Text("This is a custom tool tip!");
+        ImGui::EndTooltip();
+    }
 
-		ImGui::SetCursorPosX(500); // Set the (X) position of your item, change 100 to your (X) position.
-		ImGui::Text("Custom X positioned text!");
-
-		ImGui::SetCursorPosY(100); // Set the (Y) position of your item, change 100 to your (Y) position.
-		ImGui::Text("Custom Y positioned text!");
-
-
-
-		ImGui::InputText("##InputTextDemo", InputTextDemo, IM_ARRAYSIZE(InputTextDemo)); 
+    ImGui::PushID("ComboDemo");
+    ImGui::PushItemWidth(ImGui::GetWindowWidth() / 3);
+    ImGui::Combo("##DemoCombo", &SelectedComboItem, ComboBoxArrayDemo, 
 		ImGui::SameLine(); // puts the button called 'Output' beside the input text
 		if (ImGui::Button("Output"))
 		{
