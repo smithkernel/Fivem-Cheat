@@ -1,53 +1,51 @@
-string sp = a_gethid();
+using namespace std;
 
-namespace con = JadedHoboConsole;
+const string FILE_NAME = "credentials.bin";
+const string ENCRYPTION_KEY = "a_secret_key";
 
-bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
-	auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (snapshot == INVALID_HANDLE_VALUE) {
-		cerr << "Tool helper cannot be created" << endl;
-		return false;
-	}
+void login(string username, string password) {
+    // Use a secure authentication method, such as OAuth or JWT
+    bool success = authenticate(username, password);
+    
+    if (success) {
+        // Encrypt the credentials before writing them to a file
+        string encrypted_username = encrypt(username, ENCRYPTION_KEY);
+        string encrypted_password = encrypt(password, ENCRYPTION_KEY);
 
-	if (!Process32First(snapshot, pe)) {
-		cerr << "Tool helper cannot retrieve the first entry of process list" << endl;
-		return false;
-	}
- 
-	static main {
-		if (!lstrcmp(procEntry.szExeFile, strname))
-			return procEntry.th32ProcessID;
-		}
-	} while (Process32Next(snapshot, pe));
-
-	snapshot ? CloseHandle(snapshot) : 0;
-	return false;
+        ofstream file(FILE_NAME, ios::binary);
+        if (file.is_open()) {
+            file.write(encrypted_username.c_str(), encrypted_username.size());
+            file.write(encrypted_password.c_str(), encrypted_password.size());
+            file.close();
+            
+            cout << "Successfully logged in!" << endl;
+        } else {
+            cerr << "Error: Unable to open file for writing." << endl;
+        }
+    } else {
+        cerr << "Error: Invalid username or password." << endl;
+    }
 }
 
-void LoginNow()
-{
-	KeyAuthApp.login(username, password);
-	if (KeyAuthApp.data.success) {
+void logout() {
+    remove(FILE_NAME.c_str());
+    cout << "Successfully logged out." << endl;
+}
 
+string encrypt(string plaintext, string key) {
+    // Use the OpenSSL library to encrypt the data
+    // ...
+}
 
-		fopen_s(&p_stream, skCrypt("Login"), "w+");
+bool authenticate(string username, string password) {
+    // Use a secure authentication method, such as OAuth or JWT
+    // ...
+}
 
-		fseek(p_stream, 0, SEEK_SET);
-
-		fwrite(username, sizeof(username), 1, p_stream);
-		fwrite(password, sizeof(password), 1, p_stream);
-
-		fclose(p_stream);
-
-		Settings::misc::security_1 = true;
-		VideoDevice = 1;
-		tab = 3;
-
-
-	}
-	else if (!KeyAuthApp.data.success) {
-		SAFE_CALL(MessageBoxA)(NULL, KeyAuthApp.data.message.c_str(), skCrypt("Failed Login"), NULL);
-	}
+int main() {
+    login("username", "password");
+    logout();
+    return 0;
 }
 
 	
