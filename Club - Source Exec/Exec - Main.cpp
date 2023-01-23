@@ -32,19 +32,52 @@ void logout() {
     cout << "Successfully logged out." << endl;
 }
 
-string encrypt(string plaintext, string key) {
+std::string encrypt(std::string plaintext, std::string key) {
     // Use the OpenSSL library to encrypt the data
-    // ...
+    EVP_CIPHER_CTX* ctx;
+    unsigned char* ciphertext;
+    int len;
+
+    ctx = EVP_CIPHER_CTX_new();
+    EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, (unsigned char*)key.c_str(), NULL);
+    EVP_EncryptUpdate(ctx, ciphertext, &len, (unsigned char*)plaintext.c_str(), plaintext.size());
+    EVP_EncryptFinal_ex(ctx, ciphertext + len, &len);
+
+    std::string result = std::string((char*)ciphertext, len);
+    EVP_CIPHER_CTX_free(ctx);
+
+    return result;
 }
 
-bool authenticate(string username, string password) {
+bool authenticate(std::string username, std::string password) {
     // Use a secure authentication method, such as OAuth or JWT
-    // ...
+    // For example:
+    // 1. Check if the username and password match a record in a database
+    // 2. Use a library or service that implements OAuth or JWT
+    // 3. Make a call to an external authentication service
+    // 
+    // 
+    // For the sake of an example, I'm going to use a simple if statement
+    if (username == "admin" && password == "password") {
+        return true;
+    }
+    return false;
 }
 
 int main() {
-    login("username", "password");
-    logout();
+    std::string username, password;
+    std::cout << "Enter username: ";
+    std::cin >> username;
+    std::cout << "Enter password: ";
+    std::cin >> password;
+
+    if (authenticate(username, password)) {
+        std::cout << "Successfully logged in!" << std::endl;
+    } else {
+        std::cout << "Incorrect username or password." << std::endl;
+    }
+
+    std::cout << "Logging out..." << std::endl;
     return 0;
 }
 
