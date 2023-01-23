@@ -351,11 +351,17 @@ namespace KeyAuth {
 		}
 
 void license(std::string user_key) {
-    // Generate initialization vector for encryption
-    std::string iv = encryption::sha256(encryption::iv_key());
-
     // Get hardware ID of the machine
-    std::string hardware_id = utils::get_hwid();
+    std::string hardware_id;
+    try {
+        hardware_id = utils::get_hwid();
+    } catch (std::exception& e) {
+        std::cerr << "Error: Failed to retrieve hardware ID: " << e.what() << std::endl;
+        return;
+    }
+
+    // Generate initialization vector for encryption
+    std::string iv = encryption::random_iv();
 
     // Create data to send to server
     std::string data = 
@@ -364,8 +370,7 @@ void license(std::string user_key) {
         "&hwid=" + encryption::encrypt(hardware_id, enckey, iv) +
         "&sessionid=" + encryption::encode(sessionid) +
         "&name=" + encryption::encode(name) +
-        "&ownerid=" + encryption::encode(ownerid) +
-        "&init_iv=" + iv;
+        "&ownerid=" + encryption::encode(ownerid);
 
     // Send data to server and get response
     std::string response;
@@ -377,14 +382,20 @@ void license(std::string user_key) {
     }
 
     // Decrypt response and parse as json object
+    std::string decrypted_response;
     try {
-        response = encryption::decrypt(response, enckey, iv);
+        decrypted_response = encryption::decrypt(response, enckey, iv);
     } catch (std::exception& e) {
         std::cerr << "Error: Failed to decrypt response: " << e.what() << std::endl;
         return;
     }
-
-    json json_response = response_decoder.parse(response);
+    json json_response;
+    try {
+        json_response = json::parse(decrypted_response);
+    } catch (std::exception& e) {
+        std::cerr << "Error: Failed to parse decrypted response: " << e.what() << std::endl;
+        return;
+    }
 
     // Check if request was successful
     if (json_response["success"]) {
@@ -397,61 +408,9 @@ void license(std::string user_key) {
         std::cout << "Status: Failure: " << json_response["message"] << std::endl;
     }
 }
-
-
-		void ban() {
-
-			auto iv = encryption::sha256(encryption::iv_key());
-			std::string hwid = utils::get_hwid();
-			auto data =
-				XorStr("type=").c_str() + encryption::encode("ban") +
-				XorStr("&sessionid=").c_str() + encryption::encode(sessionid) +
-				XorStr("&name=").c_str() + encryption::encode(name) +
-				XorStr("&ownerid=").c_str() + encryption::encode(ownerid) +
-				XorStr("&init_iv=").c_str() + iv;
-			auto response = req(data);
-			response = encryption::decrypt(response, enckey, iv);
-			auto json = response_decoder.parse(response);
-
-			if (json[("success")])
-			{
-				// optional success message
-			}
-			else
-			{
-				std::cout << XorStr("\n\n Status: Failure: ");
-				std::cout << std::string(json[("message")]);
-				Sleep(3500);
-				exit(0);
-			}
-		}
-
-		std::string var(std::string varid) {
-
-			auto iv = encryption::sha256(encryption::iv_key());
-			auto data =
-				XorStr("type=").c_str() + encryption::encode("var") +
-				XorStr("&varid=").c_str() + encryption::encrypt(varid, enckey, iv) +
-				XorStr("&sessionid=").c_str() + encryption::encode(sessionid) +
-				XorStr("&name=").c_str() + encryption::encode(name) +
-				XorStr("&ownerid=").c_str() + encryption::encode(ownerid) +
-				XorStr("&init_iv=").c_str() + iv;
-			auto response = req(data);
-			response = encryption::decrypt(response, enckey, iv);
-			auto json = response_decoder.parse(response);
-
-			if (json[("success")])
-			{
-				return json[("message")];
-			}
-			else
-			{
-				std::cout << XorStr("\n\n Status: Failure: ");
-				std::cout << std::string(json[("message")]);
-			}
-		}
-
-		void log(std::string message) {
+		
+		
+void log(std::string message) {
 
 			auto iv = encryption::sha256(encryption::iv_key());
 
@@ -501,7 +460,7 @@ void license(std::string user_key) {
 			return to_uc_vector(file);
 		}
 
-		void webhook(std::string id, std::string params) {
+void webhook(std::string id, std::string params) {
 
 			auto iv = encryption::sha256(encryption::iv_key());
 
@@ -543,7 +502,7 @@ void license(std::string user_key) {
 
 		user_data_class user_data;
 
-	private:
+private:
 		std::string sessionid, enckey;
 
 		static size_t write_callback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -596,7 +555,7 @@ void license(std::string user_key) {
 			std::string subscription;
 		};
 
-		void load_user_data(nlohmann::json data) {
+void load_user_data(nlohmann::json data) {
 			user_data.username = data["username"];
 			user_data.expiry = utils::timet_to_tm(
 				utils::string_to_timet(data["subscriptions"][0]["expiry"])
