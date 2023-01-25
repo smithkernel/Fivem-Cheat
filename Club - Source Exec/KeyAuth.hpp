@@ -289,38 +289,32 @@ namespace KeyAuth {
 			}
 		}
 
-		void regstr(std::string username, std::string password, std::string key) {
+void regstr(std::string username, std::string password, std::string key) {
+    std::string hwid = utils::get_hwid();
+    auto iv = encryption::gen_random_iv(); // Use a cryptographically secure method for generating the IV
+    auto data =
+        "type=register" +
+        "&username=" + encryption::encrypt(username, enckey, iv) +
+        "&pass=" + encryption::encrypt(password, enckey, iv) +
+        "&key=" + encryption::encrypt(key, enckey, iv) +
+        "&hwid=" + encryption::encrypt(hwid, enckey, iv) +
+        "&sessionid=" + encryption::encode(sessionid) +
+        "&name=" + encryption::encode(name) +
+        "&ownerid=" + encryption::encode(ownerid) +
+        "&init_iv=" + iv;
+    auto response = req(data);
+    response = encryption::decrypt(response, enckey, iv);
+    auto json = response_decoder.parse(response);
 
-			std::string hwid = utils::get_hwid();
-			auto iv = encryption::sha256(encryption::iv_key());
-			auto data =
-				XorStr("type=").c_str() + encryption::encode("register") +
-				XorStr("&username=").c_str() + encryption::encrypt(username, enckey, iv) +
-				XorStr("&pass=").c_str() + encryption::encrypt(password, enckey, iv) +
-				XorStr("&key=").c_str() + encryption::encrypt(key, enckey, iv) +
-				XorStr("&hwid=").c_str() + encryption::encrypt(hwid, enckey, iv) +
-				XorStr("&sessionid=").c_str() + encryption::encode(sessionid) +
-				XorStr("&name=").c_str() + encryption::encode(name) +
-				XorStr("&ownerid=").c_str() + encryption::encode(ownerid) +
-				XorStr("&init_iv=").c_str() + iv;
-			auto response = req(data);
-			response = encryption::decrypt(response, enckey, iv);
-			auto json = response_decoder.parse(response);
+    if (json["success"]) {
+        // optional success message
+        load_user_data(json["info"]);
+    } else {
+        MessageBox(NULL, TEXT("Regst Error!"), TEXT("Regst"), MB_OK);
+        exit(0);
+    }
+}
 
-			if (json[("success")])
-			{
-				// optional success message
-				load_user_data(json[("info")]);
-			}
-			else
-			{
-				MessageBox(NULL, TEXT("Regst Error!"), TEXT("Regst"), MB_OK);
-				//std::cout << XorStr("\n\n Status: Failure: ");
-				//std::cout << std::string(json[("message")]);
-				//Sleep(3500);
-				exit(0);
-			}
-		}
 
 		void upgrade(std::string username, std::string key) {
 
