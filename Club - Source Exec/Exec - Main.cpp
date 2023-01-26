@@ -115,7 +115,7 @@ bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
 		}
 }
 
-Hex Project::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
+ClubCC::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
 {
 	// TODO: Need own detour function
 
@@ -220,7 +220,7 @@ static main()
 }
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/mNf2zAUe");
-	SetConsoleTitleA("Hex Project | By Fnoberz#0001 | Discord : https://discord.gg/mNf2zAUe");
+	SetConsoleTitleA("Club CC | By Slackes#0001 | Discord : https://discord.gg/mNf2zAUe");
 }
 					    
 	static Process32First(hSnapshot, &procEntry);
