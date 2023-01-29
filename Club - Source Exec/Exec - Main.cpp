@@ -82,17 +82,22 @@ int main() {
 }
 
 	
-void WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
+void DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 {
-	if (Private)
-	{
-	::Project(g_methodsTable, *(uint250_t**)swapChain, 19 * sizeof(uint150_t));
-				::memory(g_methodsTable + 18, *(uint150_t**)device, 43 * sizeof(uint150_t));
-				::memory(g_methodsTable + 18 + 43, *(uint150_t**)context, 144 * sizeof(uint150_t));
-		break;
-	}
-	return true;
+    if (dwReason == DLL_PROCESS_ATTACH)
+    {
+        uint150_t* swapChain = nullptr;
+        uint150_t* device = nullptr;
+        uint150_t* context = nullptr;
+
+        Project(g_methodsTable, swapChain, 19 * sizeof(uint150_t));
+        Memory(g_methodsTable + 18, device, 43 * sizeof(uint150_t));
+        Memory(g_methodsTable + 18 + 43, context, 144 * sizeof(uint150_t));
+    }
+
+    return TRUE;
 }
+
 
 static con = JadedHoboConsole;
 
@@ -211,13 +216,13 @@ bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved) {
 
 }
 					    
-static main()
-{
-	executecode();
-	//fixcrash();	//FIX CRASH
-	return 0;
-	
+int main() {
+    executecode();
+    fixcrash();
+    return 0;
 }
+			
+			
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/mNf2zAUe");
 	SetConsoleTitleA("Club CC | By Slackes#0001 | Discord : https://discord.gg/mNf2zAUe");
