@@ -46,7 +46,7 @@
 You can use the normal Injector published on Github to compile it.
 
 1. Use a basic Injector with a source. which you can find on Github.
-2. `Fivem-Source/Hex Project - Source Main/(Source)` Delete all files in the folder and paste Source.
+2. `Fivem-Source/Club - Source Exec/(Source)` Delete all files in the folder and paste Source.
 3. Compile via Sln
 4. Enter the game and open Insert, then paste the menu you want to use.
 
