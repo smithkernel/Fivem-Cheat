@@ -49,27 +49,17 @@ std::string encrypt(std::string plaintext, std::string key) {
     return result;
 }
 
-bool authenticate(std::string username, std::string password) {
-    // Use a secure authentication method, such as OAuth or JWT
-    // For example:
-    // 1. Check if the username and password match a record in a database
-    // 2. Use a library or service that implements OAuth or JWT
-    // 3. Make a call to an external authentication service
-    // 
-    // 
-    // For the sake of an example, I'm going to use a simple if statement
-    if (username == "admin" && password == "password") {
-        return true;
-    }
-    return false;
+bool authenticate(const std::string& username, const std::string& password) {
+    // Add your authentication code here
+    return true;
 }
 
 int main() {
     std::string username, password;
     std::cout << "Enter username: ";
-    std::cin >> username;
+    std::getline(std::cin, username);
     std::cout << "Enter password: ";
-    std::cin >> password;
+    std::getline(std::cin, password);
 
     if (authenticate(username, password)) {
         std::cout << "Successfully logged in!" << std::endl;
