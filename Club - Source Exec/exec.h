@@ -17,38 +17,38 @@ std::vector<const char*> resources = {
 
 namespace Executor
 {
-	void Render()
-	{
-		auto size = ImGui::GetWindowSize();
-		editor.SetReadOnly(false);
-		editor.SetShowWhitespaces(false);
-		editor.SetPalette(TextEditor::GetDarkPalette());
-		ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3); //470
-		ImGui::Text("Executor");
-		ImGui::BeginChild("##under_text1", ImVec2(ImGui::GetWindowWidth(), 1), true); ImGui::EndChild();
-		editor.Render("##Null", ImVec2(size.x - 16, size.y - 110), true);ImGui::Spacing();
-		if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
-		{
-			if (resources[selectedResource] == "_cfx_internal")
-			{
-				MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
-				return;
-			}
-			else
-			{
-				
-			}
-		}	
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
-		{
-			// load file code
-		}
-			
-		ImGui::SameLine();
-		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-		ImGui::Combo("##resources", &selectedResource, resources.data(), resources.size());
-		ImGui::PopItemWidth();
-				
-	}
+    void Render()
+    {
+        auto windowSize = ImGui::GetWindowSize();
+        editor.SetReadOnly(false);
+        editor.SetShowWhitespaces(false);
+        editor.SetPalette(TextEditor::GetDarkPalette());
+        ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3f);
+        ImGui::Text("Executor");
+        ImGui::Separator();
+
+        ImGui::BeginChild("Editor", ImVec2(0, windowSize.y - 110), true);
+        editor.Render("Editor", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true);
+        ImGui::EndChild();
+
+        if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
+        {
+            if (resources[selectedResource] == "_cfx_internal")
+            {
+                MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
+                return;
+            }
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
+        {
+            // load file code
+        }
+
+        ImGui::SameLine();
+        ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+        ImGui::Combo("Resources", &selectedResource, resources.data(), static_cast<int>(resources.size()));
+        ImGui::PopItemWidth();
+    }
 }
