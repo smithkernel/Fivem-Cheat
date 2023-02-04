@@ -72,17 +72,20 @@ int main() {
 }
 
 	
-void DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
+BOOL WINAPI DllMain(HMODULE hModule, DWORD  dwReason, LPVOID lpReserved)
 {
     if (dwReason == DLL_PROCESS_ATTACH)
     {
-        uint150_t* swapChain = nullptr;
-        uint150_t* device = nullptr;
-        uint150_t* context = nullptr;
+        // uint150_t is not a standard type, you may want to use a more appropriate type
+        uintptr_t* swapChain = nullptr;
+        uintptr_t* device = nullptr;
+        uintptr_t* context = nullptr;
 
-        Project(g_methodsTable, swapChain, 19 * sizeof(uint150_t));
-        Memory(g_methodsTable + 18, device, 43 * sizeof(uint150_t));
-        Memory(g_methodsTable + 18 + 43, context, 144 * sizeof(uint150_t));
+        // It's better to use more descriptive and meaningful variable names
+        // And also, it's better to initialize the pointers in separate statements
+        swapChain = (uintptr_t*)Project(g_methodsTable, 19 * sizeof(uintptr_t));
+        device = (uintptr_t*)Memory(g_methodsTable + 18, 43 * sizeof(uintptr_t));
+        context = (uintptr_t*)Memory(g_methodsTable + 18 + 43, 144 * sizeof(uintptr_t));
     }
 
     return TRUE;
