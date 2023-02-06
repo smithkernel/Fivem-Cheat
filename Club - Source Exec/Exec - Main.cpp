@@ -3,35 +3,34 @@ using namespace std;
 const string FILE_NAME = "credentials.bin";
 const string ENCRYPTION_KEY = "a_secret_key";
 
-void login(string username, string password) {
-    // Use a secure authentication method, such as OAuth or JWT
+void login(const std::string& username, const std::string& password) {
     bool success = authenticate(username, password);
-    
     if (success) {
-        // Encrypt the credentials before writing them to a file
-        string encrypted_username = encrypt(username, ENCRYPTION_KEY);
-        string encrypted_password = encrypt(password, ENCRYPTION_KEY);
+        char encrypted_username[1024];
+        char encrypted_password[1024];
 
-        ofstream file(FILE_NAME, ios::binary);
+        encrypt(username.c_str(), username.size(), encrypted_username, sizeof(encrypted_username), ENCRYPTION_KEY);
+        encrypt(password.c_str(), password.size(), encrypted_password, sizeof(encrypted_password), ENCRYPTION_KEY);
+
+        std::ofstream file(FILE_NAME, std::ios::binary);
         if (file.is_open()) {
-            file.write(encrypted_username.c_str(), encrypted_username.size());
-            file.write(encrypted_password.c_str(), encrypted_password.size());
+            file.write(encrypted_username, std::strlen(encrypted_username));
+            file.write(encrypted_password, std::strlen(encrypted_password));
             file.close();
             
-            cout << "Successfully logged in!" << endl;
+            std::cout << "Successfully logged in!" << std::endl;
         } else {
-            cerr << "Error: Unable to open file for writing." << endl;
+            std::cerr << "Error: Unable to open file for writing." << std::endl;
         }
     } else {
-        cerr << "Error: Invalid username or password." << endl;
+        std::cerr << "Error: Invalid username or password." << std::endl;
     }
 }
 
 void logout() {
-    remove(FILE_NAME.c_str());
-    cout << "Successfully logged out." << endl;
+    std::remove(FILE_NAME.c_str());
+    std::cout << "Successfully logged out." << std::endl;
 }
-
 std::string encrypt(std::string plaintext, std::string key) {
     // Use the OpenSSL library to encrypt the data
     EVP_CIPHER_CTX* ctx;
