@@ -287,18 +287,15 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
     return (stbi__uint16*)result;
 }
 
-void Renderer::DrawEsp(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
+void Renderer
 {
-	 static int
-        dirent_mbstowcs_s(
-            size_t* pReturnValue,
-            wchar_t* wcstr,
-            size_t sizeInWords,
-            const char* str,
-            size_t count)
+public:
+    void DrawEsp(const ImVec2& scalepos, const ImVec2& scaleheadPosition, INT8 health, float thickness)
     {
-        return error;
-}
+        // Implementation details for the DrawEsp function
+    }
+};
+
 
 void ScriptHook::HookFunction(PVOID * oFunction, PVOID pDetour)
 {
