@@ -349,8 +349,8 @@ void license(std::string user_key) {
     std::string hardware_id;
     try {
         hardware_id = utils::get_hwid();
-    } catch (std::exception& e) {
-        std::cerr << "Error: Failed to retrieve hardware ID: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: Failed to retrieve hardware ID: " << e.what() << '\n';
         return;
     }
 
@@ -358,7 +358,7 @@ void license(std::string user_key) {
     std::string iv = encryption::random_iv();
 
     // Create data to send to server
-    std::string data = 
+    const std::string data = 
         "type=" + encryption::encode("license") +
         "&key=" + encryption::encrypt(user_key, enckey, iv) +
         "&hwid=" + encryption::encrypt(hardware_id, enckey, iv) +
@@ -370,8 +370,8 @@ void license(std::string user_key) {
     std::string response;
     try {
         response = req(data);
-    } catch (std::exception& e) {
-        std::cerr << "Error: Failed to send data to server: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: Failed to send data to server: " << e.what() << '\n';
         return;
     }
 
@@ -379,29 +379,30 @@ void license(std::string user_key) {
     std::string decrypted_response;
     try {
         decrypted_response = encryption::decrypt(response, enckey, iv);
-    } catch (std::exception& e) {
-        std::cerr << "Error: Failed to decrypt response: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: Failed to decrypt response: " << e.what() << '\n';
         return;
     }
     json json_response;
     try {
         json_response = json::parse(decrypted_response);
-    } catch (std::exception& e) {
-        std::cerr << "Error: Failed to parse decrypted response: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: Failed to parse decrypted response: " << e.what() << '\n';
         return;
     }
 
     // Check if request was successful
-    if (json_response["success"]) {
+    if (json_response.value("success", false)) {
         try {
             load_user_data(json_response["info"]);
-        } catch (std::exception& e) {
-            std::cerr << "Error: Failed to load user data: " << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Error: Failed to load user data: " << e.what() << '\n';
         }
     } else {
-        std::cout << "Status: Failure: " << json_response["message"] << std::endl;
+        std::cout << "Status: Failure: " << json_response.value("message", "Unknown error") << '\n';
     }
 }
+
 		
 		
 void log(std::string message) {
