@@ -16,53 +16,53 @@ ID3D11ShaderResourceView* logo = NULL;
 
 namespace Menu
 {
-	int logoWidth = 18;
-	int logoHeight = 18;
-	static int Tab = 0;
-	bool IsMenuOpen = true;
+    int logoWidth = 18;
+    int logoHeight = 18;
+    static int Tab = 0;
+    bool IsMenuOpen = true;
 
-	void Render()
-	{
-		//redENGINE Remade : by xo1337 
-		ImGui::Begin("redENGINE", NULL, ImGuiWindowFlags_NoScrollbar); 
-		ImGui::Columns(2, "##maincolumn", true);
-		ImGui::SetColumnOffset(1, 225);
+    void Render()
+    {
+        //redENGINE Remade : by xo1337 
+        ImGui::Begin("redENGINE", NULL, ImGuiWindowFlags_NoScrollbar); 
+        ImGui::Columns(2, "##maincolumn", true);
+        ImGui::SetColumnOffset(1, 225);
 
-		ImGui::SetCursorPosX(74);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 9);
-		ImGui::Image((void*)logo, ImVec2(76, 87)); 
-		ImGui::NewLine();
+        ImGui::SetCursorPosX(74);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 9);
+        ImGui::Image((void*)logo, ImVec2(logoWidth, logoHeight)); 
+        ImGui::NewLine();
 
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		Gui::Seperator("##main_seperator_1", 225, 1);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		if (ImGui::Button(ICON_FA_CODE" Executor", ImVec2(225, 46)))
-		{
-			Tab = 1;
-		}
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		Gui::Seperator("##main_seperator_2", 225, 1);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		if (ImGui::Button(ICON_FA_DOWNLOAD" Resources", ImVec2(225, 46)))
-		{
-			Tab = 2;
-		}
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		Gui::Seperator("##main_seperator_3", 225, 1);
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3); //+ goes down , - goes up
-		ImGui::SetCursorPosX(0);
-		if (ImGui::Button(ICON_FA_BOOK" Menus", ImVec2(225, 46)))
-		{
-			Tab = 3;
-		}
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		Gui::Seperator("##main_seperator_4", 225, 1);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        Gui::Seperator("##main_seperator_1", 225, 1);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        if (ImGui::Button(ICON_FA_CODE" Executor", ImVec2(225, 46)))
+        {
+            Tab = 1;
+        }
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        Gui::Seperator("##main_seperator_2", 225, 1);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        if (ImGui::Button(ICON_FA_DOWNLOAD" Resources", ImVec2(225, 46)))
+        {
+            Tab = 2;
+        }
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        Gui::Seperator("##main_seperator_3", 225, 1);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3); //+ goes down , - goes up
+        ImGui::SetCursorPosX(0);
+        if (ImGui::Button(ICON_FA_BOOK" Menus", ImVec2(225, 46)))
+        {
+            Tab = 3;
+        }
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        Gui::Seperator("##main_seperator_4", 225, 1);
 
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
 		ImGui::SetCursorPosX(0);
