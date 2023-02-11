@@ -16,18 +16,19 @@ namespace Demo
     bool ShowDemo = true;
     bool TestCheckBox = true;
 
-    //Note: doing ##label, is just the id of your object / item etc etc.
+    // Note: using ## before the label is a way to provide a unique identifier for each GUI element
     int SelectedListBoxItem = 0;
-    std::string ListBoxArrayDemo[] = {"Demo Item 1","Demo Item 2","Demo Item 3"};
+    std::vector<std::string> ListBoxArrayDemo = {"Demo Item 1","Demo Item 2","Demo Item 3"};
 
     int SelectedComboItem = 0;
-    std::string ComboBoxArrayDemo[] = { "Demo Item 1","Demo Item 2","Demo Item 3" };
+    std::vector<std::string> ComboBoxArrayDemo = { "Demo Item 1","Demo Item 2","Demo Item 3" };
 
     std::string InputTextDemo = "";
-    std::string InputTextWithHintDemo = "";
+    std::string InputTextWithHintDemo = "Enter text here";
     std::string PasswordInputTextDemo = "";
     std::string InputTextMultiLineDemo = "";
 }
+
 
 void Render()
 {
