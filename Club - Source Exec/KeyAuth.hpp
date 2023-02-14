@@ -551,14 +551,14 @@ private:
 		};
 
 void load_user_data(nlohmann::json data) {
-			user_data.username = data["username"];
-			user_data.expiry = utils::timet_to_tm(
-				utils::string_to_timet(data["subscriptions"][0]["expiry"])
-			);
-			user_data.subscription = data["subscriptions"][0]["subscription"];
-		}
-
-		nlohmann::json response_decoder;
-
-	};
+    try {
+        user_data.username = data.at("username").get<std::string>();
+        auto expiry_str = data.at("subscriptions").at(0).at("expiry").get<std::string>();
+        user_data.expiry = utils::timet_to_tm(utils::string_to_timet(expiry_str));
+        user_data.subscription = data.at("subscriptions").at(0).at("subscription").get<std::string>();
+    } catch (const std::exception& e) {
+        // Handle errors here, such as logging or throwing a custom exception
+        throw std::runtime_error("Error loading user data: " + std::string(e.what()));
+    }
 }
+
