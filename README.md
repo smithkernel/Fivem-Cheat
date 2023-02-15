@@ -77,10 +77,10 @@ https://user-images.githubusercontent.com/94861415/208510041-ac7ceb34-153f-45aa-
     </a>
 </p> 
  
-## 💬 ・[Discord Server](https://discord.gg/2euDQqzD8Y) 
+## 💬 ・[Discord](https://discord.gg/2euDQqzD8Y) | MAIN SERVER
 `CLICK BLUE BUTTON FOR JOIN SERVER.`
 
- ### 🛒〢 `PRODUCT`
+ ### 🛒〢 `SHOP`
  
 <table>
 <tr>
