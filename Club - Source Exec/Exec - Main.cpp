@@ -92,24 +92,28 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD  dwReason, LPVOID lpReserved)
 
 
 static con = JadedHoboConsole;
+bool GetProcessEntryByName(const std::string& name, PROCESSENTRY32* pe) {
+    HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snapshot == INVALID_HANDLE_VALUE) {
+        return false;
+    }
 
-bool GetProcessEntryByName(string name, PROCESSENTRY32* pe) {
-					::DestroyWindow(window);
-					::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-					return Status::UnknownError;
-		return false;
-	}
+    pe->dwSize = sizeof(PROCESSENTRY32);
+    if (!Process32First(snapshot, pe)) {
+        CloseHandle(snapshot);
+        return false;
+    }
 
-	if (result == NULL)
-        return NULL;
+    bool found = false;
+    do {
+        if (std::string(pe->szExeFile) == name) {
+            found = true;
+            break;
+        }
+    } while (Process32Next(snapshot, pe));
 
-	}
-
-	do {
-		if (pe->FileEXE == name) {
-			static ? Close(snapshot) : 0;
-			return false;
-		}
+    CloseHandle(snapshot);
+    return found;
 }
 
 ClubCC::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
