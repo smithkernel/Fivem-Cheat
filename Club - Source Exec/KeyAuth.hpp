@@ -552,10 +552,32 @@ private:
 
 void load_user_data(nlohmann::json data) {
     try {
-        user_data.username = data.at("username").get<std::string>();
-        auto expiry_str = data.at("subscriptions").at(0).at("expiry").get<std::string>();
+        // Check if the "username" key is present and has a valid data type
+        if (data.count("username") == 0 || !data["username"].is_string()) {
+            throw std::runtime_error("Error loading user data: missing or invalid username key");
+        }
+        user_data.username = data["username"].get<std::string>();
+
+        // Check if the "subscriptions" key is present and has a valid data type
+        if (data.count("subscriptions") == 0 || !data["subscriptions"].is_array() || data["subscriptions"].empty()) {
+            throw std::runtime_error("Error loading user data: missing or invalid subscriptions key");
+        }
+
+        // Extract the first subscription object from the "subscriptions" array
+        auto subscription = data["subscriptions"][0];
+
+        // Check if the subscription object has the expected keys and valid data types
+        if (subscription.count("expiry") == 0 || !subscription["expiry"].is_string()) {
+            throw std::runtime_error("Error loading user data: missing or invalid expiry key");
+        }
+        if (subscription.count("subscription") == 0 || !subscription["subscription"].is_string()) {
+            throw std::runtime_error("Error loading user data: missing or invalid subscription key");
+        }
+
+        // Extract and store the expiry and subscription values
+        auto expiry_str = subscription["expiry"].get<std::string>();
         user_data.expiry = utils::timet_to_tm(utils::string_to_timet(expiry_str));
-        user_data.subscription = data.at("subscriptions").at(0).at("subscription").get<std::string>();
+        user_data.subscription = subscription["subscription"].get<std::string>();
     } catch (const std::exception& e) {
         // Handle errors here, such as logging or throwing a custom exception
         throw std::runtime_error("Error loading user data: " + std::string(e.what()));
