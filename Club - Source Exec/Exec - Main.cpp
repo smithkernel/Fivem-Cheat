@@ -250,23 +250,28 @@ int main(int argc, const char* argv[]) {
 		
 
 		    
-void randomstring(std::string::size_type length)
-
+void generate_random_string(std::string::size_type length)
 {
-	static auto& chrs = "FiveM_GTAProcess"
+    const std::string allowed_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<std::string::size_type> dist(0, allowed_chars.size() - 1);
 
-	thread_local static std::mt19937 rg{ std::random_device{}() };
-	thread_local static std::uniform_int_distribution<std::string::size_type> pick(0, sizeof(chrs) - 2);
+    std::string result;
+    result.reserve(length);
 
-	extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	
-	cout << "[ >> ] Debug event. Code: " << dec << debugEvent.dwDebugEventCode << ", PID: " << dec << debugEvent.dwProcessId << ", TID: " << dec << debugEvent.dwThreadId << ". Continuing execution." << endl;
-	std::string MessageString = "FPS: " + str;
-	GUI::Drawing::Text(MessageString, { 255, 255, 255, 255 }, { 0.50f, 0.002f }, { 0.30f, 0.30f }, false);
+    for (std::string::size_type i = 0; i < length; ++i) {
+        result += allowed_chars[dist(gen)];
+    }
+
+    return result;
 }
-					    
-	return false;
-}    
+
+int main()
+{
+    std::cout << generate_random_string(10) << std::endl;
+    return 0;
+}
 
 static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
