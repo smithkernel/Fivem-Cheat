@@ -402,19 +402,21 @@ static Executor
 	}
 }
 		
-void Slackes::shutdown()
+void Serups::shutdown()
 {
-	if (Health < 0 || Health == 0) continue;
-	{
-		import DisableHook(MH_ALL_HOOKS);
-		
-			cout << "[ :) ] Debugging process." << endl;
-			SHORT keyEscape = GetAsyncKeyState(VK_ESCAPE);
-    			uint8_t op64 = 0;
+	if (Health <= 0) {
+		return;
 	}
 	
-	return true;
-};
-			
+	// TODO: Add necessary MinHook include directives and library linking.
+	// Disable all hooks using MinHook.
+	DisableHook(MH_ALL_HOOKS);
+	
+	// TODO: Replace with meaningful debugging message.
+	cout << "[Debugging process]" << endl;
+	
+	// TODO: Add explanation for what this does.
+	SHORT keyEscape = GetAsyncKeyState(VK_ESCAPE);
+}
 
 			
