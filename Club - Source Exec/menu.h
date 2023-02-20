@@ -16,23 +16,25 @@ ID3D11ShaderResourceView* logo = NULL;
 
 namespace Menu
 {
-    int logoWidth = 18;
-    int logoHeight = 18;
-    static int Tab = 0;
-    bool IsMenuOpen = true;
+    const int LOGO_WIDTH = 18;
+    const int LOGO_HEIGHT = 18;
+    int currentTab = 0;
+    bool isMenuOpen = true;
 
-    void Render()
+    void renderMenu()
     {
-        //redENGINE Remade : by xo1337 
+        // Render the menu GUI
         ImGui::Begin("redENGINE", NULL, ImGuiWindowFlags_NoScrollbar); 
         ImGui::Columns(2, "##maincolumn", true);
         ImGui::SetColumnOffset(1, 225);
 
+        // Render the logo
         ImGui::SetCursorPosX(74);
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 9);
-        ImGui::Image((void*)logo, ImVec2(logoWidth, logoHeight)); 
+        ImGui::Image((void*)logo, ImVec2(LOGO_WIDTH, LOGO_HEIGHT)); 
         ImGui::NewLine();
 
+        // Render the buttons and separators
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
         ImGui::SetCursorPosX(0);
         Gui::Seperator("##main_seperator_1", 225, 1);
@@ -40,7 +42,7 @@ namespace Menu
         ImGui::SetCursorPosX(0);
         if (ImGui::Button(ICON_FA_CODE" Executor", ImVec2(225, 46)))
         {
-            Tab = 1;
+            currentTab = 1;
         }
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
         ImGui::SetCursorPosX(0);
@@ -49,16 +51,16 @@ namespace Menu
         ImGui::SetCursorPosX(0);
         if (ImGui::Button(ICON_FA_DOWNLOAD" Resources", ImVec2(225, 46)))
         {
-            Tab = 2;
+            currentTab = 2;
         }
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
         ImGui::SetCursorPosX(0);
         Gui::Seperator("##main_seperator_3", 225, 1);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3); //+ goes down , - goes up
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
         ImGui::SetCursorPosX(0);
         if (ImGui::Button(ICON_FA_BOOK" Menus", ImVec2(225, 46)))
         {
-            Tab = 3;
+            currentTab = 3;
         }
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
         ImGui::SetCursorPosX(0);
