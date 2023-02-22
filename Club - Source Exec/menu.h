@@ -14,100 +14,79 @@
 
 ID3D11ShaderResourceView* logo = NULL;
 
-namespace Menu
-{
+namespace Menu {
+    // Constants and variables
     const int LOGO_WIDTH = 18;
     const int LOGO_HEIGHT = 18;
-    int currentTab = 0;
-    bool isMenuOpen = true;
+    int selectedTab = 0;
 
-    void renderMenu()
-    {
+    // Renders the logo image
+    void renderLogo() {
+        ImGui::SetCursorPosX(74);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 9);
+        ImGui::Image((void*)logo, ImVec2(LOGO_WIDTH, LOGO_HEIGHT)); 
+        ImGui::NewLine();
+    }
+
+    // Renders a menu button and sets the active tab if clicked
+    void renderMenuButton(const char* icon, const char* label, int tab) {
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        Gui::Seperator("##main_seperator", 225, 1);
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
+        ImGui::SetCursorPosX(0);
+        if (ImGui::Button(icon label, ImVec2(225, 46))) {
+            selectedTab = tab;
+        }
+    }
+
+    // Renders the license and build information
+    void renderFooter() {
+        ImGui::SetCursorPosY(380);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 25);
+        ImGui::Text("Licensed to #4278");
+        ImGui::SetCursorPosY(399);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 18);
+        ImGui::Text("Build Date: Feb 10 2021");
+    }
+
+    // Renders the content for the currently selected tab
+    void renderTabContent() {
+        ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 10); // Makes sure that the column goes the whole gui height
+        ImGui::Text(""); // Don't remove this
+
+        ImGui::NextColumn();
+
+        switch (selectedTab) {
+            case 0:
+                Default::Render();
+                break;
+            case 1:
+                Executor::Render();
+                break;
+            case 2:
+                Resources::Render();
+                break;
+            case 3:
+                Menus::Render();
+                break;
+            case 4:
+                Config::Render();
+                break;
+            default:
+                // Invalid tab number, do nothing
+                break;
+        }
+    }
+
+    // Renders the entire menu
+    void renderMenu() {
         // Render the menu GUI
         ImGui::Begin("redENGINE", NULL, ImGuiWindowFlags_NoScrollbar); 
         ImGui::Columns(2, "##maincolumn", true);
         ImGui::SetColumnOffset(1, 225);
 
         // Render the logo
-        ImGui::SetCursorPosX(74);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 9);
-        ImGui::Image((void*)logo, ImVec2(LOGO_WIDTH, LOGO_HEIGHT)); 
-        ImGui::NewLine();
-
-        // Render the buttons and separators
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        Gui::Seperator("##main_seperator_1", 225, 1);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        if (ImGui::Button(ICON_FA_CODE" Executor", ImVec2(225, 46)))
-        {
-            currentTab = 1;
-        }
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        Gui::Seperator("##main_seperator_2", 225, 1);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        if (ImGui::Button(ICON_FA_DOWNLOAD" Resources", ImVec2(225, 46)))
-        {
-            currentTab = 2;
-        }
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        Gui::Seperator("##main_seperator_3", 225, 1);
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        if (ImGui::Button(ICON_FA_BOOK" Menus", ImVec2(225, 46)))
-        {
-            currentTab = 3;
-        }
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-        ImGui::SetCursorPosX(0);
-        Gui::Seperator("##main_seperator_4", 225, 1);
-
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 3);
-		ImGui::SetCursorPosX(0);
-		if (ImGui::Button(ICON_FA_COGS" Config", ImVec2(225, 46)))
-		{
-			Tab = 4;
-		}
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 4);
-		ImGui::SetCursorPosX(0);
-		Gui::Seperator("##main_seperator_5", 225, 1);
-		
-		ImGui::SetCursorPosY(380);
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 25);
-		ImGui::Text("Licensed to #4278");
-		ImGui::SetCursorPosY(399);
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 18);
-		ImGui::Text("Build Date: Feb 10 2021");
-
-		ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 10); //Same here
-		ImGui::Text(""); //Makes sure that the column goes the whole gui height, so don't remove :)
-
-		ImGui::NextColumn();
-
-		if (Tab == 0) 
-		{
-			Default::Render();
-		}
-		if (Tab == 1)
-		{
-			Executor::Render();
-		}
-		else if (Tab == 2)
-		{
-			Resources::Render();
-		}
-		else if (Tab == 3)
-		{
-			Menus::Render();
-		}
-		else if (Tab == 4)
-		{
-			Config::Render();
-		}
 
 		ImGui::End();
 	}
