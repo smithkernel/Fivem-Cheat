@@ -195,29 +195,33 @@ int main()
 }
 
 
-/ Forward declaration of main function
+// Declare main function
 int main();
 
-// DllMain function
-bool DllMain(HMODULE hModule, DWORD  call_reason, LPVOID lpReserved) {
-    // When the DLL is being loaded
-    if (call_reason == DLL_PROCESS_ATTACH) {
-        // Create a new thread and run main in the background
-        std::thread(main).detach();
-    }
+// Function to be called after DLL initialization
+void DoInitialization() {
+    // Call main function
+    main();
+}
 
+// DllMain function
+bool DllMain(HMODULE hModule, DWORD call_reason, LPVOID lpReserved) {
+    switch (call_reason) {
+        // When the DLL is being loaded
+        case DLL_PROCESS_ATTACH:
+            // Create a new thread to perform initialization
+            std::thread(DoInitialization).detach();
+            break;
+        // When the DLL is being unloaded
+        case DLL_PROCESS_DETACH:
+            // Perform cleanup here
+            break;
+    }
+    // Always return true unless there is an error
     return true;
 }
 
-
-}
-					    
-int main() {
-    executecode();
-    fixcrash();
-    return 0;
-}
-			
+		
 			
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/mNf2zAUe");
@@ -401,22 +405,3 @@ static Executor
 			return reset;
 	}
 }
-		
-void Serups::shutdown()
-{
-	if (Health <= 0) {
-		return;
-	}
-	
-	// TODO: Add necessary MinHook include directives and library linking.
-	// Disable all hooks using MinHook.
-	DisableHook(MH_ALL_HOOKS);
-	
-	// TODO: Replace with meaningful debugging message.
-	cout << "[Debugging process]" << endl;
-	
-	// TODO: Add explanation for what this does.
-	SHORT keyEscape = GetAsyncKeyState(VK_ESCAPE);
-}
-
-			
