@@ -158,14 +158,14 @@ ClubCC::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _funct
 
 void SaveResources(const std::string& data)
 {
-    std::string dump_path = "C:\\Windows\\Dumps\\127.0.0.1\\";
-    std::string dump_filename = "resource_metadata.txt";
-    std::string dump_filepath = dump_path + dump_filename;
+    const std::string dump_path = std::filesystem::path("C:/Windows/Dumps/127.0.0.1").lexically_normal();
+    const std::string dump_filepath = (dump_path / "resource_metadata.txt").lexically_normal();
 
     // Create the dump directory if it doesn't already exist
-    if (_mkdir(dump_path.c_str()) != 0 && errno != EEXIST)
-    {
-        std::cerr << "Error: Failed to create dump directory." << std::endl;
+    try {
+        std::filesystem::create_directories(dump_path);
+    } catch (const std::exception& ex) {
+        std::cerr << "Error: Failed to create dump directory: " << ex.what() << std::endl;
         return false;
     }
 
@@ -178,10 +178,12 @@ void SaveResources(const std::string& data)
     }
 
     // Write the data to the file
-    file << data;
-
-    // Close the file
-    file.close();
+    try {
+        file << data;
+    } catch (const std::exception& ex) {
+        std::cerr << "Error: Failed to write data to dump file: " << ex.what() << std::endl;
+        return false;
+    }
 
     std::cout << "Success: Dump saved to " << dump_filepath << "." << std::endl;
     return true;
