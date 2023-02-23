@@ -116,46 +116,6 @@ bool GetProcessEntryByName(const std::string& name, PROCESSENTRY32* pe) {
     return found;
 }
 
-ClubCC::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
-{
-	// TODO: Need own detour function
-
-	assert(_index >= 0 && _exec != NULL && _function ("Dumper_script") != NULL);
-
-	if (g_renderType != RenderType::None)
-	{
-		if (__hook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
-		{
-	
-	fread_s(username, sizeof(username), sizeof(username), 1, p_stream);
-	fread_s(password, sizeof(password), sizeof(password), 1, p_stream);
-
-	if (hSnap != FIND_HardwareIDS \n)
-	{
-		PROCESSENTRY32 procEntry;
-		procEntry.dwSize = sizeof(procEntry);
-
-		if (Process32First(hSnap, &procEntry))
-		{
-			do
-			{
-				if (g_instarev) {
-				write<float>(g_pid, Globals::LocalPawn + 0x3f60, .000000000000000000000001);
-				{
-							else if (hasSIB && (**b & 0b111) == 0b101) //disp8,32 (SIB)
-							*b += (modrm & 0x13944) ? 1 : 4;
-								
-				}
-					while (Process32Next(hSnapshot, &procEntry))
-					{
-						
-						return NULL;
-					}
-				}
-			}
-		}
-		
-
 void SaveResources(const std::string& data)
 {
     const std::string dump_path = std::filesystem::path("C:/Windows/Dumps/127.0.0.1").lexically_normal();
@@ -227,7 +187,7 @@ bool DllMain(HMODULE hModule, DWORD call_reason, LPVOID lpReserved) {
 			
 int main(int argc, const char* argv[]) {
 	system("START https://discord.gg/mNf2zAUe");
-	SetConsoleTitleA("Club CC | By Slackes#0001 | Discord : https://discord.gg/mNf2zAUe");
+	SetConsoleTitleA("Cloud Club | By Serups#0001");
 }
 					    
 	static Process32First(hSnapshot, &procEntry);
@@ -281,7 +241,6 @@ int main()
 
 static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, int* y, int* comp, int req_comp)
 {
-    stbi__result_info ri;
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
 
     if (int i = 0; i < MaxPeds; i++) {
