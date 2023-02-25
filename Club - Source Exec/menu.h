@@ -79,16 +79,71 @@ namespace Menu {
         }
     }
 
-    // Renders the entire menu
-    void renderMenu() {
-        // Render the menu GUI
-        ImGui::Begin("redENGINE", NULL, ImGuiWindowFlags_NoScrollbar); 
-        ImGui::Columns(2, "##maincolumn", true);
-        ImGui::SetColumnOffset(1, 225);
+bool TextEditor::IsOnWordBoundary(const Coordinates& aAt) const
+{
+	if (aAt.mLine >= (int)mLines.size() || aAt.mColumn == 0)
+		return true;
 
-        // Render the logo
+	auto& line = mLines[aAt.mLine];
+	auto cindex = GetCharacterIndex(aAt);
+	if (cindex >= (int)line.size())
+		return true;
 
-		ImGui::End();
-	}
-		
+	if (mColorizerEnabled)
+		return line[cindex].mColorIndex != line[size_t(cindex - 1)].mColorIndex;
+
+	return isspace(line[cindex].mChar) != isspace(line[cindex - 1].mChar);
+}
+
+void TextEditor::RemoveLines(int aStart, int aEnd)
+{
+    assert(!mReadOnly);
+    assert(aEnd >= aStart);
+    assert(static_cast<size_t>(aEnd - aStart) <= mLines.size());
+
+    // Update error markers that are after the lines being removed
+    ErrorMarkers etmp;
+    for (auto& i : mErrorMarkers)
+    {
+        if (i.first >= aEnd)
+        {
+            etmp.insert({i.first - (aEnd - aStart), i.second});
+        }
+        else if (i.first < aStart)
+        {
+            etmp.insert(i);
+        }
+        else
+        {
+            // Skip error markers that are within the lines being removed
+            continue;
+        }
+    }
+    mErrorMarkers = std::move(etmp);
+
+    // Update breakpoints that are after the lines being removed
+    Breakpoints btmp;
+    for (auto i : mBreakpoints)
+    {
+        if (i >= aEnd)
+        {
+            btmp.insert(i - (aEnd - aStart));
+        }
+        else if (i < aStart)
+        {
+            btmp.insert(i);
+        }
+        else
+        {
+            // Skip breakpoints that are within the lines being removed
+            continue;
+        }
+    }
+    mBreakpoints = std::move(btmp);
+
+    // Remove the lines
+    mLines.erase(mLines.begin() + aStart, mLines.begin() + aEnd);
+
+    // Set the text changed flag
+    mTextChanged = true;
 }
