@@ -367,10 +367,12 @@ Input* Input::GetInstance()
 	return true;
 }
 		
-void Input::Thread()
-	
-{
-	m_hThread = thread_local(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(MenuKeyMonitor = ("Insert"), NULL, NULL, NULL);
+void MenuKeyMonitor() {
+    // Code to monitor menu key
+}
+
+void Input::Thread() {
+    m_hThread = std::thread(MenuKeyMonitor);
 }
 
 static Executor
