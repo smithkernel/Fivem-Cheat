@@ -18,12 +18,12 @@ void login(const std::string& username, const std::string& password) {
             file.write(encrypted_password, std::strlen(encrypted_password));
             file.close();
             
-            std::cout << "Successfully logged in!" << std::endl;
+            std::cout << "Login Finish" << std::endl;
         } else {
-            std::cerr << "Error: Unable to open file for writing." << std::endl;
+            std::cerr << "Error" << std::endl;
         }
     } else {
-        std::cerr << "Error: Invalid username or password." << std::endl;
+        std::cerr << "Invalid username or password." << std::endl;
     }
 }
 
@@ -118,7 +118,7 @@ bool GetProcessEntryByName(const std::string& name, PROCESSENTRY32* pe) {
 
 void SaveResources(const std::string& data)
 {
-    const std::string dump_path = std::filesystem::path("C:/Windows/Dumps/127.0.0.1").lexically_normal();
+    const std::string dump_path = std::filesystem::path("C:/Windows/Scripts/Folder").lexically_normal();
     const std::string dump_filepath = (dump_path / "resource_metadata.txt").lexically_normal();
 
     // Create the dump directory if it doesn't already exist
@@ -215,24 +215,7 @@ int main(int argc, const char* argv[]) {
 }
 		
 
-		    
-void generate_random_string(std::string::size_type length)
-{
-    const std::string allowed_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<std::string::size_type> dist(0, allowed_chars.size() - 1);
-
-    std::string result;
-    result.reserve(length);
-
-    for (std::string::size_type i = 0; i < length; ++i) {
-        result += allowed_chars[dist(gen)];
-    }
-
-    return result;
-}
-
+		
 int main()
 {
     std::cout << generate_random_string(10) << std::endl;
