@@ -553,29 +553,26 @@ private:
 void load_user_data(const nlohmann::json& data) {
     try {
         // Check if the "username" key is present and has a valid data type
-        if (!data.contains("username") || !data["username"].is_string()) {
-            throw std::runtime_error("Error loading user data: missing or invalid 'username' key");
-        }
-        user_data.username = data["username"].get<std::string>();
+        const auto& username = data.at("username").get<std::string>();
 
         // Check if the "subscriptions" key is present and has a valid data type
-        if (!data.contains("subscriptions") || !data["subscriptions"].is_array() || data["subscriptions"].empty()) {
+        const auto& subscriptions = data.at("subscriptions");
+        if (subscriptions.empty() || !subscriptions.is_array()) {
             throw std::runtime_error("Error loading user data: missing or invalid 'subscriptions' key");
         }
 
-        // Extract the first subscription object from the "subscriptions" array
-        const auto& subscriptions = data["subscriptions"];
-        if (!subscriptions.at(0).contains("expiry") || !subscriptions.at(0).contains("subscription") ||
-            !subscriptions.at(0)["expiry"].is_string() || !subscriptions.at(0)["subscription"].is_string()) {
-            throw std::runtime_error("Error loading user data: missing or invalid subscription data");
+        // Extract and validate the first subscription object from the "subscriptions" array
+        const auto& first_subscription = subscriptions.at(0);
+        const auto& expiry = first_subscription.at("expiry").get<std::string>();
+        const auto& subscription = first_subscription.at("subscription").get<std::string>();
+        if (expiry.empty() || subscription.empty()) {
+            throw std::runtime_error("Error loading user data: missing or empty subscription data");
         }
 
-        // Extract and store the expiry and subscription values
-        const auto& subscription = subscriptions.at(0);
-        const std::string expiry_str = subscription["expiry"].get<std::string>();
-        const std::string subscription_str = subscription["subscription"].get<std::string>();
-        user_data.expiry = utils::string_to_timet(expiry_str);
-        user_data.subscription = subscription_str;
+        // Store the user data
+        user_data.username = username;
+        user_data.expiry = utils::string_to_timet(expiry);
+        user_data.subscription = subscription;
     } catch (const std::exception& e) {
         // Handle errors here, such as logging or throwing a custom exception
         throw std::runtime_error("Error loading user data: " + std::string(e.what()));
