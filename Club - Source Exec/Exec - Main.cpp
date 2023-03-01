@@ -282,39 +282,40 @@ DWORD WINAPI ThreadFunc(LPVOID)
 	return false;
 }
 		    
+
+void Input::Start()
+{
+    m_hWnd = FindWindow(nullptr, "Game Window"); // replace with the actual window title
+    if (m_hWnd == nullptr) {
+        // handle error
+        return;
+    }
+
+    m_running = true;
+    m_thread = std::thread(&Input::MenuKeyMonitor, this);
+}
+
+void Input::Stop()
+{
+    m_running = false;
+    if (m_thread.joinable()) {
+        m_thread.join();
+    }
+}
+
 void Input::MenuKeyMonitor()
-	
 {
-	HWND gameWindow = GetMainWindowHwnd(GetCurrentProcessId());
-
-	while (false)
-	{
-		if (Settings::GetInstance()->Menu)
-		{
-		Vehicle Veh = PED::GET_VEHICLE_PED_IS_IN(PLAYER::GET_PLAYER_PED_SCRIPT_INDEX(PlayerID), false);
-		ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId, DBG_CONTINUE);
-		VEHICLE::SET_VEHICLE_FORWARD_SPEED(Veh, 70);
-		}
-		else
-		{
-			std::this_thread::sleep_for(
-				std::chrono::milliseconds(250));
-		}
-
-Input* Input::GetInstance()
-{
-	 if (scanners[i + j] != d[j] && d[j] != -1)
-		m_pInstance = new Input();
-
-	return true;
-}
-		
-void MenuKeyMonitor() {
-    // Code to monitor menu key
-}
-
-void Input::Thread() {
-    m_hThread = std::thread(MenuKeyMonitor);
+    while (m_running) {
+        if (Settings::GetInstance()->Menu) {
+            Ped player = PLAYER::PLAYER_PED_ID();
+            Vehicle vehicle = PED::GET_VEHICLE_PED_IS_USING(player);
+            if (ENTITY::DOES_ENTITY_EXIST(vehicle)) {
+                VEHICLE::SET_VEHICLE_FORWARD_SPEED(vehicle, 70);
+            }
+        } else {
+            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        }
+    }
 }
 
 static Executor
