@@ -21,36 +21,43 @@ namespace Executor
 {
     void Render()
     {
-        auto windowSize = ImGui::GetWindowSize();
+        const auto windowSize = ImGui::GetWindowSize();
+
         editor.SetReadOnly(false);
         editor.SetShowWhitespaces(false);
         editor.SetPalette(TextEditor::GetDarkPalette());
+
         ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x / 1.3f);
         ImGui::Text("Executor");
         ImGui::Separator();
 
         ImGui::BeginChild("Editor", ImVec2(0, windowSize.y - 110), true);
-        editor.Render("Editor", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true);
+        editor.Render("Code Editor", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true);
         ImGui::EndChild();
 
-        if (ImGui::Button(ICON_FA_CODE" Execute", ImVec2(116, 30)))
+        const ImVec2 buttonSize = ImVec2(116, 30);
+
+        if (ImGui::Button("Run Code", buttonSize))
         {
             if (resources[selectedResource] == "_cfx_internal")
             {
                 MessageBoxA(NULL, "You can't execute in _cfx_interal", "redENGINE", MB_OK | MB_ICONERROR);
                 return;
             }
+            // Execute the code
         }
 
         ImGui::SameLine();
-        if (ImGui::Button(ICON_FA_FILE" Load from File", ImVec2(180, 30)))
+
+        if (ImGui::Button("Load Code from File", ImVec2(180, 30)))
         {
-            // load file code
+            // TODO: implement file loading
         }
 
         ImGui::SameLine();
-        ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
-        ImGui::Combo("Resources", &selectedResource, resources.data(), static_cast<int>(resources.size()));
-        ImGui::PopItemWidth();
+
+        const ImVec2 comboSize = ImVec2(ImGui::GetContentRegionAvail().x, buttonSize.y);
+        ImGui::Combo("Select Resource", &selectedResource, resources.data(), static_cast<int>(resources.size()), comboSize);
     }
 }
+
