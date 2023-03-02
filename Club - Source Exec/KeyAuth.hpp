@@ -344,7 +344,7 @@ void regstr(std::string username, std::string password, std::string key) {
 			}
 		}
 
-void license(std::string user_key) {
+void license(const std::string& user_key) {
     // Get hardware ID of the machine
     std::string hardware_id;
     try {
@@ -354,56 +354,49 @@ void license(std::string user_key) {
         return;
     }
 
-    // Generate initialization vector for encryption
-    std::string iv = encryption::random_iv();
+    // Generate random nonce for encryption
+    const std::string nonce = encryption::random_nonce();
 
-    // Create data to send to server
-    const std::string data = 
-        "type=" + encryption::encode("license") +
-        "&key=" + encryption::encrypt(user_key, enckey, iv) +
-        "&hwid=" + encryption::encrypt(hardware_id, enckey, iv) +
-        "&sessionid=" + encryption::encode(sessionid) +
-        "&name=" + encryption::encode(name) +
-        "&ownerid=" + encryption::encode(ownerid);
+    // Create JSON object to send to server
+    json data = {
+        {"type", "license"},
+        {"key", encryption::encrypt(user_key, enckey, nonce)},
+        {"hwid", encryption::encrypt(hardware_id, enckey, nonce)},
+        {"sessionid", sessionid},
+        {"name", name},
+        {"ownerid", ownerid}
+    };
 
     // Send data to server and get response
     std::string response;
     try {
-        response = req(data);
+        response = req(data.dump());
     } catch (const std::exception& e) {
         std::cerr << "Error: Failed to send data to server: " << e.what() << '\n';
         return;
     }
 
-    // Decrypt response and parse as json object
-    std::string decrypted_response;
-    try {
-        decrypted_response = encryption::decrypt(response, enckey, iv);
-    } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to decrypt response: " << e.what() << '\n';
-        return;
-    }
+    // Parse response as JSON object and check if request was successful
     json json_response;
     try {
-        json_response = json::parse(decrypted_response);
+        json_response = json::parse(response);
     } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to parse decrypted response: " << e.what() << '\n';
+        std::cerr << "Error: Failed to parse response: " << e.what() << '\n';
         return;
     }
 
-    // Check if request was successful
     if (json_response.value("success", false)) {
         try {
-            load_user_data(json_response["info"]);
+            const std::string decrypted_info = encryption::decrypt(json_response["info"], enckey, nonce);
+            load_user_data(decrypted_info);
         } catch (const std::exception& e) {
             std::cerr << "Error: Failed to load user data: " << e.what() << '\n';
         }
     } else {
-        std::cout << "Status: Failure: " << json_response.value("message", "Unknown error") << '\n';
+        std::cerr << "Error: " << json_response.value("message", "Unknown error") << '\n';
     }
 }
-
-		
+	
 		
 void log(std::string message) {
 
