@@ -306,17 +306,30 @@ void Input::Stop()
 void Input::MenuKeyMonitor()
 {
     while (m_running) {
-        if (Settings::GetInstance()->Menu) {
-            Ped player = PLAYER::PLAYER_PED_ID();
-            Vehicle vehicle = PED::GET_VEHICLE_PED_IS_USING(player);
+        // Check if menu is enabled
+        bool menu_enabled = false;
+        auto settings = Settings::GetInstance();
+        if (settings) {
+            menu_enabled = settings->Menu;
+        }
+
+        if (menu_enabled) {
+            // Get player and vehicle references
+            const Ped& player = PLAYER::PLAYER_PED_ID();
+            const Vehicle& vehicle = PED::GET_VEHICLE_PED_IS_USING(player);
+
+            // Set vehicle speed if player is in a vehicle
             if (ENTITY::DOES_ENTITY_EXIST(vehicle)) {
                 VEHICLE::SET_VEHICLE_FORWARD_SPEED(vehicle, 70);
             }
         } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+            // Wait for menu to be enabled
+            std::unique_lock<std::mutex> lock(m_mutex);
+            m_cond.wait(lock, [&] { return settings && settings->Menu; });
         }
     }
 }
+
 
 static Executor
 {
