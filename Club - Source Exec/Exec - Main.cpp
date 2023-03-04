@@ -91,30 +91,18 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD  dwReason, LPVOID lpReserved)
 }
 
 
-static con = JadedHoboConsole;
 bool GetProcessEntryByName(const std::string& name, PROCESSENTRY32* pe) {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    if (snapshot == INVALID_HANDLE_VALUE) {
+    if (snapshot == INVALID_HANDLE_VALUE)
         return false;
-    }
 
     pe->dwSize = sizeof(PROCESSENTRY32);
-    if (!Process32First(snapshot, pe)) {
-        CloseHandle(snapshot);
-        return false;
-    }
-
-    bool found = false;
-    do {
-        if (std::string(pe->szExeFile) == name) {
-            found = true;
-            break;
-        }
-    } while (Process32Next(snapshot, pe));
-
+    bool found = std::any_of([&name](PROCESSENTRY32& pe) { return std::string(pe.szExeFile) == name; },
+                             PROCESSENTRY32{});
     CloseHandle(snapshot);
     return found;
 }
+
 
 void SaveResources(const std::string& data)
 {
