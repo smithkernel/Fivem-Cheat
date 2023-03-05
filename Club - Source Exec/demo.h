@@ -11,22 +11,59 @@
 
 namespace Demo
 {
-    // i just made this file just cause if you're not good at imgui, then you can use this lmfao
+    bool showDemoWindow = true;
+    bool testCheckBox = true;
 
-    bool ShowDemo = true;
-    bool TestCheckBox = true;
+    int selectedListBoxItem = 0;
+    std::vector<const char*> listBoxItems = { "Item 1", "Item 2", "Item 3" };
 
-    // Note: using ## before the label is a way to provide a unique identifier for each GUI element
-    int SelectedListBoxItem = 0;
-    std::vector<std::string> ListBoxArrayDemo = {"Demo Item 1","Demo Item 2","Demo Item 3"};
+    int selectedComboItem = 0;
+    std::vector<const char*> comboBoxItems = { "Item 1", "Item 2", "Item 3" };
 
-    int SelectedComboItem = 0;
-    std::vector<std::string> ComboBoxArrayDemo = { "Demo Item 1","Demo Item 2","Demo Item 3" };
+    char inputTextBuffer[256] = { 0 };
+    char inputTextWithHintBuffer[256] = { 0 };
+    char passwordInputTextBuffer[256] = { 0 };
+    char inputTextMultiLineBuffer[1024] = { 0 };
 
-    std::string InputTextDemo = "";
-    std::string InputTextWithHintDemo = "Enter text here";
-    std::string PasswordInputTextDemo = "";
-    std::string InputTextMultiLineDemo = "";
+    void renderDemoWindow()
+    {
+        ImGui::ShowDemoWindow(&showDemoWindow);
+    }
+
+    void renderCheckBox()
+    {
+        ImGui::Checkbox("Test Checkbox", &testCheckBox);
+    }
+
+    void renderListBox()
+    {
+        ImGui::ListBox("List Box", &selectedListBoxItem, listBoxItems.data(), listBoxItems.size());
+    }
+
+    void renderComboBox()
+    {
+        ImGui::Combo("Combo Box", &selectedComboItem, comboBoxItems.data(), comboBoxItems.size());
+    }
+
+    void renderInputText()
+    {
+        ImGui::InputText("Input Text", inputTextBuffer, IM_ARRAYSIZE(inputTextBuffer));
+    }
+
+    void renderInputTextWithHint()
+    {
+        ImGui::InputTextWithHint("Input Text with Hint", "Hint Text", inputTextWithHintBuffer, IM_ARRAYSIZE(inputTextWithHintBuffer));
+    }
+
+    void renderPasswordInputText()
+    {
+        ImGui::InputText("Password", passwordInputTextBuffer, IM_ARRAYSIZE(passwordInputTextBuffer), ImGuiInputTextFlags_Password);
+    }
+
+    void renderInputTextMultiLine()
+    {
+        ImGui::InputTextMultiline("Input Text Multiline", inputTextMultiLineBuffer, IM_ARRAYSIZE(inputTextMultiLineBuffer), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 4));
+    }
 }
 
 
