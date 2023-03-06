@@ -155,8 +155,10 @@ void DoInitialization() {
 }
 
 // DllMain function
-bool DllMain(HMODULE hModule, DWORD call_reason, LPVOID lpReserved) {
-    switch (call_reason) {
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+{
+    switch (ul_reason_for_call)
+    {
         // When the DLL is being loaded
         case DLL_PROCESS_ATTACH:
             // Create a new thread to perform initialization
@@ -165,10 +167,16 @@ bool DllMain(HMODULE hModule, DWORD call_reason, LPVOID lpReserved) {
         // When the DLL is being unloaded
         case DLL_PROCESS_DETACH:
             // Perform cleanup here
+            DoCleanup();
+            break;
+        // When a new thread is created or destroyed
+        case DLL_THREAD_ATTACH:
+        case DLL_THREAD_DETACH:
+            // Do nothing
             break;
     }
     // Always return true unless there is an error
-    return true;
+    return TRUE;
 }
 
 		
