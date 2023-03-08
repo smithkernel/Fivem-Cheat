@@ -6,27 +6,26 @@ const string ENCRYPTION_KEY = "a_secret_key";
 void login(const std::string& username, const std::string& password) {
     bool success = authenticate(username, password);
     if (success) {
-        char encrypted_username[1024];
-        char encrypted_password[1024];
+        // Encrypt the username and password
+        std::vector<unsigned char> encrypted_username = encrypt(username, ENCRYPTION_KEY);
+        std::vector<unsigned char> encrypted_password = encrypt(password, ENCRYPTION_KEY);
 
-        encrypt(username.c_str(), username.size(), encrypted_username, sizeof(encrypted_username), ENCRYPTION_KEY);
-        encrypt(password.c_str(), password.size(), encrypted_password, sizeof(encrypted_password), ENCRYPTION_KEY);
-
+        // Open the binary file for writing
         std::ofstream file(FILE_NAME, std::ios::binary);
         if (file.is_open()) {
-            file.write(encrypted_username, std::strlen(encrypted_username));
-            file.write(encrypted_password, std::strlen(encrypted_password));
+            // Write the encrypted data to the file
+            file.write(reinterpret_cast<const char*>(encrypted_username.data()), encrypted_username.size());
+            file.write(reinterpret_cast<const char*>(encrypted_password.data()), encrypted_password.size());
             file.close();
-            
-            std::cout << "Login Finish" << std::endl;
+
+            std::cout << "Login successful." << std::endl;
         } else {
-            std::cerr << "Error" << std::endl;
+            std::cerr << "Error: Failed to open file." << std::endl;
         }
     } else {
-        std::cerr << "Invalid username or password." << std::endl;
+        std::cerr << "Error: Invalid username or password." << std::endl;
     }
 }
-
 void logout() {
     std::remove(FILE_NAME.c_str());
     std::cout << "Successfully logged out." << std::endl;
