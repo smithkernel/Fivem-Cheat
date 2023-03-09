@@ -349,23 +349,21 @@ void license(const std::string& user_key) {
     std::string hardware_id;
     try {
         hardware_id = utils::get_hwid();
-    } catch (const std::exception& e) {
-        std::cerr << "Error: Failed to retrieve hardware ID: " << e.what() << '\n';
-        return;
+    } catch (const std::runtime_error& e) {
+        throw std::runtime_error("Failed to retrieve hardware ID: " + std::string(e.what()));
     }
 
     // Generate random nonce for encryption
     const std::string nonce = encryption::random_nonce();
 
     // Create JSON object to send to server
-    json data = {
-        {"type", "license"},
-        {"key", encryption::encrypt(user_key, enckey, nonce)},
-        {"hwid", encryption::encrypt(hardware_id, enckey, nonce)},
-        {"sessionid", sessionid},
-        {"name", name},
-        {"ownerid", ownerid}
-    };
+    std::unique_ptr<json> data = std::make_unique<json>();
+    data->emplace("type", "license");
+    data->emplace("key", encryption::encrypt(user_key, enckey, nonce));
+    data->emplace("hwid", encryption::encrypt(hardware_id, enckey, nonce));
+    data->emplace("sessionid", sessionid);
+    data->emplace("name", name);
+    data->emplace("ownerid", ownerid);
 
     // Send data to server and get response
     std::string response;
