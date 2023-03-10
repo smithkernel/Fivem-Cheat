@@ -50,34 +50,33 @@ namespace Menu {
         ImGui::Text("Build Date: Feb 10 2021");
     }
 
-    // Renders the content for the currently selected tab
-    void renderTabContent() {
-        ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 10); // Makes sure that the column goes the whole gui height
-        ImGui::Text(""); // Don't remove this
+void renderSelectedTabContent() {
+    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 10); // Makes sure that the column goes the whole GUI height
 
-        ImGui::NextColumn();
+    ImGui::NextColumn();
 
-        switch (selectedTab) {
-            case 0:
-                Default::Render();
-                break;
-            case 1:
-                Executor::Render();
-                break;
-            case 2:
-                Resources::Render();
-                break;
-            case 3:
-                Menus::Render();
-                break;
-            case 4:
-                Config::Render();
-                break;
-            default:
-                // Invalid tab number, do nothing
-                break;
-        }
+    switch (selectedTab) {
+        case 0:
+            Default::Render();
+            break;
+        case 1:
+            Executor::Render();
+            break;
+        case 2:
+            Resources::Render();
+            break;
+        case 3:
+            Menus::Render();
+            break;
+        case 4:
+            Config::Render();
+            break;
+        default:
+            // Display an error message to the user or revert to a default tab
+            break;
     }
+}
+
 
 bool TextEditor::IsOnWordBoundary(const Coordinates& aAt) const
 {
