@@ -21,6 +21,13 @@
 
 - Read the instructions carefully.
 - Exec for Fivem's latest version, which you can check for updates yourself.
+- **Scroll Down for Raed more**
+
+
+#### ❗ Help & Support
+- Not understand How To Use | Join Discord For Helps: [Discord Servers](https://discord.gg/2euDQqzD8Y)
+
+---
 
 ## <a id="features"></a>🛑 〢 Features
 
@@ -58,8 +65,9 @@ You can use the normal Injector published on Github to compile it.
 - [Visual Studio](https://visualstudio.microsoft.com/):
 
 
+---
 
-## <a id="setup2"></a> 🗒 〢 Undetected
+### <a id="setup2"></a> 🗒 〢 Undetected
 - Free version is used by many Users, Detected are quite High | Our recommended alternative is Private Cheat.
 - **Legit Playing & Waranty & Lifetime | Up To You.**
 - [Discord Server](https://discord.gg/2euDQqzD8Y) 
