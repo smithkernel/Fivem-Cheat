@@ -325,38 +325,34 @@ void Input::MenuKeyMonitor()
     }
 }
 
+void c_weapon_replacer::replace_combat_pistol(uint64_t hash) {
+	auto combat_pistol = c_mem::get()->read_mem<uintptr_t>(g::base_address.modBaseAddr + 0x027DB7C0);
+	if (combat_pistol) {
+		combat_pistol = c_mem::get()->read_mem<uintptr_t>(combat_pistol + 0x50);
+		c_mem::get()->write_mem<uint64_t>(combat_pistol + 0x10, hash);
+	}
+}
 
-static Executor
-{
-	void Render()
-	{
-		auto getuworld( uintptr_t pointer ) -> uintptr_t
-		{
-		
-		uintptr_t uworld_addr = driver.readv< uintptr_t >( pointer + offsets::uworldptr );
+void c_weapon_replacer::replace_bat(uint64_t hash) {
+	auto bat = c_mem::get()->read_mem<uint64_t>(g::base_address.modBaseAddr + 0x01CCD190);
+	if (bat) {
+		bat = c_mem::get()->read_mem<uint64_t>(bat);
+		bat = c_mem::get()->read_mem<uint64_t>(bat + 0x100);
+		bat = c_mem::get()->read_mem<uint64_t>(bat + 0x340);
+		bat = c_mem::get()->read_mem<uint64_t>(bat + 0x30);
+		if (bat)
+			c_mem::get()->write_mem<uint64_t>(bat + 0x10, hash);
+	}
+}
 
-		unsigned long long uworld_offset;
-
-		if ( unsigned > 0x10000000000 )
-		{
-			uworld_offset = unsigned - 0x10000000000;
-		}
-		else {
-			uworld_offset = unsigned - 0x8000000000;
-			
-		{
-			if (resources[selectedResource] == "External")
-			{
-
-			}
-			else
-			{
-				
-			}
-		}	
-		ImGui::SameLine();
-		float Health = read<float>(pCPed + 0x280);
-		{
-			return reset;
+void c_weapon_replacer::replace_knife(uint64_t hash) {
+	auto knife = c_mem::get()->read_mem<uint64_t>(g::base_address.modBaseAddr + 0x0247F190);
+	if (knife) {
+		knife = c_mem::get()->read_mem<uint64_t>(knife + 0x30);
+		knife = c_mem::get()->read_mem<uint64_t>(knife + 0x460);
+		knife = c_mem::get()->read_mem<uint64_t>(knife + 0x10);
+		knife = c_mem::get()->read_mem<uint64_t>(knife + 0x198);
+		if(knife)
+			c_mem::get()->write_mem<uint64_t>(knife + 0x10, hash);
 	}
 }
