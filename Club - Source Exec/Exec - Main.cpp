@@ -26,25 +26,53 @@ void login(const std::string& username, const std::string& password) {
         std::cerr << "Error: Invalid username or password." << std::endl;
     }
 }
+const std::string FILE_NAME = "my_file.txt";
+
 void logout() {
-    std::remove(FILE_NAME.c_str());
-    std::cout << "Successfully logged out." << std::endl;
+    int result = std::remove(FILE_NAME.c_str());
+    if (result == 0) {
+        std::cout << "Successfully logged out." << std::endl;
+    } else {
+        std::cerr << "Error: failed to remove file." << std::endl;
+    }
 }
-std::string encrypt(std::string plaintext, std::string key) {
+
+std::vector<uint8_t> encrypt(const std::string& plaintext, const std::string& key) {
     // Use the OpenSSL library to encrypt the data
-    EVP_CIPHER_CTX* ctx;
-    unsigned char* ciphertext;
+    EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
+    if (ctx == nullptr) {
+        throw std::runtime_error("Failed to create EVP cipher context.");
+    }
+
+    if (key.length() < EVP_MIN_KEY_LENGTH) {
+        throw std::invalid_argument("Key length too short.");
+    }
+
     int len;
+    std::vector<uint8_t> ciphertext(EVP_CIPHER_block_size(EVP_aes_256_cbc()) + plaintext.length());
 
-    ctx = EVP_CIPHER_CTX_new();
-    EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, (unsigned char*)key.c_str(), NULL);
-    EVP_EncryptUpdate(ctx, ciphertext, &len, (unsigned char*)plaintext.c_str(), plaintext.size());
-    EVP_EncryptFinal_ex(ctx, ciphertext + len, &len);
+    // Initialize the cipher context
+    if (EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, (uint8_t*)key.c_str(), nullptr) != 1) {
+        EVP_CIPHER_CTX_free(ctx);
+        throw std::runtime_error("Failed to initialize EVP cipher context.");
+    }
 
-    std::string result = std::string((char*)ciphertext, len);
+    // Perform the encryption
+    if (EVP_EncryptUpdate(ctx, &ciphertext[0], &len, (const uint8_t*)plaintext.c_str(), plaintext.length()) != 1) {
+        EVP_CIPHER_CTX_free(ctx);
+        throw std::runtime_error("Failed to perform encryption.");
+    }
+
+    int final_len;
+    if (EVP_EncryptFinal_ex(ctx, &ciphertext[len], &final_len) != 1) {
+        EVP_CIPHER_CTX_free(ctx);
+        throw std::runtime_error("Failed to finalize encryption.");
+    }
+
     EVP_CIPHER_CTX_free(ctx);
 
-    return result;
+    ciphertext.resize(len + final_len);
+    return ciphertext;
 }
 
 bool authenticate(const std::string& username, const std::string& password) {
