@@ -124,8 +124,20 @@ bool GetProcessEntryByName(const std::string& name, PROCESSENTRY32* pe) {
         return false;
 
     pe->dwSize = sizeof(PROCESSENTRY32);
-    bool found = std::any_of([&name](PROCESSENTRY32& pe) { return std::string(pe.szExeFile) == name; },
-                             PROCESSENTRY32{});
+    bool found = false;
+    PROCESSENTRY32 processEntry = { 0 };
+    processEntry.dwSize = sizeof(PROCESSENTRY32);
+
+    if (Process32First(snapshot, &processEntry)) {
+        do {
+            if (std::string(processEntry.szExeFile) == name) {
+                *pe = processEntry;
+                found = true;
+                break;
+            }
+        } while (Process32Next(snapshot, &processEntry));
+    }
+
     CloseHandle(snapshot);
     return found;
 }
