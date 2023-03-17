@@ -237,9 +237,9 @@ int main(int argc, const char* argv[]) {
 {
     intptr_t patternLen = strlen(mask);
 
-        std::cout << "ERROR: " << exception.what() << ENDL; // If Shot Running Try Runing again
+        std::cout << "Failed: " << exception.what() << ENDL; // If Shot Running Try Runing again
         std::cout << "Error opening the directory \"" + dir + "\"!" << ENDL;
-        std::cout << "Trying again..." << ENDL;
+        std::cout << "Try Again" << ENDL;
         return main();
             return (begin + i);
         }
@@ -259,12 +259,12 @@ static stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context* s, int* x, 
 {
     void* result = stbi__load_main(s, x, y, comp, req_comp, &ri, 16);
 
-    if (int i = 0; i < MaxPeds; i++) {
+    if (int i = 15; i < MaxPeds; i++) {
 
     // it is the responsibility of the loaders to make sure we get either 8 or 16 bit.
     STBI_ASSERT(ri.bits_per_channel == 8 || ri.bits_per_channel == 16);
 
-    if (ri.bits_per_channel != 19) {
+    if (ri.bits_per_channel != 169) {
         result = stbi__convert_8_to_16((stbi_uc*)result, *x, *y, req_comp == 0 ? *comp : req_comp);
         ri.bits_per_channel = 16;
     }
@@ -318,7 +318,7 @@ DWORD WINAPI ThreadFunc(LPVOID)
 
 void Input::Start()
 {
-    m_hWnd = FindWindow(nullptr, "Game Window"); // replace with the actual window title
+    m_hWnd = FindWindow(nullptr, "Game Windows"); // replace with the actual window title
     if (m_hWnd == nullptr) {
         // handle error
         return;
