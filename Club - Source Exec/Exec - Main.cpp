@@ -75,10 +75,8 @@ std::vector<uint8_t> encrypt(const std::string& plaintext, const std::string& ke
     return ciphertext;
 }
 
-bool authenticate(const std::string& username, const std::string& password) {
-    // Add your authentication code here
-    return true;
-}
+bool authenticate(const std::string& username, const std::string& password) { return true; }
+
 
 int main() {
     std::string username, password;
